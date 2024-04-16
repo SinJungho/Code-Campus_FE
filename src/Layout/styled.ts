@@ -2,57 +2,65 @@ import styled from "styled-components";
 import { Layout } from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 
-export const _Layout = styled(Layout)``;
+export const _Layout = styled(Layout)`
+  background-color: #fff;
+`;
 
 export const _Header = styled(Header)`
-  width: 100%;
-  height: 85px;
-  position: fixed;
-  border-bottom: 1px solid #ccc;
-  background-color: #fff;
-  color: #727272;
-  a {
-    display: flex;
-    height: 85px;
-    font-weight: 300;
-    align-items: center;
-  }
-
-  a img {
-    margin: 15px 45px 15px 15px;
-  }
-
-  .header_menu {
-    display: flex;
-    gap: 60px;
-    align-items: center;
-  }
-
-  .header_menu_inner {
-    display: flex;
-    position: relative;
-    justify-content: end;
-    padding: 0 25px 0 0;
-    gap: 40px;
-    text-align: center;
-  }
-
-  .header_menu .on:hover {
-    font-weight: 600;
-    border-bottom: 3px solid #095efe;
-    color: #095efe;
-    transition: 0s;
-  }
-
-  .login_inner .btn {
-    width: 100px;
-    height: 40px;
-    border-radius: 10px;
-    background: #095efe;
-    justify-content: center;
-    color: #fff;
-  }
+  display: flex;
+  align-items: center;
+  background-color: transparent;
 `;
+
+// export const _Header = styled(Header)`
+//   width: 100%;
+//   height: 85px;
+//   position: fixed;
+//   border-bottom: 1px solid #ccc;
+//   background-color: #fff;
+//   color: #727272;
+//   a {
+//     display: flex;
+//     height: 85px;
+//     font-weight: 300;
+//     align-items: center;
+//   }
+
+//   a img {
+//     margin: 15px 45px 15px 15px;
+//   }
+
+//   .header_menu {
+//     display: flex;
+//     gap: 60px;
+//     align-items: center;
+//   }
+
+//   .header_menu_inner {
+//     display: flex;
+//     position: relative;
+//     justify-content: end;
+//     padding: 0 25px 0 0;
+//     gap: 40px;
+//     text-align: center;
+//   }
+
+//   .header_menu .on:hover {
+//     font-weight: 600;
+//     border-bottom: 3px solid #095efe;
+//     color: #095efe;
+//     transition: 0s;
+//   }
+
+//   .login_inner .btn {
+//     width: 100px;
+//     height: 40px;
+//     border-radius: 10px;
+//     background: #095efe;
+//     justify-content: center;
+//     color: #fff;
+//   }
+// `;
 
 export const header_inner = styled.div`
   display: flex;
