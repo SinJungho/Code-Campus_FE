@@ -1,11 +1,27 @@
 import React from 'react';
+import * as S from "./styled";
+import { Link } from "react-router-dom";
+import { Carousel } from 'antd';
+
+const list:number[] = [
+  1,2,3
+];
 
 const Home: React.FC = () => {
   return (
-    <div>
-      <h1>Welcome to our website!</h1>
-      <p>This is the home page content. Feel free to explore!</p>
-    </div>
+    <S.Wrapper>
+      <S.SlideShow>
+        <Carousel autoplay>
+          {list && list.map((item)=>{
+            return(
+              <div>
+                <h3>{item}</h3>
+              </div>
+              );
+          })}
+        </Carousel>
+      </S.SlideShow>
+    </S.Wrapper>
   );
 };
 

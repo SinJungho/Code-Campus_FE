@@ -12,7 +12,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <S._Layout>
       <Header />
-      <Content>{children}</Content>
+      <S._Content>{children}</S._Content>
       <Footer />
     </S._Layout>
   );
