@@ -12,26 +12,24 @@ const items: MenuProps['items'] = [
 
 const Header: React.FC = () => {
   return (
-    <S.Wrapper>
-      <S._Header>
+    <S._Header>
+      <Link to="/">
+        <img src={header_logo} alt="header_logo" />
+      </Link>
+      <Menu
+        theme="light"
+        mode="horizontal"
+        // defaultSelectedKeys={['2']}
+        items={items}
+        style={{ flex: 1, minWidth: 0 }}
+        onClick={(e) => { console.log(e.key) }}
+      />
+      <Button type="primary">
         <Link to="/">
-          <img src={header_logo} alt="header_logo" />
+          로그인
         </Link>
-        <Menu
-          theme="light"
-          mode="horizontal"
-          defaultSelectedKeys={['2']}
-          items={items}
-          style={{ flex: 1, minWidth: 0 }}
-          onClick={(e) => { console.log(e.key) }}
-        />
-        <Button type="primary">
-          <Link to="/">
-            로그인
-          </Link>
-        </Button>
-      </S._Header >
-    </S.Wrapper>
+      </Button>
+    </S._Header >
   );
 };
 

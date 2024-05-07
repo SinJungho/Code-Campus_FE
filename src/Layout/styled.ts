@@ -9,11 +9,8 @@ export const _Layout = styled(Layout)`
   align-items: center;
 `;
 
-export const Wrapper = styled.div`
-  width: 70%;
-`;
-
 export const _Header = styled(Header)`
+  width: 60%;
   display: flex;
   align-items: center;
   background-color: transparent;
@@ -27,7 +24,7 @@ export const _Header = styled(Header)`
 `;
 
 export const _Content = styled(Content)`
-  /* min-height: 700px; */
+  width: 60%;
 `;
 
 export const _Footer = styled(Footer)`
@@ -40,7 +37,7 @@ export const _Footer = styled(Footer)`
   background: #fff;
 
   .inner {
-    width: 1200px;
+    width: 60%;
     margin: 0 auto;
   }
 
@@ -50,7 +47,7 @@ export const _Footer = styled(Footer)`
 `;
 
 export const privacy_area = styled.div`
-  width: 1200px;
+  width: 60%;
   height: 65px;
   display: flex;
   margin: 0 auto;
