@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
     /* min-height: 1600px; */
 `;
 
-export const SlideShow = styled.div`
+export const SlideShowDiv = styled.div`
     h3{
         height: 160px;
         color: #fff;
@@ -13,4 +13,8 @@ export const SlideShow = styled.div`
         text-align: center;
         background-color: #333;
     }
+`;
+
+export const SearchDiv = styled.div`
+    
 `;

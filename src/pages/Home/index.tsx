@@ -10,7 +10,7 @@ const list:number[] = [
 const Home: React.FC = () => {
   return (
     <S.Wrapper>
-      <S.SlideShow>
+      <S.SlideShowDiv>
         <Carousel autoplay>
           {list && list.map((item)=>{
             return(
@@ -20,7 +20,8 @@ const Home: React.FC = () => {
               );
           })}
         </Carousel>
-      </S.SlideShow>
+      </S.SlideShowDiv>
+      
     </S.Wrapper>
   );
 };
