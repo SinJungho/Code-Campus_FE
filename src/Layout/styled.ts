@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { Layout } from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
+import { Box } from "@mui/material";
 
-export const _Layout = styled(Layout)`
+export const _Layout = styled(Box)`
   background-color: #fff;
   display: flex;
   flex-direction:column;

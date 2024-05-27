@@ -1,5 +1,5 @@
 {
-  "name": "weedu-frontend",
+  "name": "codecampus-frontend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,6 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "@ant-design/icons": "^5.3.6",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.18",
+    "@mui/material": "^5.15.18",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@types/react": "^18.2.67",
     "@types/react-dom": "^18.2.22",
     "antd": "^5.15.3",
@@ -19,7 +24,7 @@
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.4",
     "react-router-dom": "^6.22.3",
-    "styled-components": "^6.1.8",
+    "styled-components": "^6.1.11",
     "typescript": "^5.4.2",
     "web-vitals": "^3.5.2"
   },
