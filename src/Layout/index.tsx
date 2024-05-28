@@ -3,7 +3,7 @@ import * as S from "./styled";
 import Header from "./Header";
 import Footer from "./Footer";
 import { Content } from "antd/es/layout/layout";
-import { Box } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
 import LabelBottomNavigation from "./BottomNavigation";
 import ResponsiveAppBar from "./AppBar";
 
@@ -13,10 +13,13 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <S._Layout sx={{ flexGrow: 1 }}>
-      <ResponsiveAppBar/>
-      {children}
-      <LabelBottomNavigation/>
+    <S._Layout>
+      <ResponsiveAppBar />
+      <Box component="main" sx={{ flexGrow: 1 }}>
+        {children}
+      </Box>
+
+      <LabelBottomNavigation />
     </S._Layout>
   );
 };

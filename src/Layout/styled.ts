@@ -5,9 +5,9 @@ import { Box } from "@mui/material";
 
 export const _Layout = styled(Box)`
   background-color: #fff;
-  display: flex;
-  flex-direction:column;
+  /* flex-direction: column; */
   align-items: center;
+  min-height: 100vh;
 `;
 
 export const _Header = styled(Header)`
@@ -17,10 +17,10 @@ export const _Header = styled(Header)`
   align-items: center;
   padding: 0;
   background-color: transparent;
-  img{
+  img {
   }
-  .ant-menu{
-    li{
+  .ant-menu {
+    li {
       user-select: none;
     }
   }
@@ -57,25 +57,25 @@ export const footer_bottom = styled.div`
   display: flex;
   width: 60%;
   justify-content: space-between;
-  .footer_bottom_left{
+  .footer_bottom_left {
     display: flex;
     flex-direction: column;
   }
-  .footer_info_top{
+  .footer_info_top {
     display: flex;
     padding: 0;
     margin-bottom: 8px;
     list-style: none;
     align-items: center;
-    a{
+    a {
       text-decoration: none;
       font-size: 12px;
       color: #bdbdbd;
       font-weight: 700;
-    line-height: 1.5;
+      line-height: 1.5;
     }
   }
-  .footer_info_top li+li:before {
+  .footer_info_top li + li:before {
     display: inline-block;
     content: "|";
     color: #bdbdbd;
@@ -84,11 +84,11 @@ export const footer_bottom = styled.div`
     font-size: 12px;
     line-height: 1.5;
   }
-  .footer_info_bottom{
+  .footer_info_bottom {
     font-size: 12px;
     line-height: 1.5;
     color: #bdbdbd;
-    a{
+    a {
       text-decoration: none;
       font-size: 12px;
       color: #bdbdbd;
