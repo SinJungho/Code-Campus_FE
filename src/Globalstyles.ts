@@ -17,7 +17,7 @@ const GlobalStyles = createGlobalStyle`
         margin: 0;
         padding: 0;
         border: 0;
-        font-size: 100%;
+        font-size: 30px;
         font-family: 'Spoqa Han Sans Neo';
         vertical-align: baseline;
     }

@@ -18,7 +18,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Box component="main" sx={{ flexGrow: 1 }}>
         {children}
       </Box>
-
       <LabelBottomNavigation />
     </S._Layout>
   );

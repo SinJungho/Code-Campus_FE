@@ -25,8 +25,8 @@ export default function LabelBottomNavigation() {
         <BottomNavigation
           showLabels
           sx={{
-            height: isMobile ? "10rem" : "5rem",
-            gap: isMobile ? "4rem" : "1rem",
+            height: isMobile ? "5rem" : "5rem",
+            gap: isMobile ? "1rem" : "1rem",
           }}
           value={value}
           onChange={(event, newValue) => {
@@ -35,17 +35,17 @@ export default function LabelBottomNavigation() {
         >
           <BottomNavigationAction
             label="Recents"
-            icon={<RestoreIcon sx={{ fontSize: isMobile ? "5rem" : "2rem" }} />}
+            icon={<RestoreIcon sx={{ fontSize: isMobile ? "2rem" : "2rem" }} />}
           />
           <BottomNavigationAction
             label="Favorites"
             icon={
-              <FavoriteIcon sx={{ fontSize: isMobile ? "5rem" : "2rem" }} />
+              <FavoriteIcon sx={{ fontSize: isMobile ? "2rem" : "2rem" }} />
             }
           />
           <BottomNavigationAction
             label="Archive"
-            icon={<ArchiveIcon sx={{ fontSize: isMobile ? "5rem" : "2rem" }} />}
+            icon={<ArchiveIcon sx={{ fontSize: isMobile ? "2rem" : "2rem" }} />}
           />
         </BottomNavigation>
       </ThemeProvider>
