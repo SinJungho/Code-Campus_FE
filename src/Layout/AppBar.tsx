@@ -13,9 +13,10 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import header_logo from "../assets/img/header_logo.png";
 import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 export default function MenuAppBar() {
-  const [auth, setAuth] = React.useState(true);
+  const [auth, setAuth] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,18 +45,18 @@ export default function MenuAppBar() {
           label={auth ? 'Logout' : 'Login'}
         />
       </FormGroup>
-      <AppBar position="static" sx={{backgroundColor: '#fff', color: '#000', padding: '.5rem'}}>
-        <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
+      <AppBar position="static" sx={{ backgroundColor: '#fff', color: '#000', padding: '.5rem' }}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2, minHeight: '3rem'}}
+            sx={{ mr: 2, minHeight: '3rem' }}
           >
-            <img src={header_logo} alt="header_logo" style={{width: "10rem"}}/>
+            <img src={header_logo} alt="header_logo" style={{ width: "10rem" }} />
           </IconButton>
-          {auth && (
+          {auth && auth ? (
             <div>
               <IconButton
                 size="large"
@@ -85,6 +86,12 @@ export default function MenuAppBar() {
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
               </Menu>
+            </div>
+          ) : (
+            <div>
+              <Button variant="contained" sx={{ borderRadius: 5, padding: '.2rem 1rem', fontSize: '0.75rem' }}>
+                로그인
+              </Button>
             </div>
           )}
         </Toolbar>
