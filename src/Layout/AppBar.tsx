@@ -14,6 +14,7 @@ import Menu from '@mui/material/Menu';
 import header_logo from "../assets/img/header_logo.png";
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
+import TemporaryDrawer from './Drawer';
 
 export default function MenuAppBar() {
   const [auth, setAuth] = React.useState(false);
@@ -47,6 +48,7 @@ export default function MenuAppBar() {
       </FormGroup>
       <AppBar position="static" sx={{ backgroundColor: '#fff', color: '#000', padding: '.5rem' }}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <TemporaryDrawer />
           <IconButton
             size="large"
             edge="start"
@@ -56,44 +58,46 @@ export default function MenuAppBar() {
           >
             <img src={header_logo} alt="header_logo" style={{ width: "10rem" }} />
           </IconButton>
-          {auth && auth ? (
-            <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-              </Menu>
-            </div>
-          ) : (
-            <div>
-              <Button variant="contained" sx={{ borderRadius: 5, padding: '.2rem 1rem', fontSize: '0.75rem' }}>
-                로그인
-              </Button>
-            </div>
-          )}
+          <Box sx={{minWidth:'4.5rem', display:'flex', justifyContent:'end'}}>
+            {auth && auth ? (
+              <div>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                </Menu>
+              </div>
+            ) : (
+              <div>
+                <Button variant="contained" sx={{ borderRadius: 5, padding: '.2rem 1rem', fontSize: '0.75rem' }}>
+                  로그인
+                </Button>
+              </div>
+            )}
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>

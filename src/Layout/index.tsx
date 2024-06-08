@@ -1,8 +1,5 @@
 import React from "react";
 import * as S from "./styled";
-import Header from "./Header";
-import Footer from "./Footer";
-import { Content } from "antd/es/layout/layout";
 import { Box, CssBaseline } from "@mui/material";
 import LabelBottomNavigation from "./BottomNavigation";
 import ResponsiveAppBar from "./AppBar";
@@ -18,7 +15,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Box component="main" sx={{ flexGrow: 1 }}>
         {children}
       </Box>
-      <LabelBottomNavigation />
+      {/* <LabelBottomNavigation /> */}
     </S._Layout>
   );
 };
