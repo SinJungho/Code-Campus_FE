@@ -1,3 +1,5 @@
+import { Paper } from "@mui/material";
+import Carousel from "react-material-ui-carousel";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
@@ -5,16 +7,17 @@ export const Wrapper = styled.div`
     /* min-height: 1600px; */
 `;
 
-export const SlideShowDiv = styled.div`
-    h3{
-        height: 160px;
-        color: #fff;
-        line-height: 160px;
-        text-align: center;
-        background-color: #333;
-    }
+export const CarouselDiv = styled(Carousel)`
+    padding: 1rem;
 `;
 
-export const SearchDiv = styled.div`
-    
+export const BannerPaper = styled(Paper)`
+    p{
+        font-weight: 800;
+        font-size: 1.5rem;
+        letter-spacing: 0rem;
+    }
+    p:nth-of-type(2){
+        color: #1564ff;
+    }
 `;
