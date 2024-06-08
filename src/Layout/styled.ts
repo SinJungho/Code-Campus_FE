@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import { Layout } from "antd";
-import { Content, Footer, Header } from "antd/es/layout/layout";
 import { Box } from "@mui/material";
 
 export const _Layout = styled(Box)`
@@ -8,38 +6,6 @@ export const _Layout = styled(Box)`
   /* flex-direction: column; */
   align-items: center;
   min-height: 100vh;
-`;
-
-export const _Header = styled(Header)`
-  width: 60%;
-  display: flex;
-  justify-content: baseline;
-  align-items: center;
-  padding: 0;
-  background-color: transparent;
-  img {
-  }
-  .ant-menu {
-    li {
-      user-select: none;
-    }
-  }
-`;
-
-export const _Content = styled(Content)`
-  width: 60%;
-`;
-
-export const _Footer = styled(Footer)`
-  width: 100%;
-  height: 200px;
-  bottom: 0;
-  border-top: 1px solid #ccc;
-  padding: 0;
-  background: #303740;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 export const sns_area = styled.div`
