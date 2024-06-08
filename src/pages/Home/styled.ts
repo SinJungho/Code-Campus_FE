@@ -20,6 +20,9 @@ export const BannerPaper = styled(Paper)`
     p:nth-of-type(2){
         color: #1564ff;
     }
+    b{
+        line-height: 1.5rem;
+    }
 `;
 
 export const SearchDiv = styled(Box)`
@@ -27,6 +30,7 @@ export const SearchDiv = styled(Box)`
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 1600px;
     h1{
         font-size: 1.2rem;
     }
