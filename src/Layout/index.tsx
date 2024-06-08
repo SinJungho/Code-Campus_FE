@@ -9,10 +9,10 @@ const Layout: React.FC = () => {
   return (
     <S._Layout>
       <ResponsiveAppBar />
+      <Outlet />
       <Box component="main" sx={{ flexGrow: 1 }}>
-        <Outlet />
-      </Box>
-      {/* <LabelBottomNavigation /> */}
+      </Box> 
+      <LabelBottomNavigation />
     </S._Layout>
   );
 };

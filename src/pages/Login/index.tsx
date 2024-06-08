@@ -1,7 +1,6 @@
 import React from 'react';
 // import * as S from "./styled";
 import { Link } from "react-router-dom";
-import { ArrowRight } from '@mui/icons-material';
 import { Box } from '@mui/material';
 
 const Login: React.FC = () => {
