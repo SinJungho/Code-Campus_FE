@@ -91,11 +91,11 @@ export default function MenuAppBar() {
                 </Menu>
               </div>
             ) : (
-              <div>
+              <Link to="/login">
                 <Button variant="contained" sx={{ borderRadius: 5, padding: '.2rem 1rem', fontSize: '0.75rem' }}>
                   로그인
                 </Button>
-              </div>
+              </Link>
             )}
           </Box>
         </Toolbar>

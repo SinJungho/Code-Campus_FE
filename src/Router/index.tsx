@@ -5,11 +5,14 @@ import * as P from '../pages';
 
 const Router = () => {
     return (
-        <Layout>
+        <div>
             <Routes>
-                <Route path='*' element={<P.Home />} />
+                <Route element={<Layout />}>
+                    <Route path='*' element={<P.Home />} />
+                </Route>
+                <Route path='/login' element={<P.Login />} />
             </Routes>
-        </Layout>
+        </div>
     );
 };
 
