@@ -9,6 +9,7 @@ import insta_icon from "../assets/img/jt-instagram.png";
 
 const Footer: React.FC = () => {
   return (
+    // footer
     <S._Footer>
       <S.footer_bottom>
         <div className="footer_bottom_left footer_info">
