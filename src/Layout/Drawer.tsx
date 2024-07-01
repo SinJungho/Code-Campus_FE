@@ -32,8 +32,8 @@ export default function TemporaryDrawer() {
         <Box sx={{ width: 300 }} role="presentation" onClick={toggleDrawer(false)}>
             <List>
                 {MenuList.map((value, index) => (
-                    <Link to={value.url}>
-                        <ListItem key={index} disablePadding>
+                    <Link to={value.url} key={index} >
+                        <ListItem disablePadding>
                             <ListItemButton sx={{
                                 padding:'1rem',
                                 color:'#333'

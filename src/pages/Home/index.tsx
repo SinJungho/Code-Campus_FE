@@ -3,6 +3,7 @@ import * as S from "./styled";
 import { Link } from "react-router-dom";
 import { ArrowRight, Search } from '@mui/icons-material';
 import { IconButton, InputBase, Paper } from '@mui/material';
+import students from '../../mock-data/students';
 
 const list: number[] = [
   1, 2, 3
@@ -22,7 +23,7 @@ const Home: React.FC = () => {
           <p>선배와 후배가 함께 성장하는</p>
           <p>코드 캠퍼스</p>
           <Link to='/about'>
-            <Paper sx={{ boxShadow: 'none', backgroundColor: 'transparent', display: 'flex', alignContent: 'center', pt:'2rem' }}>
+            <Paper sx={{ boxShadow: 'none', backgroundColor: 'transparent', display: 'flex', alignContent: 'center', pt: '2rem' }}>
               <ArrowRight />
               <b>서비스 소개</b>
             </Paper>
@@ -56,7 +57,14 @@ const Home: React.FC = () => {
           </IconButton>
         </Paper>
       </S.SearchDiv>
-
+      <S.CardDiv>
+        <h1>코캠 인기 선배님</h1>
+        {/* {students.map((student, index) => (
+          <S.CardWrap>
+            
+          </S.CardWrap>
+        ))} */}
+      </S.CardDiv>
     </S.Wrapper>
   );
 };

@@ -30,8 +30,18 @@ export const SearchDiv = styled(Box)`
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 1600px;
     h1{
         font-size: 1.2rem;
     }
+`;
+
+export const CardDiv = styled(Box)`
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+`;
+
+export const CardWrap = styled(Paper)`
+    width: 90%;
 `;
