@@ -10,8 +10,6 @@ const Layout: React.FC = () => {
     <S._Layout>
       <ResponsiveAppBar />
       <Outlet />
-      <Box component="main" sx={{ flexGrow: 1 }}>
-      </Box> 
       <LabelBottomNavigation />
     </S._Layout>
   );

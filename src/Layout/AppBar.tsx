@@ -46,7 +46,7 @@ export default function MenuAppBar() {
           label={auth ? 'Logout' : 'Login'}
         />
       </FormGroup>
-      <AppBar position="static" sx={{ backgroundColor: '#fff', color: '#000', padding: '.5rem', boxShadow:'none' }}>
+      <AppBar position="fixed" sx={{ backgroundColor: '#fff', color: '#000', padding: '.5rem', boxShadow:'none' }}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <TemporaryDrawer />
           <IconButton

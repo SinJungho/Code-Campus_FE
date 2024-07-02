@@ -6,6 +6,7 @@ export const _Layout = styled(Box)`
   /* flex-direction: column; */
   align-items: center;
   min-height: 100vh;
+  margin-top: 4rem;
 `;
 
 export const sns_area = styled.div`
