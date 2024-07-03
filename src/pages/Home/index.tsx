@@ -2,7 +2,7 @@ import React from 'react';
 import * as S from "./styled";
 import { Link } from "react-router-dom";
 import { ArrowRight, Search } from '@mui/icons-material';
-import { IconButton, InputBase, Paper } from '@mui/material';
+import { Avatar, IconButton, InputBase, Paper } from '@mui/material';
 import students from '../../mock-data/students';
 
 const list: number[] = [
@@ -59,11 +59,19 @@ const Home: React.FC = () => {
       </S.SearchDiv>
       <S.CardDiv>
         <h1>코캠 인기 선배님</h1>
-        {/* {students.map((student, index) => (
-          <S.CardWrap>
-            
+        {students.map((student, index) => (
+          <S.CardWrap key={index} sx={{
+            mt: '2rem', padding:'1.5rem', bgcolor: '#f0f0f0', borderRadius: '.8rem'
+          }}>
+            <Avatar sx={{
+              width:'4rem', height:'4rem', fontSize:'1rem', color:'#999', bgcolor: '#fff',
+              display: 'flex', alignContent:'center', flexWrap: 'wrap', justifyContent:'center'
+            }}>{student.name.charAt(0)}</Avatar>
+            <S.CardTextDiv>
+              
+            </S.CardTextDiv>
           </S.CardWrap>
-        ))} */}
+        ))}
       </S.CardDiv>
     </S.Wrapper>
   );

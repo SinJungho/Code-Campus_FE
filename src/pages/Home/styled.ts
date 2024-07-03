@@ -39,9 +39,20 @@ export const CardDiv = styled(Box)`
     padding: 1rem;
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: center;
+    h1{
+        width: 90%;
+        font-size: 1rem;
+    }
 `;
 
 export const CardWrap = styled(Paper)`
     width: 90%;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+`;
+
+export const CardTextDiv = styled.div`
+
 `;
