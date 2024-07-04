@@ -1,6 +1,5 @@
 import React from "react";
 import * as S from "./styled";
-import { Box, CssBaseline } from "@mui/material";
 import LabelBottomNavigation from "./BottomNavigation";
 import ResponsiveAppBar from "./AppBar";
 import { Outlet } from "react-router-dom";

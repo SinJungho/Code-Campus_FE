@@ -46,7 +46,7 @@ export default function MenuAppBar() {
           label={auth ? 'Logout' : 'Login'}
         />
       </FormGroup>
-      <AppBar position="fixed" sx={{ backgroundColor: '#fff', color: '#000', padding: '.5rem', boxShadow:'none' }}>
+      <AppBar position="fixed" sx={{ backgroundColor: '#fff', color: '#000', padding: '.5rem', boxShadow: 'none' }}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <TemporaryDrawer />
           <IconButton
@@ -56,9 +56,11 @@ export default function MenuAppBar() {
             aria-label="menu"
             sx={{ mr: 2, minHeight: '3rem' }}
           >
-            <img src={header_logo} alt="header_logo" style={{ width: "10rem" }} />
+            <Link to='/'>
+              <img src={header_logo} alt="header_logo" style={{ width: "10rem" }} />
+            </Link>
           </IconButton>
-          <Box sx={{minWidth:'4.5rem', display:'flex', justifyContent:'end'}}>
+          <Box sx={{ minWidth: '4.5rem', display: 'flex', justifyContent: 'end' }}>
             {auth && auth ? (
               <div>
                 <IconButton
