@@ -54,5 +54,16 @@ export const CardWrap = styled(Paper)`
 `;
 
 export const CardTextDiv = styled.div`
-
+    height: 4rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    span{
+        font-size: .9rem;
+        color: #aaa;
+    }
+    p{
+        font-size: .9rem;
+    }
 `;
