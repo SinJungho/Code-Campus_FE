@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const webpack = require("webpack");
 
 module.exports = {
   mode: "development",
@@ -10,6 +11,7 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     publicPath: "/", // 추가된 부분
   },
+  devtool: "inline-source-map", // Source Map 설정 추가
   devServer: {
     static: {
       directory: path.join(__dirname, "dist"),
@@ -17,6 +19,7 @@ module.exports = {
     port: 3000,
     open: true,
     historyApiFallback: true, // 추가된 부분
+    hot: true, // HMR 활성화
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
@@ -29,6 +32,10 @@ module.exports = {
         use: "ts-loader",
       },
       {
+        test: /\.css$/i, // CSS 로더 추가
+        use: ["style-loader", "css-loader"],
+      },
+      {
         test: /\.(?:gif|png|jpg|jpeg)$/i,
         type: "asset/resource",
       },
@@ -39,6 +46,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
+    new webpack.HotModuleReplacementPlugin(), // HMR 플러그인 추가
   ],
   stats: {
     children: true,

@@ -1,19 +1,15 @@
 import React from "react";
 import * as S from "./styled";
-import Header from "./Header";
-import Footer from "./Footer";
-import { Content } from "antd/es/layout/layout";
+import LabelBottomNavigation from "./BottomNavigation";
+import ResponsiveAppBar from "./AppBar";
+import { Outlet } from "react-router-dom";
 
-interface LayoutProps {
-  children: React.ReactNode; // Layout 컴포넌트의 자식으로 받을 수 있는 컴포넌트 타입 정의
-}
-
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC = () => {
   return (
     <S._Layout>
-      <Header />
-      <S._Content>{children}</S._Content>
-      <Footer />
+      <ResponsiveAppBar />
+      <Outlet />
+      <LabelBottomNavigation />
     </S._Layout>
   );
 };
