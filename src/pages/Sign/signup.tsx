@@ -1,9 +1,9 @@
 import React from 'react';
-// import * as S from "./styled";
+import * as S from "./styled";
 import { Link } from "react-router-dom";
 import { Box } from '@mui/material';
 
-const Login: React.FC = () => {
+const SignUp: React.FC = () => {
   return (
     <Box>
 
@@ -11,4 +11,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default SignUp;
