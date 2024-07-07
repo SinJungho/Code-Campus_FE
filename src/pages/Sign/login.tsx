@@ -12,7 +12,6 @@ import {
 // Icons
 import PersonIcon from "@mui/icons-material/Person";
 import LockIcon from "@mui/icons-material/Lock";
-import BusinessIcon from "@mui/icons-material/Business";
 import CloseIcon from "@mui/icons-material/Close";
 import Logo from "../../assets/img/SNSLogo";
 import TabContext from "@mui/lab/TabContext";
@@ -48,12 +47,12 @@ const Login: React.FC = () => {
           <TabList onChange={handleChange} variant="fullWidth">
             <Tab
               sx={{ width: "100%", fontSize: "0.5rem" }}
-              label="개인 회원"
+              label="멘티 회원"
               value="1"
             />
             <Tab
               sx={{ width: "100%", fontSize: "0.5rem" }}
-              label="기업 회원"
+              label="멘토 회원"
               value="2"
             />
           </TabList>
@@ -122,7 +121,7 @@ function IndividualMember() {
       {/* SNS 회원 가입 & 로그인 */}
       <SNSLogInButton />
       {/* 개인 회원 가입 */}
-      <S.TextSignUp href="#">개인 회원가입</S.TextSignUp>
+      <S.TextSignUp to="/signup">멘티 회원가입</S.TextSignUp>
     </S.Wrapper>
   );
 }
@@ -146,20 +145,20 @@ function CompanyMember() {
           onChange={handleChange}
           inputProps={{ "aria-label": "controlled" }}
         />
-        <S.SwitchText>서치펌 회원</S.SwitchText>
+        <S.SwitchText>졸업생 회원</S.SwitchText>
       </Box>
       {/* 아이디 입력창 */}
       <S.TextInput
         id="outlined-basic"
         label=""
         placeholder={
-          checked === true ? "서치펌 회원 아이디" : "기업회원 아이디"
+          checked === true ? "졸업생 회원 아이디" : "멘토 회원 아이디"
         }
         variant="outlined"
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <BusinessIcon sx={{ fontSize: 30 }} />
+              <PersonIcon sx={{ fontSize: 30 }} />
             </InputAdornment>
           ),
         }}
@@ -209,9 +208,9 @@ function CompanyMember() {
           marginTop: "36px",
         }}
       >
-        <S.CompanySignUpLink href="#">기업 회원가입</S.CompanySignUpLink>
+        <S.CompanySignUpLink to="/signup">멘토 회원가입</S.CompanySignUpLink>
         <S.Line />
-        <S.CompanySignUpLink href="#">서치펌 회원가입</S.CompanySignUpLink>
+        <S.CompanySignUpLink to="/signup">졸업생 회원가입</S.CompanySignUpLink>
       </Box>
     </S.Wrapper>
   );

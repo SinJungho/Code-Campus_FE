@@ -147,7 +147,7 @@ export const AppleButton = styled.button`
 `;
 
 // 개인 회원 가입
-export const TextSignUp = styled.a`
+export const TextSignUp = styled(Link)`
   text-align: center;
   font-size: 0.5rem;
 `;
@@ -161,6 +161,6 @@ export const SwitchText = styled.p`
   font-size: 0.5rem;
 `;
 
-export const CompanySignUpLink = styled.a`
+export const CompanySignUpLink = styled(Link)`
   font-size: 0.5rem;
 `;
