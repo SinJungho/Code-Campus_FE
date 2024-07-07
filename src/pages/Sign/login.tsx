@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import * as S from "./styled";
 import { Link } from "react-router-dom";
-import {
-  Box,
-  Button,
-  InputAdornment,
-  TextField,
-  Switch,
-  Tab,
-} from "@mui/material";
+import { Box, Button, InputAdornment, Switch, Tab } from "@mui/material";
 // Icons
 import PersonIcon from "@mui/icons-material/Person";
 import LockIcon from "@mui/icons-material/Lock";
@@ -38,9 +31,9 @@ const Login: React.FC = () => {
         }}
       >
         <S.LogInTitle>로그인</S.LogInTitle>
-        <a href="#">
+        <Link to="/index">
           <CloseIcon sx={{ fontSize: "28px" }} />
-        </a>
+        </Link>
       </Box>
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -58,18 +51,18 @@ const Login: React.FC = () => {
           </TabList>
         </Box>
         <TabPanel value="1">
-          <IndividualMember />
+          <MenteeLogin />
         </TabPanel>
         <TabPanel value="2">
-          <CompanyMember />
+          <MentorLogin />
         </TabPanel>
       </TabContext>
     </S.Wrapper>
   );
 };
 
-// 개인 회원 로그인 폼
-function IndividualMember() {
+// 멘티 회원 로그인 폼
+function MenteeLogin() {
   return (
     <S.Wrapper>
       {/* 아이디 입력창 */}
@@ -126,7 +119,7 @@ function IndividualMember() {
   );
 }
 
-function CompanyMember() {
+function MentorLogin() {
   const [checked, setChecked] = useState(false);
   const handleChange = () => {
     setChecked((prev) => !prev);
@@ -199,7 +192,7 @@ function CompanyMember() {
       >
         <FindIdOrPw />
       </Box>
-      {/* 개인 회원 가입 */}
+      {/* 멘티 회원 가입 */}
       <Box
         sx={{
           display: "flex",
@@ -208,9 +201,9 @@ function CompanyMember() {
           marginTop: "36px",
         }}
       >
-        <S.CompanySignUpLink to="/signup">멘토 회원가입</S.CompanySignUpLink>
+        <S.MentorSignUpLink to="/signup">멘토 회원가입</S.MentorSignUpLink>
         <S.Line />
-        <S.CompanySignUpLink to="/signup">졸업생 회원가입</S.CompanySignUpLink>
+        <S.MentorSignUpLink to="/signup">졸업생 회원가입</S.MentorSignUpLink>
       </Box>
     </S.Wrapper>
   );

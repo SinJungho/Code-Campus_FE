@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Box, TextField, Button } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
+import { CheckBox } from "@mui/icons-material";
 
 export const Wrapper = styled(Box)`
   display: flex;
@@ -153,14 +154,44 @@ export const TextSignUp = styled(Link)`
 `;
 
 /**
- * 기업 회원
+ * 졸업생, 멘토 회원
  */
 
-// 서치팜 회원 스위치
+// 졸업생 회원 스위치
 export const SwitchText = styled.p`
   font-size: 0.5rem;
 `;
 
-export const CompanySignUpLink = styled(Link)`
+export const MentorSignUpLink = styled(Link)`
   font-size: 0.5rem;
+`;
+
+/*
+ * * 회원 가입
+ */
+
+export const SignUpSubTitle = styled.span`
+  font-size: 0.5rem;
+  opacity: 0.5;
+`;
+
+export const SignUpTitle = styled.p`
+  font-size: 1rem;
+  font-weight: bold;
+`;
+
+export const ChooseMemberTypeTitle = styled.p`
+  font-size: 1rem;
+  font-weight: bold;
+`;
+
+export const ChooseMemberTypeContext = styled.span`
+  font-size: 0.5rem;
+`;
+
+export const ChooseMemberTypeCheckbox = styled(CheckBox)`
+  background-color: aqua;
+  /* margin: 0 auto; */
+  padding: 1.3rem;
+  border-radius: 14px;
 `;
