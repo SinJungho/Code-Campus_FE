@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Box, TextField, Button } from "@mui/material";
+import { Box, TextField, StepLabel, Stepper } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import { CheckBox } from "@mui/icons-material";
 
@@ -202,4 +202,27 @@ export const ChooseMemberTypeTitle = styled.p`
 
 export const ChooseMemberTypeContext = styled.span`
   font-size: 0.5rem;
+`;
+
+/***
+ * Stepper
+ */
+
+export const StepperLabel = styled(StepLabel)`
+  && .MuiStepIcon-text {
+    font-size: 0.35rem;
+  }
+
+  && .MuiStepLabel-label {
+    font-size: 0.5rem;
+  }
+`;
+
+export const SignStepper = styled(Stepper)`
+  & .MuiStepConnector-line {
+    display: block;
+    border-color: #bdbdbd;
+    border-top-style: dotted;
+    border-top-width: 1.5px;
+  }
 `;

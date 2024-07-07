@@ -81,7 +81,7 @@ const SignUp: React.FC = () => {
       </Box>
       {/* stepper */}
       <Box sx={{ padding: "0px 24px" }}>
-        <Stepper activeStep={activeStep}>
+        <S.SignStepper activeStep={activeStep} sx={{ margin: "1.5rem 0" }}>
           {steps.map((label, index) => {
             const stepProps: { completed?: boolean } = {};
             const labelProps: {
@@ -93,11 +93,11 @@ const SignUp: React.FC = () => {
             }
             return (
               <Step key={label} {...stepProps}>
-                <StepLabel {...labelProps}>{label}</StepLabel>
+                <S.StepperLabel {...labelProps}>{label}</S.StepperLabel>
               </Step>
             );
           })}
-        </Stepper>
+        </S.SignStepper>
         {activeStep === steps.length ? (
           <React.Fragment>
             <Typography sx={{ mt: 2, mb: 1 }}>
@@ -129,7 +129,12 @@ const SignUp: React.FC = () => {
                 color="inherit"
                 disabled={activeStep === 0}
                 onClick={handleBack}
-                sx={{ fontSize: "0.5rem", fontWeight: "bold" }}
+                sx={{
+                  fontSize: "0.5rem",
+                  fontWeight: "bold",
+                  padding: "0.5rem 0",
+                  borderRadius: "14px",
+                }}
               >
                 이전
               </Button>
@@ -145,7 +150,13 @@ const SignUp: React.FC = () => {
                   variant="contained"
                   color="inherit"
                   onClick={handleSkip}
-                  sx={{ mr: 1 }}
+                  sx={{
+                    mr: 1,
+                    fontSize: "0.5rem",
+                    fontWeight: "bold",
+                    padding: "0.5rem 0px",
+                    borderRadius: "14px",
+                  }}
                 >
                   건너뛰기
                 </Button>
@@ -156,6 +167,8 @@ const SignUp: React.FC = () => {
                 sx={{
                   fontSize: "0.5rem",
                   fontWeight: "bold",
+                  padding: "0.5rem 0px",
+                  borderRadius: "14px",
                 }}
               >
                 {activeStep === steps.length - 1 ? "완료" : "다음으로"}
@@ -185,23 +198,26 @@ function Checkbox({ type }: CheckboxTypes) {
   return (
     <S.SignUpLabel>
       <S.CheckInput type="checkbox" />
-      <S.CheckSubText>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <S.ChooseMemberTypeTitle>
-            {type === "mentor" ? "선배" : "후배"}
-          </S.ChooseMemberTypeTitle>
-          <S.ChooseMemberTypeContext>
-            {type === "mentor"
-              ? "코딩을 가르쳐 줄거에요! (대학생만 가능합니다!)"
-              : "코딩을 배울거에요!"}
-          </S.ChooseMemberTypeContext>
-        </Box>
-      </S.CheckSubText>
+      {/* <S.CheckSubText> */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "14px",
+          fontSize: "0.5rem",
+          marginLeft: "0.7rem",
+        }}
+      >
+        <S.ChooseMemberTypeTitle>
+          {type === "mentor" ? "선배" : "후배"}
+        </S.ChooseMemberTypeTitle>
+        <S.ChooseMemberTypeContext>
+          {type === "mentor"
+            ? "코딩을 가르쳐 줄거에요! (대학생만 가능합니다!)"
+            : "코딩을 배울거에요!"}
+        </S.ChooseMemberTypeContext>
+      </Box>
+      {/* </S.CheckSubText> */}
     </S.SignUpLabel>
   );
 }
