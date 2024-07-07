@@ -1,12 +1,29 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Box, Checkbox } from "@mui/material";
+import { Box, TextField, Button } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 
 export const Wrapper = styled(Box)`
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+`;
+
+export const LogInTitle = styled.h4`
+  font-size: 0.55rem;
+`;
+
+// 아이디, 비밀번호 입력창
+export const TextInput = styled(TextField)`
+  & .MuiOutlinedInput-root {
+    border-radius: 14px;
+  }
+
+  & .MuiOutlinedInput-input {
+    padding: 0.5rem 0rem;
+    font-size: 0.5rem;
+    font-weight: bold;
+  }
 `;
 
 // checkbox
@@ -22,18 +39,17 @@ export const CheckInput = styled.input`
   height: 1rem;
   border: 1.5px solid gainsboro;
   border-radius: 50%;
-  background-color: gray;
+  background-color: #a6a6a6;
   background-image: url("data:image/svg+xml,${checkIconSvg}");
   background-repeat: no-repeat;
   background-position: 50%;
-  opacity: 0.5;
 
   &:checked {
     border-color: transparent;
     background-image: url("data:image/svg+xml,${checkIconSvg}");
     background-position: 50%;
     background-repeat: no-repeat;
-    background-color: skyblue;
+    background-color: #156aff;
   }
 `;
 
@@ -43,22 +59,108 @@ export const CheckLabel = styled.label`
   user-select: none;
 `;
 
+export const CheckSubText = styled.p`
+  font-size: 0.5rem;
+  margin-left: 0.2rem;
+`;
+
 export const CheckText = styled.p`
   margin-left: 1.5rem;
 `;
 
 export const FindId = styled.a`
-  font-size: 1rem;
+  font-size: 0.5rem;
 `;
 
 export const Line = styled.span`
   display: inline-block;
-  background-color: black;
-  margin: 0.5rem;
-  height: 100%;
-  width: 2px;
+  background-color: gray;
+  margin: 0rem 0.3rem;
+  height: 0.6rem;
+  width: 1px;
+  opacity: 0.2;
 `;
 
 export const FindPw = styled.a`
-  font-size: 1rem;
+  font-size: 0.5rem;
+`;
+
+export const NaverButton = styled.button`
+  width: 40px;
+  height: 40px;
+  background: #11d166;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+`;
+
+export const KakaoButton = styled.button`
+  width: 40px;
+  height: 40px;
+  background: #ffe812;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const XButton = styled.button`
+  width: 40px;
+  height: 40px;
+  background: #222;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const GoogleButton = styled.button`
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 50%;
+  border: 0.5px solid #dadce0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const AppleButton = styled.button`
+  width: 40px;
+  height: 40px;
+  background: #222;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+// 개인 회원 가입
+export const TextSignUp = styled.a`
+  text-align: center;
+  font-size: 0.5rem;
+`;
+
+/**
+ * 기업 회원
+ */
+
+// 서치팜 회원 스위치
+export const SwitchText = styled.p`
+  font-size: 0.5rem;
+`;
+
+export const CompanySignUpLink = styled.a`
+  font-size: 0.5rem;
 `;
