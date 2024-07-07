@@ -80,7 +80,7 @@ const SignUp: React.FC = () => {
         </Link>
       </Box>
       {/* stepper */}
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ padding: "0px 24px" }}>
         <Stepper activeStep={activeStep}>
           {steps.map((label, index) => {
             const stepProps: { completed?: boolean } = {};
@@ -112,21 +112,34 @@ const SignUp: React.FC = () => {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>
+            <Box sx={{ mt: 2, mb: 1 }}>
               {/* 회원 유형 선택 */}
               {activeStep + 1 === 1 && <ChooseMemberType />}
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                pt: 2,
+                gap: "10px",
+              }}
+            >
               <Button
                 variant="contained"
                 color="inherit"
                 disabled={activeStep === 0}
                 onClick={handleBack}
-                sx={{ mr: 1 }}
+                sx={{ fontSize: "0.5rem", fontWeight: "bold" }}
               >
                 이전
               </Button>
-              <Box sx={{ flex: "1 1 auto" }} />
+              <Box
+                sx={{
+                  flex: "1 1 auto",
+                  fontSize: "0.5rem",
+                  fontWeight: "bold",
+                }}
+              />
               {isStepOptional(activeStep) && (
                 <Button
                   variant="contained"
@@ -134,11 +147,18 @@ const SignUp: React.FC = () => {
                   onClick={handleSkip}
                   sx={{ mr: 1 }}
                 >
-                  Skip
+                  건너뛰기
                 </Button>
               )}
-              <Button variant="contained" onClick={handleNext}>
-                {activeStep === steps.length - 1 ? "완료" : "다음"}
+              <Button
+                variant="contained"
+                onClick={handleNext}
+                sx={{
+                  fontSize: "0.5rem",
+                  fontWeight: "bold",
+                }}
+              >
+                {activeStep === steps.length - 1 ? "완료" : "다음으로"}
               </Button>
             </Box>
           </React.Fragment>
@@ -163,10 +183,15 @@ function ChooseMemberType() {
 
 function Checkbox({ type }: CheckboxTypes) {
   return (
-    <S.CheckLabel>
+    <S.SignUpLabel>
       <S.CheckInput type="checkbox" />
       <S.CheckSubText>
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <S.ChooseMemberTypeTitle>
             {type === "mentor" ? "선배" : "후배"}
           </S.ChooseMemberTypeTitle>
@@ -177,7 +202,7 @@ function Checkbox({ type }: CheckboxTypes) {
           </S.ChooseMemberTypeContext>
         </Box>
       </S.CheckSubText>
-    </S.CheckLabel>
+    </S.SignUpLabel>
   );
 }
 

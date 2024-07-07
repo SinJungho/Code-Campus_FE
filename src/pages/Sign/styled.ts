@@ -170,14 +170,29 @@ export const MentorSignUpLink = styled(Link)`
  * * 회원 가입
  */
 
+export const SignUpLabel = styled.label`
+      display: flex;
+    align-items: center;
+    user-select: none;
+    background-color: #f9f9f9;
+    padding: 1.3rem 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 14px;
+}
+`;
+
 export const SignUpSubTitle = styled.span`
+  display: block;
   font-size: 0.5rem;
   opacity: 0.5;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
 `;
 
 export const SignUpTitle = styled.p`
   font-size: 1rem;
   font-weight: bold;
+  margin-bottom: 1rem;
 `;
 
 export const ChooseMemberTypeTitle = styled.p`
@@ -187,11 +202,4 @@ export const ChooseMemberTypeTitle = styled.p`
 
 export const ChooseMemberTypeContext = styled.span`
   font-size: 0.5rem;
-`;
-
-export const ChooseMemberTypeCheckbox = styled(CheckBox)`
-  background-color: aqua;
-  /* margin: 0 auto; */
-  padding: 1.3rem;
-  border-radius: 14px;
 `;
