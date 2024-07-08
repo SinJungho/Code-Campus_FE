@@ -171,14 +171,17 @@ export const MentorSignUpLink = styled(Link)`
  */
 
 export const SignUpLabel = styled.label`
-      display: flex;
-    align-items: center;
-    user-select: none;
-    background-color: #f9f9f9;
-    padding: 1.3rem 0.5rem;
-    margin-bottom: 1rem;
-    border-radius: 14px;
-}
+  display: flex;
+  align-items: center;
+  user-select: none;
+  background-color: #f9f9f9;
+  padding: 1.3rem 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 14px;
+
+  &.active {
+    border: 2px solid #1565c0;
+  }
 `;
 
 export const SignUpSubTitle = styled.span`

@@ -195,9 +195,15 @@ function ChooseMemberType() {
 }
 
 function Checkbox({ type }: CheckboxTypes) {
+  const [border, setBorder] = React.useState<boolean>(false);
+
+  const handleClick = () => {
+    setBorder(!border);
+  };
+
   return (
-    <S.SignUpLabel>
-      <S.CheckInput type="checkbox" />
+    <S.SignUpLabel onClick={handleClick} className={border ? "active" : ""}>
+      <S.CheckInput type="checkbox" onClick={(e) => e.stopPropagation()} />
       {/* <S.CheckSubText> */}
       <Box
         sx={{

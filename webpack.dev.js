@@ -16,7 +16,7 @@ module.exports = {
     static: {
       directory: path.join(__dirname, "dist"),
     },
-    port: 3001,
+    port: 3011,
     open: true,
     historyApiFallback: true, // 추가된 부분
     hot: true, // HMR 활성화
