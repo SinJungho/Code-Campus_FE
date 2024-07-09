@@ -14,7 +14,8 @@ import {
 import WestIcon from "@mui/icons-material/West";
 
 interface CheckboxTypes {
-  type: string;
+  type: "mentor" | "mentee";
+  id: string;
 }
 const steps = ["회원 유형 선택", "개인 정보 입력", "선배 등록", "완료"];
 const SignUp: React.FC = () => {
@@ -187,23 +188,34 @@ function ChooseMemberType() {
       <S.SignUpSubTitle>회원가입</S.SignUpSubTitle>
       <S.SignUpTitle>회원 유형 선택</S.SignUpTitle>
       <Box>
-        <Checkbox type="mentor" />
-        <Checkbox type="mentee" />
+        <Checkbox type="mentor" id="mentor" />
+        <Checkbox type="mentee" id="mentee" />
       </Box>
     </Box>
   );
 }
 
-function Checkbox({ type }: CheckboxTypes) {
-  const [border, setBorder] = React.useState<boolean>(false);
+function Checkbox({ type, id }: CheckboxTypes) {
+  const [activeCheck, setActiveCheck] = React.useState<string | null>(null);
 
-  const handleClick = () => {
-    setBorder(!border);
+  const handleClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const isChecked = event.target.checked;
+
+    if (isChecked) {
+      setActiveCheck(id);
+    } else {
+      setActiveCheck(null);
+    }
   };
 
   return (
-    <S.SignUpLabel onClick={handleClick} className={border ? "active" : ""}>
-      <S.CheckInput type="checkbox" onClick={(e) => e.stopPropagation()} />
+    <S.SignUpLabel className={activeCheck === id ? "active" : ""}>
+      <S.CheckInput
+        type="checkbox"
+        onChange={handleClick}
+        name="member"
+        checked={activeCheck === id}
+      />
       {/* <S.CheckSubText> */}
       <Box
         sx={{
