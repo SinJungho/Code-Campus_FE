@@ -33,6 +33,33 @@ export default function LabelBottomNavigation() {
               <Home sx={{ fontSize: isMobile ? "2rem" : "2rem" }} />
             }
           />
+          <BottomNavigationAction
+            label="home"
+            onClick={()=>{
+              navigate('/home');
+            }}
+            icon={
+              <Home sx={{ fontSize: isMobile ? "2rem" : "2rem" }} />
+            }
+          />
+          <BottomNavigationAction
+            label="home"
+            onClick={()=>{
+              navigate('/home');
+            }}
+            icon={
+              <Home sx={{ fontSize: isMobile ? "2rem" : "2rem" }} />
+            }
+          />
+          <BottomNavigationAction
+            label="home"
+            onClick={()=>{
+              navigate('/home');
+            }}
+            icon={
+              <Home sx={{ fontSize: isMobile ? "2rem" : "2rem" }} />
+            }
+          />
         </BottomNavigation>
       </ThemeProvider>
     </Paper>
