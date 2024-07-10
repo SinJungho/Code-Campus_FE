@@ -14,6 +14,9 @@ import CheckIcon from "@mui/icons-material/Check";
 import { CheckBox } from "@mui/icons-material";
 
 export const Wrapper = styled(Box)`
+  .padding {
+    padding: 24px;
+  }
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -247,11 +250,14 @@ export const SignTextInput = styled(TextField)`
 
   & .MuiOutlinedInput-notchedOutline {
     legend {
-      font-size: 0.45rem; // label 폰트 크기보다 약간 작게 설정
+      font-size: 0.45rem;
+      width: fit-content;
 
       span {
-        width: 50px;
-        padding-right: 5px; // 오른쪽 여백 조절
+        width: fit-content;
+        padding: 0; // padding 초기화
+        margin: 0; // margin 초기화
+        display: inline-block;
       }
     }
   }

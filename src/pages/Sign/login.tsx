@@ -35,7 +35,7 @@ const Login: React.FC = () => {
           <CloseIcon sx={{ fontSize: "28px" }} />
         </Link>
       </Box>
-      <TabContext value={value}>
+      {/* <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList onChange={handleChange} variant="fullWidth">
             <Tab
@@ -56,7 +56,8 @@ const Login: React.FC = () => {
         <TabPanel value="2">
           <MentorLogin />
         </TabPanel>
-      </TabContext>
+      </TabContext> */}
+      <MenteeLogin />
     </S.Wrapper>
   );
 };
@@ -64,7 +65,7 @@ const Login: React.FC = () => {
 // 멘티 회원 로그인 폼
 function MenteeLogin() {
   return (
-    <S.Wrapper>
+    <S.Wrapper className="padding">
       {/* 아이디 입력창 */}
       <S.TextInput
         id="outlined-basic"
