@@ -409,8 +409,8 @@ function ResidentialArea() {
 // 자기 소개
 function Introduce() {
   return (
-    <Box>
-      <Box sx={{ display: "flex", marginBottom: "1rem" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+      <Box sx={{ display: "flex" }}>
         <S.Title>자기소개</S.Title>
         <S.Star>*</S.Star>
       </Box>
@@ -428,12 +428,16 @@ function Introduce() {
 // 오픈 채팅 링크
 function InsertOpenChatingLink() {
   return (
-    <Box>
-      <Box sx={{ display: "flex", marginRight: "10px" }}>
-        <S.Title>오픈채팅 링크</S.Title>
-        <S.Star>*</S.Star>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box
+          sx={{ display: "flex", alignItems: "center", marginRight: "10px" }}
+        >
+          <S.Title>오픈채팅 링크</S.Title>
+          <S.Star>*</S.Star>
+        </Box>
+        <S.Context>매칭 시 소통할 오픈채팅 링크</S.Context>
       </Box>
-      <S.Context>매칭 시 소통할 오픈채팅 링크</S.Context>
       <S.OpenChat
         id="openchat-text-input"
         placeholder="링크 주소 입력해주세요."
@@ -447,16 +451,23 @@ function InsertOpenChatingLink() {
 function PortfolioLink() {
   return (
     <Box>
-      <Box sx={{ display: "flex", marginBottom: "0.6rem" }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          marginBottom: "0.6rem",
+          gap: "10px",
+        }}
+      >
         <S.Title>포트폴리오 링크</S.Title>
         <S.Context>노션, 깃허브 등 유효한 링크 첨부</S.Context>
-        <S.OpenChat
-          id="openchat-text-input"
-          placeholder="링크 주소 입력해주세요."
-          variant="outlined"
-          fullWidth
-        />
       </Box>
+      <S.OpenChat
+        id="openchat-text-input"
+        placeholder="링크 주소 입력해주세요."
+        variant="outlined"
+        fullWidth
+      />
     </Box>
   );
 }

@@ -23,6 +23,7 @@ import {
 import WestIcon from "@mui/icons-material/West";
 import AddMentor from "./AddMentor";
 import ChooseMemberType from "./ChooseMemberType";
+import PrivacyInput from "./PrivacyInput";
 
 const steps = ["회원 유형 선택", "개인 정보 입력", "선배 등록", "완료"];
 
@@ -125,6 +126,7 @@ const SignUp: React.FC = () => {
               {/* 회원 유형 선택 */}
               {activeStep + 1 === 1 && <ChooseMemberType />}
               {/* 개인 정보 입력 */}
+              {activeStep + 1 === 2 && <PrivacyInput />}
               {/* 선배 등록 */}
               <Box>{activeStep + 1 === 3 && <AddMentor />}</Box>
             </Box>
