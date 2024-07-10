@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as S from "./styled";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -9,15 +9,23 @@ import {
   StepLabel,
   Button,
   Typography,
+  TextField,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Chip,
+  FormLabel,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
 } from "@mui/material";
 // Icons
 import WestIcon from "@mui/icons-material/West";
+import AddMentor from "./AddMentor";
+import ChooseMemberType from "./ChooseMemberType";
 
-interface CheckboxTypes {
-  type: "mentor" | "mentee";
-  id: string;
-}
 const steps = ["회원 유형 선택", "개인 정보 입력", "선배 등록", "완료"];
+
 const SignUp: React.FC = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
@@ -116,7 +124,11 @@ const SignUp: React.FC = () => {
             <Box sx={{ mt: 2, mb: 1 }}>
               {/* 회원 유형 선택 */}
               {activeStep + 1 === 1 && <ChooseMemberType />}
+              {/* 개인 정보 입력 */}
+              {/* 선배 등록 */}
+              <Box>{activeStep + 1 === 3 && <AddMentor />}</Box>
             </Box>
+
             <Box
               sx={{
                 display: "flex",
@@ -134,7 +146,7 @@ const SignUp: React.FC = () => {
                   fontSize: "0.5rem",
                   fontWeight: "bold",
                   padding: "0.5rem 0",
-                  borderRadius: "14px",
+                  borderRadius: "10px",
                 }}
               >
                 이전
@@ -156,7 +168,7 @@ const SignUp: React.FC = () => {
                     fontSize: "0.5rem",
                     fontWeight: "bold",
                     padding: "0.5rem 0px",
-                    borderRadius: "14px",
+                    borderRadius: "10px",
                   }}
                 >
                   건너뛰기
@@ -169,7 +181,7 @@ const SignUp: React.FC = () => {
                   fontSize: "0.5rem",
                   fontWeight: "bold",
                   padding: "0.5rem 0px",
-                  borderRadius: "14px",
+                  borderRadius: "10px",
                 }}
               >
                 {activeStep === steps.length - 1 ? "완료" : "다음으로"}
@@ -181,63 +193,5 @@ const SignUp: React.FC = () => {
     </S.Wrapper>
   );
 };
-
-function ChooseMemberType() {
-  return (
-    <Box>
-      <S.SignUpSubTitle>회원가입</S.SignUpSubTitle>
-      <S.SignUpTitle>회원 유형 선택</S.SignUpTitle>
-      <Box>
-        <Checkbox type="mentor" id="mentor" />
-        <Checkbox type="mentee" id="mentee" />
-      </Box>
-    </Box>
-  );
-}
-
-function Checkbox({ type, id }: CheckboxTypes) {
-  const [activeCheck, setActiveCheck] = React.useState<string | null>(null);
-
-  const handleClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const isChecked = event.target.checked;
-
-    if (isChecked) {
-      setActiveCheck(id);
-    } else {
-      setActiveCheck(null);
-    }
-  };
-
-  return (
-    <S.SignUpLabel className={activeCheck === id ? "active" : ""}>
-      <S.CheckInput
-        type="checkbox"
-        onChange={handleClick}
-        name="member"
-        checked={activeCheck === id}
-      />
-      {/* <S.CheckSubText> */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "14px",
-          fontSize: "0.5rem",
-          marginLeft: "0.7rem",
-        }}
-      >
-        <S.ChooseMemberTypeTitle>
-          {type === "mentor" ? "선배" : "후배"}
-        </S.ChooseMemberTypeTitle>
-        <S.ChooseMemberTypeContext>
-          {type === "mentor"
-            ? "코딩을 가르쳐 줄거에요! (대학생만 가능합니다!)"
-            : "코딩을 배울거에요!"}
-        </S.ChooseMemberTypeContext>
-      </Box>
-      {/* </S.CheckSubText> */}
-    </S.SignUpLabel>
-  );
-}
 
 export default SignUp;

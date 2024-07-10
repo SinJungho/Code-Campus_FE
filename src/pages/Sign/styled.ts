@@ -1,6 +1,15 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Box, TextField, StepLabel, Stepper } from "@mui/material";
+import {
+  Box,
+  TextField,
+  StepLabel,
+  Stepper,
+  MenuItem,
+  FormControl,
+  Chip,
+  FormControlLabel,
+} from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import { CheckBox } from "@mui/icons-material";
 
@@ -17,7 +26,7 @@ export const LogInTitle = styled.h4`
 // 아이디, 비밀번호 입력창
 export const TextInput = styled(TextField)`
   & .MuiOutlinedInput-root {
-    border-radius: 14px;
+    border-radius: 10px;
   }
 
   & .MuiOutlinedInput-input {
@@ -177,7 +186,7 @@ export const SignUpLabel = styled.label`
   background-color: #f9f9f9;
   padding: 1.3rem 0.5rem;
   margin-bottom: 1rem;
-  border-radius: 14px;
+  border-radius: 10px;
 
   &.active {
     border: 2px solid #1565c0;
@@ -207,6 +216,47 @@ export const ChooseMemberTypeContext = styled.span`
   font-size: 0.5rem;
 `;
 
+export const SignTextInput = styled(TextField)`
+  & .MuiOutlinedInput-root {
+    border-radius: 10px;
+
+    & fieldset {
+      top: 0px;
+    }
+  }
+
+  & .MuiOutlinedInput-input {
+    padding: 0.5rem 0.5rem;
+    font-size: 0.5rem;
+    font-weight: bold;
+  }
+
+  & .MuiInputLabel-root,
+  & .MuiFormLabel-asterisk {
+    font-size: 0.5rem;
+    font-weight: bold;
+
+    &.MuiInputLabel-shrink {
+      transform: translate(14px, -6px) scale(1);
+    }
+  }
+
+  & .MuiFormLabel-asterisk {
+    color: red;
+  }
+
+  & .MuiOutlinedInput-notchedOutline {
+    legend {
+      font-size: 0.45rem; // label 폰트 크기보다 약간 작게 설정
+
+      span {
+        width: 50px;
+        padding-right: 5px; // 오른쪽 여백 조절
+      }
+    }
+  }
+`;
+
 /***
  * Stepper
  */
@@ -227,5 +277,166 @@ export const SignStepper = styled(Stepper)`
     border-color: #bdbdbd;
     border-top-style: dotted;
     border-top-width: 1.5px;
+  }
+`;
+
+/***
+ *
+ * 성별
+ */
+export const DropDownMenu = styled(FormControl)`
+  & .MuiInputLabel-root {
+    font-size: 0.5rem;
+    font-weight: bold;
+
+    &.MuiInputLabel-shrink {
+      transform: translate(14px, -6px) scale(1);
+    }
+  }
+
+  & .MuiOutlinedInput-notchedOutline {
+    legend {
+      font-size: 0.45rem;
+
+      span {
+        padding-right: 5px;
+      }
+    }
+  }
+
+  & .MuiSelect-select {
+    font-size: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  & .MuiSelect-root {
+    border-radius: 12px;
+  }
+
+  & .MuiOutlinedInput-root {
+    & fieldset {
+      top: -2px;
+    }
+  }
+
+  & .MuiMenuItem-root {
+    font-size: 0.5rem;
+  }
+`;
+
+export const Title = styled.h4`
+  font-size: 0.7rem;
+  font-weight: bold;
+  margin-right: 3px;
+`;
+export const Context = styled.p`
+  font-size: 0.5rem;
+  opacity: 0.6;
+`;
+
+export const Star = styled.span`
+  font-size: 0.5rem;
+  font-weight: bold;
+  color: red;
+`;
+
+/***
+ *
+ * 날 소개하는 키워드 설정
+ */
+
+export const KeywordChip = styled(Chip)`
+  & .MuiChip-label {
+    font-size: 0.5rem;
+    font-weight: bold;
+  }
+`;
+
+/***
+ *
+ * 수업 방식
+ */
+export const TeachTypeRadio = styled(FormControlLabel)`
+  & .MuiTypography-root {
+    font-size: 0.5rem;
+    font-size: 0.5rem;
+    font-weight: bold;
+  }
+
+  & .MuiSvgIcon-root {
+    font-size: 1.1rem;
+  }
+`;
+
+/***
+ *
+ * 거주 지역
+ *
+ */
+
+export const AreaDropDownMenu = styled(FormControl)`
+  & .MuiInputLabel-root {
+    font-size: 0.55rem;
+    font-weight: bold;
+
+    &.MuiInputLabel-shrink {
+      transform: translate(14px, -6px) scale(1);
+    }
+  }
+
+  & .MuiOutlinedInput-notchedOutline {
+    legend {
+      font-size: 0.45rem;
+
+      span {
+        padding-right: 5px;
+      }
+    }
+  }
+
+  & .MuiSelect-select {
+    font-size: 0.5rem;
+    padding-top: 0.35rem;
+    padding-bottom: 0.3rem;
+  }
+
+  & .MuiSelect-root {
+    border-radius: 12px;
+  }
+
+  & .MuiOutlinedInput-root {
+    & fieldset {
+      top: -2px;
+    }
+  }
+`;
+
+export const AreaDropDownMenuItem = styled(MenuItem)`
+  &.MuiMenuItem-root {
+    font-size: 0.5rem;
+  }
+`;
+
+/***
+ *
+ * 자기 소개
+ */
+export const TextArea = styled(TextField)`
+  & .MuiOutlinedInput-root {
+    border-radius: 10px;
+    font-size: 0.5rem;
+  }
+`;
+
+/***
+ *
+ * 오픈 채팅 링크
+ */
+
+export const OpenChat = styled(TextField)`
+  & .MuiOutlinedInput-root {
+    border-radius: 10px;
+    font-size: 0.5rem;
   }
 `;
