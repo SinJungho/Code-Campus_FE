@@ -96,7 +96,6 @@ export const NaverButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-}
 `;
 
 export const KakaoButton = styled.button`
@@ -178,7 +177,6 @@ export const SignUpLabel = styled.label`
     padding: 1.3rem 0.5rem;
     margin-bottom: 1rem;
     border-radius: 14px;
-}
 `;
 
 export const SignUpSubTitle = styled.span`
