@@ -24,12 +24,14 @@ import WestIcon from "@mui/icons-material/West";
 import AddMentor from "./AddMentor";
 import ChooseMemberType from "./ChooseMemberType";
 import PrivacyInput from "./PrivacyInput";
+import AddMentee from "./AddMentee";
 
-const steps = ["회원 유형 선택", "개인 정보 입력", "선배 등록", "완료"];
+const steps = ["회원 유형 선택", "개인 정보 입력", "선배 등록"];
 
 const SignUp: React.FC = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
+  const [type, setType] = React.useState<"mentor" | "mentee" | null>(null);
 
   const isStepOptional = (step: number) => {
     return step === 2;
@@ -73,7 +75,7 @@ const SignUp: React.FC = () => {
     setActiveStep(0);
   };
   return (
-    <S.Wrapper>
+    <S.Wrapper sx={{ marginBottom: "5rem" }} className="margin-bottom">
       <Box
         sx={{
           display: "flex",
@@ -124,11 +126,12 @@ const SignUp: React.FC = () => {
           <React.Fragment>
             <Box sx={{ mt: 2, mb: 1 }}>
               {/* 회원 유형 선택 */}
-              {activeStep + 1 === 1 && <ChooseMemberType />}
+              {activeStep + 1 === 1 && <ChooseMemberType setType={setType} />}
               {/* 개인 정보 입력 */}
               {activeStep + 1 === 2 && <PrivacyInput />}
               {/* 선배 등록 */}
-              <Box>{activeStep + 1 === 3 && <AddMentor />}</Box>
+              {activeStep + 1 === 3 && type === "mentor" && <AddMentor />}
+              {activeStep + 1 === 3 && type === "mentee" && <AddMentee />}
             </Box>
 
             <Box
@@ -160,22 +163,7 @@ const SignUp: React.FC = () => {
                   fontWeight: "bold",
                 }}
               />
-              {isStepOptional(activeStep) && (
-                <Button
-                  variant="contained"
-                  color="inherit"
-                  onClick={handleSkip}
-                  sx={{
-                    mr: 1,
-                    fontSize: "0.5rem",
-                    fontWeight: "bold",
-                    padding: "0.5rem 0px",
-                    borderRadius: "10px",
-                  }}
-                >
-                  건너뛰기
-                </Button>
-              )}
+
               <Button
                 variant="contained"
                 onClick={handleNext}

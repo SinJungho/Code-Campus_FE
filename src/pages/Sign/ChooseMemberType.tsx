@@ -5,21 +5,29 @@ import * as S from "./styled";
 interface CheckboxTypes {
   type: "mentor" | "mentee";
   id: string;
+  onChange: (type: "mentor" | "mentee") => void;
 }
-export default function ChooseMemberType() {
+
+interface ChooseMemberTypeProps {
+  setType: React.Dispatch<React.SetStateAction<"mentor" | "mentee" | null>>;
+}
+export default function ChooseMemberType({ setType }: ChooseMemberTypeProps) {
+  const handleCheckboxChange = (type: "mentor" | "mentee") => {
+    setType(type);
+  };
   return (
     <Box>
       <S.SignUpSubTitle>회원가입</S.SignUpSubTitle>
       <S.SignUpTitle>회원 유형 선택</S.SignUpTitle>
       <Box>
-        <Checkbox type="mentor" id="mentor" />
-        <Checkbox type="mentee" id="mentee" />
+        <Checkbox type="mentor" id="mentor" onChange={handleCheckboxChange} />
+        <Checkbox type="mentee" id="mentee" onChange={handleCheckboxChange} />
       </Box>
     </Box>
   );
 }
 
-function Checkbox({ type, id }: CheckboxTypes) {
+function Checkbox({ type, id, onChange }: CheckboxTypes) {
   const [activeCheck, setActiveCheck] = React.useState<string | null>(null);
 
   const handleClick = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,8 +35,10 @@ function Checkbox({ type, id }: CheckboxTypes) {
 
     if (isChecked) {
       setActiveCheck(id);
+      onChange(type);
     } else {
       setActiveCheck(null);
+      onChange(type === "mentor" ? "mentee" : "mentor");
     }
   };
 

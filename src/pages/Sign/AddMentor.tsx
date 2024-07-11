@@ -43,13 +43,14 @@ export default function AddMentor() {
           }}
         >
           <S.SignTextInput
+            fullWidth
             required
             id="outlined-required"
             label="학교"
             placeholder="학교 이름을 입력 해주세요."
             sx={{
-              width: "91%",
               fontSize: "0.5rem",
+              flex: "1.7",
             }}
           />
 
@@ -59,6 +60,8 @@ export default function AddMentor() {
               fontSize: "0.5rem",
               fontWeight: "bold",
               padding: "12px 16px",
+              flex: "0.1",
+              marginLeft: "0.5rem",
             }}
           >
             학교 찾기
@@ -176,8 +179,15 @@ function IntroduceKeyword() {
       })}
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <S.TextInput
+          fullWidth
           placeholder="키워드 검색"
-          sx={{ width: "88%" }}
+          sx={{
+            flex: "1.7",
+            padding: "0.5rem",
+            "& .MuiOutlinedInput-input": {
+              padding: "0.5rem",
+            },
+          }}
         ></S.TextInput>
         <Button
           variant="contained"
@@ -185,6 +195,8 @@ function IntroduceKeyword() {
             fontSize: "0.5rem",
             fontWeight: "bold",
             padding: "12px 16px",
+            marginLeft: "0.5rem",
+            flex: "0.1",
           }}
         >
           검색하기
