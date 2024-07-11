@@ -1,7 +1,13 @@
 import * as S_privacy from "./PrivacyInput_styled";
 import * as S from "./styled";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { Box, Button, Checkbox, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Typography,
+  FormControlLabel,
+} from "@mui/material";
 
 export default function PrivacyInput() {
   return (
@@ -87,45 +93,81 @@ function IndeterminateCheckbox() {
   };
 
   return (
-    <>
+    <Box>
+      {/* 이용약관 전체 동의 체크박스 */}
       <S_privacy.Wrapper>
-        <S_privacy.PrivacyCheckbox
-          name="all"
-          onChange={checkAll}
-          checked={checkList.length === 3 ? true : false}
-        ></S_privacy.PrivacyCheckbox>
-        <S_privacy.PrivacyText className="bold">
-          이용약관 전체 동의
-        </S_privacy.PrivacyText>
+        <FormControlLabel
+          value="end"
+          control={
+            <S_privacy.PrivacyCheckbox
+              name="all"
+              onChange={checkAll}
+              checked={checkList.length === 3 ? true : false}
+            />
+          }
+          label={
+            <S_privacy.PrivacyText className="bold">
+              이용약관 전체 동의
+            </S_privacy.PrivacyText>
+          }
+          labelPlacement="end"
+        />
       </S_privacy.Wrapper>
+      {/* 이용약관 동의 체크 박스 */}
       <S_privacy.Wrapper>
-        <S_privacy.PrivacyCheckbox
-          name="terms"
-          onChange={check}
-          checked={checkList.includes("terms") ? true : false}
-        ></S_privacy.PrivacyCheckbox>
-        <S_privacy.PrivacyText>
-          이용약관 동의<S.Star>*</S.Star>
-        </S_privacy.PrivacyText>
+        <FormControlLabel
+          value="end"
+          control={
+            <S_privacy.PrivacyCheckbox
+              name="terms"
+              onChange={check}
+              checked={checkList.includes("terms") ? true : false}
+            />
+          }
+          label={
+            <S_privacy.PrivacyText>
+              이용약관 동의<S.Star>*</S.Star>
+            </S_privacy.PrivacyText>
+          }
+          labelPlacement="end"
+        />
       </S_privacy.Wrapper>
+      {/* 개인 정보 취급 방침 동의 체크박스 */}
       <S_privacy.Wrapper>
-        <S_privacy.PrivacyCheckbox
-          name="privacy"
-          onChange={check}
-          checked={checkList.includes("privacy") ? true : false}
-        ></S_privacy.PrivacyCheckbox>
-        <S_privacy.PrivacyText>
-          개인정보 취급 방침 동의<S.Star>*</S.Star>
-        </S_privacy.PrivacyText>
+        <FormControlLabel
+          value="end"
+          control={
+            <S_privacy.PrivacyCheckbox
+              name="privacy"
+              onChange={check}
+              checked={checkList.includes("privacy") ? true : false}
+            />
+          }
+          label={
+            <S_privacy.PrivacyText>
+              개인정보 취급 방침 동의<S.Star>*</S.Star>
+            </S_privacy.PrivacyText>
+          }
+          labelPlacement="end"
+        />
       </S_privacy.Wrapper>
+      {/* 마케팅 정보 수신 동의 체크박스 */}
       <S_privacy.Wrapper>
-        <S_privacy.PrivacyCheckbox
-          name="marketing"
-          onChange={check}
-          checked={checkList.includes("marketing") ? true : false}
-        ></S_privacy.PrivacyCheckbox>
-        <S_privacy.PrivacyText>마케팅 정보 수신 동의</S_privacy.PrivacyText>
+        <FormControlLabel
+          value="end"
+          control={
+            <S_privacy.PrivacyCheckbox
+              name="marketing"
+              onChange={check}
+              checked={checkList.includes("marketing") ? true : false}
+            />
+          }
+          label={
+            <S_privacy.PrivacyText>마케팅 정보 수신 동의</S_privacy.PrivacyText>
+          }
+          labelPlacement="end"
+        />
       </S_privacy.Wrapper>
-    </>
+    </Box>
   );
 }
