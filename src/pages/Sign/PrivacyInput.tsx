@@ -15,16 +15,32 @@ import {
   FormControlLabel,
 } from "@mui/material";
 
-interface nameState {
+interface NameState {
   name: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
 }
-const StateContext = createContext<nameState | undefined>;
-export default function PrivacyInput({ children }: { children: ReactNode }) {
+const defaultNameState: NameState = {
+  name: "",
+  setName: () => {},
+};
+export const StateContext = createContext<NameState>(defaultNameState);
+export const StateProvider = ({ children }: { children: ReactNode }) => {
   const [name, setName] = useState<string>("");
+  return (
+    <StateContext.Provider value={{ name, setName }}>
+      {children}
+    </StateContext.Provider>
+  );
+};
+
+export default function PrivacyInput() {
+  return <PrivacyInputContent />;
+}
+
+export function PrivacyInputContent() {
+  const { name, setName } = React.useContext(StateContext);
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
-    console.log(`name : ${name}`);
   };
 
   return (
@@ -32,6 +48,7 @@ export default function PrivacyInput({ children }: { children: ReactNode }) {
       <S.SignTextInput
         fullWidth
         required
+        type="email"
         id="email-required"
         label="이메일"
         variant="outlined"
@@ -39,6 +56,7 @@ export default function PrivacyInput({ children }: { children: ReactNode }) {
       <S.SignTextInput
         fullWidth
         required
+        type="password"
         id="password-required"
         label="비밀번호"
         variant="outlined"
@@ -46,6 +64,7 @@ export default function PrivacyInput({ children }: { children: ReactNode }) {
       <S.SignTextInput
         fullWidth
         required
+        type="password"
         id="repeatPassword-required"
         label="비밀번호 확인"
         variant="outlined"
@@ -53,6 +72,7 @@ export default function PrivacyInput({ children }: { children: ReactNode }) {
       <S.SignTextInput
         fullWidth
         required
+        type="text"
         id="name-required"
         label="이름"
         variant="outlined"
@@ -64,6 +84,7 @@ export default function PrivacyInput({ children }: { children: ReactNode }) {
         <S.SignTextInput
           fullWidth
           required
+          type="tel"
           id="phone-required"
           label="전화번호"
           variant="outlined"

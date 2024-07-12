@@ -13,12 +13,15 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
+import { StateContext, StateProvider } from "./PrivacyInput";
 
 export default function SuccessSign() {
+  const { name } = React.useContext(StateContext);
+  console.log(name);
   return (
     <Box>
       <Box sx={{ marginBottom: "1.5rem" }}>
-        <Typography sx={{ fontWeight: "bold" }}>최예진님,</Typography>
+        <Typography sx={{ fontWeight: "bold" }}>{name}님,</Typography>
         <Typography sx={{ fontWeight: "bold" }}>가입을 축하합니다.</Typography>
       </Box>
       <Box>
