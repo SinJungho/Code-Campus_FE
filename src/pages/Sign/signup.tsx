@@ -32,6 +32,10 @@ import SuccessSign from "./SuccessSign";
 
 const steps = ["회원 유형 선택", "개인 정보 입력", "선배 등록"];
 
+interface CheckboxTypes {
+  type: string;
+}
+const steps = ["회원 유형 선택", "개인 정보 입력", "선배 등록", "완료"];
 const SignUp: React.FC = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
