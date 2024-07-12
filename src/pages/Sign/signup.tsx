@@ -25,6 +25,7 @@ import AddMentor from "./AddMentor";
 import ChooseMemberType from "./ChooseMemberType";
 import PrivacyInput from "./PrivacyInput";
 import AddMentee from "./AddMentee";
+import SuccessSign from "./SuccessSign";
 
 const steps = ["회원 유형 선택", "개인 정보 입력", "선배 등록"];
 
@@ -112,15 +113,22 @@ const SignUp: React.FC = () => {
         </S.SignStepper>
         {activeStep === steps.length ? (
           <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>
-              모든 회원 가입 절차가 끝났습니다.
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Box sx={{ flex: "1 1 auto" }} />
-              <Button variant="contained" onClick={handleReset}>
-                홈으로 돌아가기
-              </Button>
-            </Box>
+            <SuccessSign />
+
+            <Button
+              sx={{
+                borderRadius: "10px",
+                fontSize: "0.5rem",
+                fontWeight: "bold",
+                padding: "0.5rem",
+                marginTop: "3.5rem",
+              }}
+              fullWidth
+              variant="contained"
+              onClick={handleReset}
+            >
+              홈으로 돌아가기
+            </Button>
           </React.Fragment>
         ) : (
           <React.Fragment>

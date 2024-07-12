@@ -1,6 +1,12 @@
 import * as S_privacy from "./PrivacyInput_styled";
 import * as S from "./styled";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  createContext,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
 import {
   Box,
   Button,
@@ -9,7 +15,18 @@ import {
   FormControlLabel,
 } from "@mui/material";
 
-export default function PrivacyInput() {
+interface nameState {
+  name: string;
+  setName: React.Dispatch<React.SetStateAction<string>>;
+}
+const StateContext = createContext<nameState | undefined>;
+export default function PrivacyInput({ children }: { children: ReactNode }) {
+  const [name, setName] = useState<string>("");
+  const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+    console.log(`name : ${name}`);
+  };
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
       <S.SignTextInput
@@ -39,6 +56,8 @@ export default function PrivacyInput() {
         id="name-required"
         label="이름"
         variant="outlined"
+        value={name}
+        onChange={handleName}
       />
 
       <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
