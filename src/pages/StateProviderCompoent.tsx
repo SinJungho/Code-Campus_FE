@@ -1,7 +1,8 @@
 import React from "react";
-import { StateProvider } from "./PrivacyInput";
-import PrivacyInput from "./PrivacyInput";
-import SuccessSign from "./SuccessSign";
+import { StateProvider } from "./Sign/PrivacyInput";
+import PrivacyInput from "./Sign/PrivacyInput";
+import SuccessSign from "./Sign/SuccessSign";
+import MyProfile from "./MyProfile/MyProfile";
 
 function StateProviderCompoent() {
   return (
@@ -9,6 +10,7 @@ function StateProviderCompoent() {
       <div>
         <PrivacyInput />
         <SuccessSign />
+        <MyProfile />
       </div>
     </StateProvider>
   );

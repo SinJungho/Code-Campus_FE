@@ -19,7 +19,7 @@ const MenuList: MenuType[] = [
   { name: "코드캠퍼스 소개", url: "/about" },
   { name: "선배 탐색", url: "/explore" },
   { name: "공모전", url: "/competitions" },
-  { name: "내 프로필", url: "/login" },
+  { name: "내 프로필", url: "/profile" },
 ];
 
 export default function TemporaryDrawer() {

@@ -11,7 +11,7 @@ const NaverLogo = () => {
       style={{ width: 15, height: 15, position: "relative" }}
       preserveAspectRatio="xMidYMid meet"
     >
-      <g clip-path="url(#clip0_74_15)">
+      <g clipPath="url(#clip0_74_15)">
         <path
           d="M43.3947 34.2533L19.6693 0H0V64H20.6027V29.7493L44.3307 64H64V0H43.3947V34.2533Z"
           fill="#EAEAEA"

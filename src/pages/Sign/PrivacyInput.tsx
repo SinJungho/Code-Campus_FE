@@ -20,12 +20,15 @@ interface NameState {
   setName: React.Dispatch<React.SetStateAction<string>>;
 }
 const defaultNameState: NameState = {
-  name: "",
+  name: "회원",
   setName: () => {},
 };
+
 export const StateContext = createContext<NameState>(defaultNameState);
+
 export const StateProvider = ({ children }: { children: ReactNode }) => {
   const [name, setName] = useState<string>("");
+
   return (
     <StateContext.Provider value={{ name, setName }}>
       {children}
