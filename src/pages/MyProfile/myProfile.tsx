@@ -25,7 +25,7 @@ import students from "../../mock-data/students";
 import MenteeControl from "./MenteeControl";
 import MatchRequest from "./MatchRequest";
 
-export default function MyProfile() {
+const MyProfile: React.FC = () => {
   const { name, setName } = React.useContext(StateContext);
   const [value, setValue] = React.useState("1");
 
@@ -177,7 +177,7 @@ export default function MyProfile() {
       </TabContext>
     </Box>
   );
-}
+};
 
 function TabLabel() {
   return (
@@ -188,3 +188,4 @@ function TabLabel() {
     </Box>
   );
 }
+export default MyProfile;
