@@ -10,12 +10,13 @@ import {
   Tabs,
   Badge,
 } from "@mui/material";
+import TutorDetail from "./TutorDetail";
 
 const TutorList: React.FC = () => {
   return (
-    <Box>
-      <Typography>선배 탐색</Typography>
-    </Box>
+    <div>
+      <TutorDetail />
+    </div>
   );
 };
 export default TutorList;
