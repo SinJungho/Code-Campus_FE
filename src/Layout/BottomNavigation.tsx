@@ -44,7 +44,7 @@ export default function LabelBottomNavigation() {
           <BottomNavigationAction
             label="선배 탐색"
             onClick={() => {
-              navigate("/PeopleAlt");
+              navigate("/TutorList");
             }}
             icon={<PeopleAlt sx={{ fontSize: isMobile ? "2rem" : "2rem" }} />}
           />
