@@ -1,23 +1,34 @@
 import React, { useState } from "react";
 import * as S from "../styled";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Box, Button, InputAdornment, Switch, Tab } from "@mui/material";
 // Icons
 import PersonIcon from "@mui/icons-material/Person";
 import LockIcon from "@mui/icons-material/Lock";
 import CloseIcon from "@mui/icons-material/Close";
 import Logo from "../../../assets/img/SNSLogo";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
+import useLogin from "../../../hooks/useLogin";
 
 const Login: React.FC = () => {
-  const [value, setValue] = React.useState("1");
+  const navigate = useNavigate();
+  const [inputForm, setInputForm] = useState({ email: '', password: '' });
+  const { emailLogin } = useLogin();
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputForm({
+      ...inputForm,
+      [e.target.name]: e.target.value,
+    });
   };
 
+  const handleSubmit = async () => {
+    try {
+      await emailLogin(inputForm);
+      navigate("/"); // 로그인 성공 시 이동할 페이지
+    } catch (error) {
+      console.error("로그인 실패:", error);
+    }
+  };
   return (
     <S.Wrapper>
       <Box
@@ -35,155 +46,65 @@ const Login: React.FC = () => {
           <CloseIcon sx={{ fontSize: "28px" }} />
         </Link>
       </Box>
-      <MenteeLogin />
-    </S.Wrapper>
-  );
-};
-
-// 멘티 회원 로그인 폼
-const MenteeLogin = () => {
-  return (
-    <S.Wrapper className="padding">
-      {/* 아이디 입력창 */}
-      <S.TextInput
-        id="outlined-basic"
-        label=""
-        placeholder="아이디"
-        variant="outlined"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <PersonIcon sx={{ fontSize: 30 }} />
-            </InputAdornment>
-          ),
-        }}
-      ></S.TextInput>
-      {/* 비밀 번호 입력창 */}
-      <S.TextInput
-        id="outlined-basic"
-        label=""
-        placeholder="비밀번호"
-        variant="outlined"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <LockIcon sx={{ fontSize: 30 }} />
-            </InputAdornment>
-          ),
-        }}
-      />
-      {/* 로그인 버튼 */}
-      <Button
-        sx={{
-          borderRadius: "12px",
-          fontSize: "0.5rem",
-          fontWeight: "bold",
-          padding: "0.4rem 0rem",
-          background: "#156aff",
-        }}
-        variant="contained"
-      >
-        로그인
-      </Button>
-      {/* 로그인 유지 */}
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Checkbox />
-        <FindIdOrPw />
-      </Box>
-      {/* SNS 회원 가입 & 로그인 */}
-      <SNSLogInButton />
-      {/* 개인 회원 가입 */}
-      <S.TextSignUp to="/signup">멘티 회원가입</S.TextSignUp>
-    </S.Wrapper>
-  );
-};
-
-const MentorLogin = () => {
-  const [checked, setChecked] = useState(false);
-  const handleChange = () => {
-    setChecked((prev) => !prev);
-  };
-  return (
-    <S.Wrapper>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
-        }}
-      >
-        <Switch
-          checked={checked}
+      <S.Wrapper className="padding">
+        {/* 아이디 입력창 */}
+        <S.TextInput
+          id="outlined-basic"
+          label=""
+          placeholder="아이디"
+          variant="outlined"
+          name="email"
+          value={inputForm.email}
           onChange={handleChange}
-          inputProps={{ "aria-label": "controlled" }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <PersonIcon sx={{ fontSize: 30 }} />
+              </InputAdornment>
+            ),
+          }}
+        ></S.TextInput>
+        {/* 비밀 번호 입력창 */}
+        <S.TextInput
+          id="outlined-basic"
+          label=""
+          placeholder="비밀번호"
+          variant="outlined"
+          name="password"
+          value={inputForm.password}
+          onChange={handleChange}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <LockIcon sx={{ fontSize: 30 }} />
+              </InputAdornment>
+            ),
+          }}
         />
-        <S.SwitchText>졸업생 회원</S.SwitchText>
-      </Box>
-      {/* 아이디 입력창 */}
-      <S.TextInput
-        id="outlined-basic"
-        label=""
-        placeholder={
-          checked === true ? "졸업생 회원 아이디" : "멘토 회원 아이디"
-        }
-        variant="outlined"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <PersonIcon sx={{ fontSize: 30 }} />
-            </InputAdornment>
-          ),
-        }}
-      ></S.TextInput>
-      {/* 비밀 번호 입력창 */}
-      <S.TextInput
-        id="outlined-basic"
-        label=""
-        placeholder="비밀번호"
-        variant="outlined"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <LockIcon sx={{ fontSize: 30 }} />
-            </InputAdornment>
-          ),
-        }}
-      />
-      <Button
-        sx={{
-          borderRadius: "12px",
-          fontSize: "0.5rem",
-          fontWeight: "bold",
-          padding: "0.4rem 0rem",
-          background: "#156aff",
-        }}
-        variant="contained"
-      >
-        로그인
-      </Button>
-      {/* 아이디, 비밀번호 찾기 */}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
-        }}
-      >
-        <FindIdOrPw />
-      </Box>
-      {/* 멘티 회원 가입 */}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: "36px",
-        }}
-      >
-        <S.MentorSignUpLink to="/signup">멘토 회원가입</S.MentorSignUpLink>
-        <S.Line />
-        <S.MentorSignUpLink to="/signup">졸업생 회원가입</S.MentorSignUpLink>
-      </Box>
+        {/* 로그인 버튼 */}
+        <Button
+          sx={{
+            borderRadius: "12px",
+            fontSize: "0.5rem",
+            fontWeight: "bold",
+            padding: "0.4rem 0rem",
+            background: "#156aff",
+          }}
+          variant="contained"
+          onClick={handleSubmit}
+        >
+          로그인
+        </Button>
+        {/* 로그인 유지 */}
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Checkbox />
+          <FindIdOrPw />
+        </Box>
+        {/* SNS 회원 가입 & 로그인 */}
+        <SNSLogInButton />
+        {/* 개인 회원 가입 */}
+        <S.TextSignUp to="/signup">멘티 회원가입</S.TextSignUp>
+      </S.Wrapper>
     </S.Wrapper>
   );
 };
