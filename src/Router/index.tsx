@@ -13,7 +13,7 @@ const Router = () => {
         <Route path="/login" element={<P.Login />} />
         <Route path="/signup" element={<P.SignUp />} />
         <Route path="/tutorlist" element={<P.TutorList />} />
-        <Route path="/profile" element={<P.MyProfile />} />
+        <Route path="/profile" element={<P.StateProviderCompoent />} />
       </Routes>
     </div>
   );

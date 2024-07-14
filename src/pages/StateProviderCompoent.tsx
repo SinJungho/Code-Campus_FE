@@ -2,7 +2,7 @@ import React from "react";
 import { StateProvider } from "./Sign/PrivacyInput";
 import PrivacyInput from "./Sign/PrivacyInput";
 import SuccessSign from "./Sign/SuccessSign";
-import MyProfile from "./MyProfile/MyProfile";
+import MyProfile from "./MyProfile/myProfile";
 
 function StateProviderCompoent() {
   return (
