@@ -1,9 +1,9 @@
 //import * as S_signOk from "./AddMentee_styled";
-import * as S from "./styled";
+import * as S from "../styled";
 import * as S_success from "./SuccessSign_styled";
 import React from "react";
 import { Link } from "react-router-dom";
-import CodeCampusLogo from "../../assets/img/CodeCampusLogo";
+import CodeCampusLogo from "../../../assets/img/CodeCampusLogo";
 import {
   Box,
   Button,

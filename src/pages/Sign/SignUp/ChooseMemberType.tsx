@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React, { useState } from "react";
-import * as S from "./styled";
+import * as S from "../styled";
 
 interface CheckboxTypes {
   type: "mentor" | "mentee";

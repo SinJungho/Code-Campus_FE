@@ -1,7 +1,7 @@
 import Home from "./Home";
-import Login from "./Sign/login";
-import SignUp from "./Sign/signup";
+import Login from "./Sign/LogIn/login";
+import SignUp from "./Sign/SignUp/signup";
 import TutorList from "./Tutor/TutorList";
 import MyProfile from "./MyProfile/MyProfile";
-
-export { Home, Login, SignUp, TutorList, MyProfile };
+import TutorDetail from "./Tutor/TutorDetail";
+export { Home, Login, SignUp, TutorList, MyProfile, TutorDetail };

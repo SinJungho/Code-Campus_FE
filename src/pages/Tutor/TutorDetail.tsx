@@ -30,22 +30,6 @@ const TutorDetail: React.FC = () => {
   ];
   return (
     <Box>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          borderBottom: 1,
-          borderColor: "divider",
-          padding: "0.3rem 24px",
-        }}
-      >
-        <TemporaryDrawer />
-        <S_detail.LogInTitle>선배 탐색</S_detail.LogInTitle>
-        <Link to="/index">
-          <CloseIcon sx={{ fontSize: "28px" }} />
-        </Link>
-      </Box>
       {/* 이미지 슬라이드 */}
       <Carousel
         cycleNavigation={true}

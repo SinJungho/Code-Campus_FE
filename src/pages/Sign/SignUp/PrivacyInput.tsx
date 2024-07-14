@@ -1,5 +1,5 @@
 import * as S_privacy from "./PrivacyInput_styled";
-import * as S from "./styled";
+import * as S from "../styled";
 import React, {
   ChangeEvent,
   createContext,

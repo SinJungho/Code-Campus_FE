@@ -101,7 +101,7 @@ const Home: React.FC = () => {
               <p>{student.university + " " + student.department}</p>
               <b>{student.name} 선배님</b>
             </S.CardTextDiv>
-            <Link to="/login">
+            <Link to="/tutorDetail">
               <Button
                 variant="contained"
                 sx={{
@@ -119,4 +119,4 @@ const Home: React.FC = () => {
     </S.Wrapper>
   );
 };
-export default TutorList;
+export default Home;

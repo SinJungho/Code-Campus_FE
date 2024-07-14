@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import * as S from "./styled";
+import * as S from "../styled";
 import { Link } from "react-router-dom";
 import { Box, Button, InputAdornment, Switch, Tab } from "@mui/material";
 // Icons
 import PersonIcon from "@mui/icons-material/Person";
 import LockIcon from "@mui/icons-material/Lock";
 import CloseIcon from "@mui/icons-material/Close";
-import Logo from "../../assets/img/SNSLogo";
+import Logo from "../../../assets/img/SNSLogo";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -63,7 +63,7 @@ const Login: React.FC = () => {
 };
 
 // 멘티 회원 로그인 폼
-function MenteeLogin() {
+const MenteeLogin = () => {
   return (
     <S.Wrapper className="padding">
       {/* 아이디 입력창 */}
@@ -118,9 +118,9 @@ function MenteeLogin() {
       <S.TextSignUp to="/signup">멘티 회원가입</S.TextSignUp>
     </S.Wrapper>
   );
-}
+};
 
-function MentorLogin() {
+const MentorLogin = () => {
   const [checked, setChecked] = useState(false);
   const handleChange = () => {
     setChecked((prev) => !prev);
@@ -208,9 +208,9 @@ function MentorLogin() {
       </Box>
     </S.Wrapper>
   );
-}
+};
 
-function SNSLogInButton() {
+const SNSLogInButton = () => {
   return (
     <Box
       sx={{
@@ -238,7 +238,7 @@ function SNSLogInButton() {
       </S.AppleButton>
     </Box>
   );
-}
+};
 
 function Checkbox() {
   return (

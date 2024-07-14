@@ -1,4 +1,4 @@
-import * as S from "./styled";
+import * as S from "../styled";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import React, { ChangeEvent, useState } from "react";
 import {
@@ -18,7 +18,7 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
-import { data } from "./addrData";
+import { data } from "../../../mock-data/addrData";
 
 // 선배 등록 페이지
 export default function AddMentor() {

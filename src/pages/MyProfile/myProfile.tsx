@@ -19,7 +19,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import TemporaryDrawer from "../../Layout/Drawer";
-import { StateContext, StateProvider } from "../Sign/PrivacyInput";
+import { StateContext, StateProvider } from "../Sign/SignUp/PrivacyInput";
 // student data
 import students from "../../mock-data/students";
 import MenteeControl from "./MenteeControl";
