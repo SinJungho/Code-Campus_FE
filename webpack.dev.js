@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const webpack = require("webpack");
+const dotenv = require("dotenv");
 
 module.exports = {
   mode: "development",
@@ -47,6 +48,9 @@ module.exports = {
       template: "./public/index.html",
     }),
     new webpack.HotModuleReplacementPlugin(), // HMR 플러그인 추가
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(dotenv.config().parsed)
+    })
   ],
   stats: {
     children: true,
