@@ -35,28 +35,6 @@ const Login: React.FC = () => {
           <CloseIcon sx={{ fontSize: "28px" }} />
         </Link>
       </Box>
-      {/* <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList onChange={handleChange} variant="fullWidth">
-            <Tab
-              sx={{ width: "100%", fontSize: "0.5rem" }}
-              label="멘티 회원"
-              value="1"
-            />
-            <Tab
-              sx={{ width: "100%", fontSize: "0.5rem" }}
-              label="멘토 회원"
-              value="2"
-            />
-          </TabList>
-        </Box>
-        <TabPanel value="1">
-          <MenteeLogin />
-        </TabPanel>
-        <TabPanel value="2">
-          <MentorLogin />
-        </TabPanel>
-      </TabContext> */}
       <MenteeLogin />
     </S.Wrapper>
   );
