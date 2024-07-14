@@ -13,6 +13,7 @@ const Router = () => {
         </Route>
         <Route path="/login" element={<P.Login />} />
         <Route path="/signup" element={<P.SignUp />} />
+        <Route path="/profile" element={<P.MyProfile />} />
       </Routes>
     </div>
   );
