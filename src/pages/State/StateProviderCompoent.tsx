@@ -3,6 +3,7 @@ import { StateProvider } from "../Sign/SignUp/PrivacyInput";
 import PrivacyInput from "../Sign/SignUp/PrivacyInput";
 import SuccessSign from "../Sign/SignUp/SuccessSign";
 import MyProfile from "../MyProfile/MyProfile";
+import ChooseMemberType from "../Sign/SignUp/ChooseMemberType";
 
 function StateProviderCompoent() {
   return (
