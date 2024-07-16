@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Box, Chip, Typography } from "@mui/material";
+import { Box, Chip, Typography, Button } from "@mui/material";
 
 export const Wrapper = styled(Box)`
   padding: 24px;
@@ -46,5 +46,25 @@ export const ListText = styled.li`
   margin-left: 24px;
   &::marker {
     color: #1564ff;
+  }
+`;
+
+// 선배 매칭 페이지
+export const MatchingButton = styled(Button)`
+  &.MuiButton-root {
+    border-radius: 30px;
+    font-size: 0.53rem;
+    font-weight: bold;
+    padding: 0.3rem 0.62rem;
+    border: 1.5px solid #1564ff;
+    color: #1564ff;
+    background-color: #f5f5f5;
+  }
+`;
+
+export const LevelChip = styled(Chip)`
+  & .MuiChip-label {
+    font-size: 0.5rem;
+    font-weight: bold;
   }
 `;

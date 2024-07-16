@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as S from "../styled";
 import * as S_detail from "./TutorDetail_styled";
 import { Link } from "react-router-dom";
@@ -13,6 +13,7 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import TutorDefaultInfo from "./TutorDefaultInfo";
 import TutorShortAdvice from "./TutorShortAdvice";
+import MentorAndMenteeKeyWord from "./MentorAndMenteeKeyWord";
 
 const TutorDetail: React.FC = () => {
   const emojiInfo = [
@@ -162,6 +163,9 @@ const TutorDetail: React.FC = () => {
         <Box>
           <MentorTabMenu />
         </Box>
+        <Box sx={{ padding: "24px" }}>
+          <MantorMatching />
+        </Box>
       </Box>
     </S_detail.Wrapper>
   );
@@ -193,6 +197,7 @@ const MentorSkillKeyword = () => {
   );
 };
 
+// 선배 상세 페이지 탭 메뉴
 const MentorTabMenu = () => {
   const [value, setValue] = React.useState("1");
 
@@ -222,6 +227,38 @@ const MentorTabMenu = () => {
         <TutorShortAdvice />
       </TabPanel>
     </TabContext>
+  );
+};
+
+// 멘토 매칭 페이지
+const MantorMatching = () => {
+  return (
+    <Box>
+      <S_detail.Title>매칭 요청하기</S_detail.Title>
+      <Typography
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          fontSize: "0.7rem",
+          margin: "1rem 0",
+        }}
+      >
+        <Typography
+          sx={{
+            fontWeight: "bold",
+            color: "#1564FF",
+            fontSize: "0.7rem",
+          }}
+        >
+          3
+        </Typography>
+        개의 키워드가 일치합니다.
+      </Typography>
+      {/* 선배 키워드 */}
+      <MentorAndMenteeKeyWord />
+      {/* 선호 요일 및 시간 */}
+      <TutoringDateAndTime />
+    </Box>
   );
 };
 

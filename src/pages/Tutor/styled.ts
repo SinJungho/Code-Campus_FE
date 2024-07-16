@@ -1,4 +1,4 @@
-import { Box, Paper } from "@mui/material";
+import { Box, Button, Paper } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
 import styled from "styled-components";
 
