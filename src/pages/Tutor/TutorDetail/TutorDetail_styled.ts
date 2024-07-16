@@ -86,6 +86,10 @@ export const DateButton = styled(Button)`
     color: #333;
     background-color: #f5f5f5;
   }
+  &.active {
+    border: 1px solid #1564ff;
+    color: #1564ff;
+  }
 `;
 
 /***

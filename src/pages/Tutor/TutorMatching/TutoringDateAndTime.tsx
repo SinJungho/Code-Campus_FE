@@ -20,6 +20,11 @@ export const TutoringDateAndTime = () => {
     { id: 6, date: "토" },
     { id: 7, date: "일" },
   ];
+  const [active, setActive] = useState<number>(-1);
+  const hadleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const value = parseInt(e.currentTarget.value);
+    setActive(value);
+  };
   return (
     <Box sx={{ marginTop: "1.5rem" }}>
       <S_detail.Title>선호 요일 및 시간</S_detail.Title>
@@ -34,9 +39,16 @@ export const TutoringDateAndTime = () => {
           marginTop: "1rem",
         }}
       >
-        {date.map((index) => {
+        {date.map((index, id) => {
           return (
-            <S_detail.DateButton key={index.id} variant="outlined" size="large">
+            <S_detail.DateButton
+              value={id}
+              key={index.id}
+              variant="outlined"
+              size="large"
+              onClick={hadleClick}
+              className={active == id ? "active" : " "}
+            >
               {index.date}
             </S_detail.DateButton>
           );
