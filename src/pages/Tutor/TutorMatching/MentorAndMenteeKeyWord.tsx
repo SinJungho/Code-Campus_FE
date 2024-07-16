@@ -1,5 +1,5 @@
 import React from "react";
-import * as S_detail from "./TutorDetail_styled";
+import * as S_detail from "../TutorDetail/TutorDetail_styled";
 import { Box } from "@mui/material";
 
 /***
@@ -12,8 +12,8 @@ export const MentorAndMenteeKeyWord = () => {
       sx={{
         display: "flex",
         flexDirection: { xs: "column", sm: "row" },
-        justifyContent: "space-between",
         marginTop: "2rem",
+        gap: "2rem",
       }}
     >
       <Box sx={{ display: "flex", gap: "25px", flexDirection: "column" }}>

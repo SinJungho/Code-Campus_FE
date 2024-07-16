@@ -13,7 +13,7 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import TutorDefaultInfo from "./TutorDefaultInfo";
 import TutorShortAdvice from "./TutorShortAdvice";
-import MentorAndMenteeKeyWord from "./MentorAndMenteeKeyWord";
+import TutorMatching from "../TutorMatching/TutorMatching";
 
 const TutorDetail: React.FC = () => {
   const emojiInfo = [
@@ -102,16 +102,18 @@ const TutorDetail: React.FC = () => {
               <b style={{ fontSize: "0.82rem" }}>맹승열</b> 선배님
             </Typography>
             <Box>
-              <Button
-                variant="contained"
-                sx={{
-                  fontSize: "0.5rem",
-                  fontWeight: "bold",
-                  marginRight: "14px",
-                }}
-              >
-                매칭 요청
-              </Button>
+              <Link to="/tutorMatching">
+                <Button
+                  variant="contained"
+                  sx={{
+                    fontSize: "0.5rem",
+                    fontWeight: "bold",
+                    marginRight: "14px",
+                  }}
+                >
+                  매칭 요청
+                </Button>
+              </Link>
               <Button
                 variant="outlined"
                 sx={{ fontSize: "0.5rem", fontWeight: "bold" }}
@@ -162,9 +164,6 @@ const TutorDetail: React.FC = () => {
         {/* 선배 상세 페이지 탭 컴포넌트 */}
         <Box>
           <MentorTabMenu />
-        </Box>
-        <Box sx={{ padding: "24px" }}>
-          <MantorMatching />
         </Box>
       </Box>
     </S_detail.Wrapper>
@@ -227,38 +226,6 @@ const MentorTabMenu = () => {
         <TutorShortAdvice />
       </TabPanel>
     </TabContext>
-  );
-};
-
-// 멘토 매칭 페이지
-const MantorMatching = () => {
-  return (
-    <Box>
-      <S_detail.Title>매칭 요청하기</S_detail.Title>
-      <Typography
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          fontSize: "0.7rem",
-          margin: "1rem 0",
-        }}
-      >
-        <Typography
-          sx={{
-            fontWeight: "bold",
-            color: "#1564FF",
-            fontSize: "0.7rem",
-          }}
-        >
-          3
-        </Typography>
-        개의 키워드가 일치합니다.
-      </Typography>
-      {/* 선배 키워드 */}
-      <MentorAndMenteeKeyWord />
-      {/* 선호 요일 및 시간 */}
-      <TutoringDateAndTime />
-    </Box>
   );
 };
 

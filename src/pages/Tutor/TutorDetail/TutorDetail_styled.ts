@@ -1,6 +1,13 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Box, Chip, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Chip,
+  Typography,
+  Button,
+  MenuItem,
+  FormControl,
+} from "@mui/material";
 
 export const Wrapper = styled(Box)`
   padding: 24px;
@@ -66,5 +73,70 @@ export const LevelChip = styled(Chip)`
   & .MuiChip-label {
     font-size: 0.5rem;
     font-weight: bold;
+  }
+`;
+// 선호 요일 및 시간
+export const DateButton = styled(Button)`
+  &.MuiButton-root {
+    border-radius: 50%;
+    border: 1px solid rgba(22, 22, 22, 0.2);
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 0.7rem 0.95rem;
+    color: #333;
+    background-color: #f5f5f5;
+  }
+`;
+
+/***
+ * 시간 드롭다운 메뉴
+ */
+
+/***
+ *
+ * 거주 지역
+ *
+ */
+
+export const AreaDropDownMenu = styled(FormControl)`
+  & .MuiInputLabel-root {
+    font-size: 0.55rem;
+    font-weight: bold;
+
+    &.MuiInputLabel-shrink {
+      transform: translate(14px, -6px) scale(1);
+    }
+  }
+
+  & .MuiOutlinedInput-notchedOutline {
+    legend {
+      font-size: 0.45rem;
+
+      span {
+        padding-right: 5px;
+      }
+    }
+  }
+
+  & .MuiSelect-select {
+    font-size: 0.5rem;
+    padding-top: 0.35rem;
+    padding-bottom: 0.3rem;
+  }
+
+  & .MuiSelect-root {
+    border-radius: 12px;
+  }
+
+  & .MuiOutlinedInput-root {
+    & fieldset {
+      top: -2px;
+    }
+  }
+`;
+
+export const AreaDropDownMenuItem = styled(MenuItem)`
+  &.MuiMenuItem-root {
+    font-size: 0.5rem;
   }
 `;

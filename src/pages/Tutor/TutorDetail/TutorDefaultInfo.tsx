@@ -2,7 +2,7 @@ import React from "react";
 import * as S from "../styled";
 import * as S_detail from "./TutorDetail_styled";
 import { Link } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import SchoolIcon from "@mui/icons-material/School";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
@@ -46,7 +46,7 @@ const TutorInfo = () => {
       sx={{
         display: "flex",
         flexDirection: { xs: "column", sm: "row" },
-        justifyContent: "space-between",
+        gap: "2rem",
       }}
     >
       <Box>
@@ -139,8 +139,8 @@ const TutorTeachTypeAndTutoringTime = () => {
       sx={{
         display: "flex",
         flexDirection: { xs: "column", sm: "row" },
-        justifyContent: "space-between",
-        marginTop: "2rem  ",
+        marginTop: "2rem",
+        gap: "2rem",
       }}
     >
       <TutorTeachType />
