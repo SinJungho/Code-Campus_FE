@@ -42,7 +42,7 @@ export const TutoringDateAndTime = () => {
         {date.map((index, id) => {
           return (
             <S_detail.DateButton
-              value={id}
+              value={id.toString()}
               key={index.id}
               variant="outlined"
               size="large"
