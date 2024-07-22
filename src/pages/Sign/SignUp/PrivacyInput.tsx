@@ -1,47 +1,15 @@
 import * as S_privacy from "./PrivacyInput_styled";
 import * as S from "../styled";
-import React, {
-  ChangeEvent,
-  createContext,
-  ReactNode,
-  useEffect,
-  useState,
-} from "react";
-import {
-  Box,
-  Button,
-  Checkbox,
-  Typography,
-  FormControlLabel,
-} from "@mui/material";
-
-interface NameState {
-  name: string;
-  setName: React.Dispatch<React.SetStateAction<string>>;
-}
-const defaultNameState: NameState = {
-  name: "회원",
-  setName: () => {},
-};
-
-export const StateContext = createContext<NameState>(defaultNameState);
-
-export const StateProvider = ({ children }: { children: ReactNode }) => {
-  const [name, setName] = useState<string>("");
-
-  return (
-    <StateContext.Provider value={{ name, setName }}>
-      {children}
-    </StateContext.Provider>
-  );
-};
+import React, { ChangeEvent, useState } from "react";
+import { Box, Button, FormControlLabel } from "@mui/material";
+import { useUserNameStore } from "../../../stores/isSignuped/userSucess";
 
 export default function PrivacyInput() {
   return <PrivacyInputContent />;
 }
 
 export function PrivacyInputContent() {
-  const { name, setName } = React.useContext(StateContext);
+  const { name, setName } = useUserNameStore();
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };

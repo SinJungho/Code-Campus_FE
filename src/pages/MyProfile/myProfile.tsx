@@ -1,15 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import * as S from "./styled";
 import { Link } from "react-router-dom";
-import {
-  Box,
-  Avatar,
-  Typography,
-  Button,
-  Tab,
-  Tabs,
-  Badge,
-} from "@mui/material";
+import { Box, Avatar, Typography, Button, Tab } from "@mui/material";
 import TabPanel from "@mui/lab/TabPanel";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
@@ -19,14 +11,15 @@ import CloseIcon from "@mui/icons-material/Close";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import TemporaryDrawer from "../../Layout/Drawer";
-import { StateContext, StateProvider } from "../Sign/SignUp/PrivacyInput";
+
 // student data
 import students from "../../mock-data/students";
 import MenteeControl from "./MenteeControl";
 import MatchRequest from "./MatchRequest";
+import { useUserNameStore } from "../../stores/isSignuped/userSucess";
 
 const MyProfile: React.FC = () => {
-  const { name, setName } = React.useContext(StateContext);
+  const { name, setName } = useUserNameStore();
   const [value, setValue] = React.useState("1");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
