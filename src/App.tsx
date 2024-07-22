@@ -1,17 +1,17 @@
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import GlobalStyles from './Globalstyles';
-import Router from './Router';
-import PageScrollTop from './component/PageScrollTop';
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import GlobalStyles from "./Globalstyles";
+import Router from "./Router";
+import PageScrollTop from "./components/PageScrollTop";
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <PageScrollTop/>
+      <PageScrollTop />
       <GlobalStyles />
       <Router />
     </BrowserRouter>
   );
-}
+};
 
 export default App;
