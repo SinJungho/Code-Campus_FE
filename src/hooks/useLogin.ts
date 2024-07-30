@@ -7,7 +7,7 @@ const API_URL = process.env.REACT_APP_BASE_URL as string;
 const JWT_EXPIRY_TIME = 2400 * 1000; // 40분(2400초) * 1000(ms)
 
 interface InputForm {
-  email: string;
+  userEmail: string;
   password: string;
 }
 
@@ -20,16 +20,16 @@ const useLogin = () => {
   const { setUserName, setUserEmail } = useUserStore();
 
   // axios 헤더에 액세스 토큰 담고 setTimeout으로 리프레쉬 돌리기
-  const setAuthTokens = (access_TOKEN: string): boolean => {
-    instance.defaults.headers.common['Authorization'] = `Bearer ${access_TOKEN}`;
+  const setAuthTokens = (data: any): boolean => {
+    instance.defaults.headers.common['Authorization'] = `Bearer ${data.accessTOKEN}`;
     setTimeout(() => refreshLogin(), JWT_EXPIRY_TIME - 300000); // 35분에 연장
     return true;
   };
 
-  const changeLoginStatus = (setAuthTokens: boolean, response: ResponseData) => {
+  const changeLoginStatus = (setAuthTokens: boolean, response: any) => {
     if (setAuthTokens) {
-      setUserName(response.data.user_NICK);
-      setUserEmail(response.data.user_EMAIL);
+      setUserName(response.user_NICK);
+      setUserEmail(response.user_EMAIL);
       setIsLoggedIn(true);
       setIsLoading(false);
     }
@@ -39,7 +39,8 @@ const useLogin = () => {
   const emailLogin = async (inputForm: InputForm): Promise<void> => {
     try {
       const response = await axios.post<ResponseData>(`${API_URL}/api/users/login`, inputForm, { withCredentials: true });
-      changeLoginStatus(setAuthTokens(response.data.data.access_TOKEN), response.data);
+      console.log(response.data);
+      changeLoginStatus(setAuthTokens(response.data), response.data);
     } catch (error) {
       setIsLoading(false);
       throw error;
@@ -50,7 +51,7 @@ const useLogin = () => {
   const refreshLogin = async (): Promise<void> => {
     try {
       const response = await axios.get<ResponseData>(`${API_URL}/api/users/refreshToken`, { params: { refreshToken: getRefreshToken() }, withCredentials: true });
-      changeLoginStatus(setAuthTokens(response.data.data.access_TOKEN), response.data);
+      changeLoginStatus(setAuthTokens(response.data), response.data);
     } catch (error) {
       setIsLoading(false);
     }

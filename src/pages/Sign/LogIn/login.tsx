@@ -11,7 +11,7 @@ import useLogin from "../../../hooks/useLogin";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [inputForm, setInputForm] = useState({ email: '', password: '' });
+  const [inputForm, setInputForm] = useState({ userEmail: '', password: '' });
   const { emailLogin } = useLogin();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,8 +53,8 @@ const Login: React.FC = () => {
           label=""
           placeholder="아이디"
           variant="outlined"
-          name="email"
-          value={inputForm.email}
+          name="userEmail"
+          value={inputForm.userEmail}
           onChange={handleChange}
           InputProps={{
             startAdornment: (
