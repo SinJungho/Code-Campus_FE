@@ -14,30 +14,41 @@ import TabPanel from "@mui/lab/TabPanel";
 import TutorDefaultInfo from "./TutorDefaultInfo";
 import TutorShortAdvice from "./TutorShortAdvice";
 import TutorMatching from "../TutorMatching/TutorMatching";
+import { useTutorDetailStore } from "../../../stores/Tutor/TutorStore";
 
 const TutorDetail: React.FC = () => {
+  const {
+    like,
+    setLike,
+    comment,
+    setComment,
+    addr,
+    setAddr,
+    onlineOrOffline,
+    setOnlineOrOffline,
+  } = useTutorDetailStore();
   const emojiInfo = [
     {
       id: 1,
       emoji: <FavoriteIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />,
-      text: "129",
+      text: like,
     },
     {
       id: 2,
       emoji: <SmsIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />,
-      text: "129",
+      text: comment,
     },
   ];
   const mentorInfo = [
     {
       id: 1,
       icon: <FmdGoodIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />,
-      text: "경기도 안양시",
+      text: addr,
     },
     {
       id: 2,
       icon: <LaptopIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />,
-      text: "온라인 강의 / 오프라인 강의",
+      text: onlineOrOffline,
     },
   ];
   const stepFourCarousel = [
