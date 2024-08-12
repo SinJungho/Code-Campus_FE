@@ -17,9 +17,14 @@ import students from "../../mock-data/students";
 import MenteeControl from "./MenteeControl";
 import MatchRequest from "./MatchRequest";
 import { useUserNameStore } from "../../stores/isSignuped/userSucess";
+import { useMyProfileStore } from "../../stores/MyProfile/MyProfileStore";
 
 const MyProfile: React.FC = () => {
+  // 멘토 이름
   const { name, setName } = useUserNameStore();
+  // 코드 캠퍼스 멤버쉽, 매칭 요청 횟수
+  const { memberShip, setMemberShip, matchingRequest, setMatchingRequest } =
+    useMyProfileStore();
   const [value, setValue] = React.useState("1");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -39,7 +44,7 @@ const MyProfile: React.FC = () => {
         <WorkspacePremiumIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />
       ),
       text: "코드 캠퍼스 멤버쉽 :",
-      content: "LV.0",
+      content: `LV.${memberShip}`,
     },
     {
       id: 3,
@@ -101,7 +106,7 @@ const MyProfile: React.FC = () => {
                 fontWeight: "bold",
               }}
             >
-              {name}님
+              {name === "" ? "멘토" : name}님
             </Typography>
             <Button
               variant="contained"
@@ -170,15 +175,20 @@ const MyProfile: React.FC = () => {
       </TabContext>
     </Box>
   );
+
+  function TabLabel() {
+    return (
+      <Box>
+        <S.TabBadge
+          sx={{ fontSize: "0.4rem" }}
+          color="info"
+          badgeContent={matchingRequest}
+        >
+          <Typography sx={{ fontSize: "0.5rem" }}>매칭 요청</Typography>
+        </S.TabBadge>
+      </Box>
+    );
+  }
 };
 
-function TabLabel() {
-  return (
-    <Box>
-      <S.TabBadge sx={{ fontSize: "0.4rem" }} color="info" badgeContent={3}>
-        <Typography sx={{ fontSize: "0.5rem" }}>매칭 요청</Typography>
-      </S.TabBadge>
-    </Box>
-  );
-}
 export default MyProfile;

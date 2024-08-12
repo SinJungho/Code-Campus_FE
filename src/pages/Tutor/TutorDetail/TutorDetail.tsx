@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as S from "../styled";
 import * as S_detail from "./TutorDetail_styled";
 import { Link } from "react-router-dom";
@@ -14,30 +14,41 @@ import TabPanel from "@mui/lab/TabPanel";
 import TutorDefaultInfo from "./TutorDefaultInfo";
 import TutorShortAdvice from "./TutorShortAdvice";
 import TutorMatching from "../TutorMatching/TutorMatching";
+import { useTutorDetailStore } from "../../../stores/Tutor/TutorStore";
 
 const TutorDetail: React.FC = () => {
+  const {
+    like,
+    setLike,
+    comment,
+    setComment,
+    addr,
+    setAddr,
+    onlineOrOffline,
+    setOnlineOrOffline,
+  } = useTutorDetailStore();
   const emojiInfo = [
     {
       id: 1,
       emoji: <FavoriteIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />,
-      text: "129",
+      text: like,
     },
     {
       id: 2,
       emoji: <SmsIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />,
-      text: "129",
+      text: comment,
     },
   ];
   const mentorInfo = [
     {
       id: 1,
       icon: <FmdGoodIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />,
-      text: "경기도 안양시",
+      text: addr,
     },
     {
       id: 2,
       icon: <LaptopIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />,
-      text: "온라인 강의 / 오프라인 강의",
+      text: onlineOrOffline,
     },
   ];
   const stepFourCarousel = [
@@ -197,15 +208,38 @@ const MentorSkillKeyword = () => {
 };
 
 // 선배 상세 페이지 탭 메뉴
-const MentorTabMenu = () => {
+const MentorTabMenu: React.FC = () => {
   const [value, setValue] = React.useState("1");
+  const [isSticky, setIsSticky] = useState(false);
+  const tabRef = useRef<HTMLDivElement>(null);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (tabRef.current) {
+        const tabPosition = tabRef.current.getBoundingClientRect().top;
+        setIsSticky(tabPosition <= 0);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
     <TabContext value={value}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <Box
+        sx={{
+          borderBottom: 1,
+          borderColor: "divider",
+          position: isSticky ? "fixed" : "static",
+          top: isSticky ? 0 : "auto",
+          width: "100%",
+          zIndex: 1000,
+          backgroundColor: "white",
+        }}
+      >
         <TabList onChange={handleChange} variant="fullWidth">
           <Tab
             sx={{ width: "100%", fontSize: "0.5rem" }}
@@ -219,6 +253,7 @@ const MentorTabMenu = () => {
           />
         </TabList>
       </Box>
+      {isSticky && <Box sx={{ height: "48px" }} />}
       <TabPanel value="1">
         <TutorDefaultInfo />
       </TabPanel>
