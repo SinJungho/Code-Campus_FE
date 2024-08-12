@@ -76,7 +76,7 @@ export default function MenuAppBar() {
             {auth && auth ? (
               <Link to="/profile">
                 <Paper>
-                  {userName}님
+                  {userName} 님
                 </Paper>
               </Link>
             ) : (

@@ -22,15 +22,16 @@ const useLogin = () => {
   // axios 헤더에 액세스 토큰 담고 setTimeout으로 리프레쉬 돌리기
   const setAuthTokens = (data: any): boolean => {
     instance.defaults.headers.common['Authorization'] = `Bearer ${data.accessTOKEN}`;
-    setRefreshToken(data.refreshToken);
     setTimeout(() => refreshLogin(), JWT_EXPIRY_TIME - 300000); // 35분에 연장
     return true;
   };
 
   const changeLoginStatus = (setAuthTokens: boolean, response: any) => {
     if (setAuthTokens) {
-      setUserName(response.user_NICK);
-      setUserEmail(response.user_EMAIL);
+      console.log(response);
+      localStorage.setItem('refresh', response.refreshToken);
+      setUserName(response.userName);
+      setUserEmail(response.userEmail);
       setIsLoggedIn(true);
       setIsLoading(false);
     }
@@ -40,7 +41,7 @@ const useLogin = () => {
   const emailLogin = async (inputForm: InputForm): Promise<void> => {
     try {
       const response = await axios.post<ResponseData>(`${API_URL}/api/users/login`, inputForm, { withCredentials: true });
-      changeLoginStatus(setAuthTokens(response.data), response.data);
+      changeLoginStatus(setAuthTokens(response.data.data), response.data.data);
     } catch (error) {
       setIsLoading(false);
       throw error;
@@ -50,8 +51,8 @@ const useLogin = () => {
   // 로그인 갱신
   const refreshLogin = async (): Promise<void> => {
     try {
-      const response = await axios.get<ResponseData>(`${API_URL}/api/users/refreshToken`, { params: { refreshToken: getRefreshToken() }, withCredentials: true });
-      changeLoginStatus(setAuthTokens(response.data), response.data);
+      const response = await axios.post<ResponseData>(`${API_URL}/api/users/refreshToken`, { refreshToken: localStorage.getItem('refresh') }, { withCredentials: true });
+      changeLoginStatus(setAuthTokens(response.data.data), response.data.data);
     } catch (error) {
       setIsLoading(false);
     }
