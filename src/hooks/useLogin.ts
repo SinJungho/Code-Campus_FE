@@ -1,7 +1,7 @@
 import instance from '../api/axiosInstance';
 import axios from 'axios';
 import { useAuthStore, useUserStore } from '../stores/isLogined/loginStore';
-import { getRefreshToken } from '../cookie/cookies';
+import { getRefreshToken, setRefreshToken } from '../cookie/cookies';
 
 const API_URL = process.env.REACT_APP_BASE_URL as string;
 const JWT_EXPIRY_TIME = 2400 * 1000; // 40분(2400초) * 1000(ms)
@@ -22,6 +22,7 @@ const useLogin = () => {
   // axios 헤더에 액세스 토큰 담고 setTimeout으로 리프레쉬 돌리기
   const setAuthTokens = (data: any): boolean => {
     instance.defaults.headers.common['Authorization'] = `Bearer ${data.accessTOKEN}`;
+    setRefreshToken(data.refreshToken);
     setTimeout(() => refreshLogin(), JWT_EXPIRY_TIME - 300000); // 35분에 연장
     return true;
   };
@@ -39,7 +40,6 @@ const useLogin = () => {
   const emailLogin = async (inputForm: InputForm): Promise<void> => {
     try {
       const response = await axios.post<ResponseData>(`${API_URL}/api/users/login`, inputForm, { withCredentials: true });
-      console.log(response.data);
       changeLoginStatus(setAuthTokens(response.data), response.data);
     } catch (error) {
       setIsLoading(false);
