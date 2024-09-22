@@ -73,7 +73,7 @@ export default function MenuAppBar() {
           <Box
             sx={{ minWidth: "4.5rem", display: "flex", justifyContent: "end" }}
           >
-            {auth && auth ? (
+            {localStorage.getItem('isLoggedIn') === 'true' ? (
               <Link to="/profile">
                 <Paper>
                   {userName} 님

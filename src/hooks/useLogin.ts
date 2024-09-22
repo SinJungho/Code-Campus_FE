@@ -32,7 +32,7 @@ const useLogin = () => {
       localStorage.setItem('refresh', response.refreshToken);
       setUserName(response.userName);
       setUserEmail(response.userEmail);
-      setIsLoggedIn(true);
+      setIsLoggedIn(true);  
       setIsLoading(false);
     }
   };
@@ -42,6 +42,7 @@ const useLogin = () => {
     try {
       const response = await axios.post<ResponseData>(`${API_URL}/api/users/login`, inputForm, { withCredentials: true });
       changeLoginStatus(setAuthTokens(response.data.data), response.data.data);
+      localStorage.setItem('isLoggedIn', 'true');
     } catch (error) {
       setIsLoading(false);
       throw error;
@@ -51,7 +52,7 @@ const useLogin = () => {
   // 로그인 갱신
   const refreshLogin = async (): Promise<void> => {
     try {
-      const response = await axios.post<ResponseData>(`${API_URL}/api/users/refreshToken`, { refreshToken: localStorage.getItem('refresh') }, { withCredentials: true });
+      const response = await axios.post<ResponseData>(`${API_URL}/api/users/issueAccessToken`, { refreshToken: localStorage.getItem('refresh') }, { withCredentials: true });
       changeLoginStatus(setAuthTokens(response.data.data), response.data.data);
     } catch (error) {
       setIsLoading(false);
