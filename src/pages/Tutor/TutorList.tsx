@@ -40,6 +40,7 @@ const Home: React.FC = () => {
             </Select>
           </FormControl>
         </S.FilterDiv>
+
         <S.FilterDiv>
           <FormControl
             variant="outlined"
@@ -58,6 +59,28 @@ const Home: React.FC = () => {
               <MenuItem value="offline">서울특별시</MenuItem>
               <MenuItem value="offline">부산광역시</MenuItem>
               <MenuItem value="offline">대전광역시</MenuItem>
+            </Select>
+          </FormControl>
+        </S.FilterDiv>
+
+        <S.FilterDiv>
+          <FormControl
+            variant="outlined"
+            sx={{
+              position: "relative",
+              left: "-20rem",
+              width: "10rem",
+              border: "1px solid #BBBBBB",
+              borderRadius: "10px",
+              mt: "1rem",
+            }}
+          >
+            <Select value={filterMode} label="Mode">
+              <MenuItem value="all">분야</MenuItem>
+              <MenuItem value="online">웹개발</MenuItem>
+              <MenuItem value="offline">데브옵스</MenuItem>
+              <MenuItem value="offline">풀스택</MenuItem>
+              <MenuItem value="offline">모바일</MenuItem>
             </Select>
           </FormControl>
         </S.FilterDiv>
