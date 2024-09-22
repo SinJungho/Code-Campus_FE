@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as S from "../styled";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Box,
   Stepper,
@@ -26,11 +26,14 @@ import ChooseMemberType from "./ChooseMemberType";
 import PrivacyInput from "./PrivacyInput";
 import AddMentee from "./AddMentee";
 import SuccessSign from "./SuccessSign";
+// import useSignUp from "../../../hooks/useSignUp";
 
 interface CheckboxTypes {
   type: string;
 }
+
 const steps = ["회원 유형 선택", "개인 정보 입력", "선배 등록", "완료"];
+
 const SignUp: React.FC = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());

@@ -3,12 +3,48 @@ import * as S from "../styled";
 import React, { ChangeEvent, useState } from "react";
 import { Box, Button, FormControlLabel } from "@mui/material";
 import { useUserNameStore } from "../../../stores/isSignuped/userSucess";
+// import useSignUp from "../../../hooks/useSignUp";
+import { useNavigate } from "react-router-dom";
 
 export default function PrivacyInput() {
   return <PrivacyInputContent />;
 }
 
 export function PrivacyInputContent() {
+  // const { userSignUp } = useSignUp();
+  const navigate = useNavigate();
+
+  const [inputForm, setInputForm] = useState({
+    userEmail: "",
+    password: "",
+    userName: "",
+    userPhone: "",
+    userSex: "",
+    userType: "",
+    keyword: [""],
+    level: "",
+    school: "",
+    classArea: "",
+    classType: "",
+    tutorProfileImg: "",
+    tutorMajor: "",
+    tutorClassNum: "",
+    tutorIntro: "",
+    chatLink: "",
+    portLink: "",
+    authYN: "",
+    tutorLikes: 0,
+    studentType: "",
+  });
+
+  const handleSubmit = async () => {
+    try {
+      // await userSignUp(inputForm);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const { name, setName } = useUserNameStore();
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -23,6 +59,7 @@ export function PrivacyInputContent() {
         id="email-required"
         label="이메일"
         variant="outlined"
+        value={inputForm.userEmail}
       />
       <S.SignTextInput
         fullWidth
@@ -31,6 +68,7 @@ export function PrivacyInputContent() {
         id="password-required"
         label="비밀번호"
         variant="outlined"
+        value={inputForm.password}
       />
       <S.SignTextInput
         fullWidth
@@ -47,7 +85,7 @@ export function PrivacyInputContent() {
         id="name-required"
         label="이름"
         variant="outlined"
-        value={name}
+        value={inputForm.userName}
         onChange={handleName}
       />
 
@@ -59,6 +97,7 @@ export function PrivacyInputContent() {
           id="phone-required"
           label="전화번호"
           variant="outlined"
+          value={inputForm.userPhone}
         />
         <Box
           sx={{

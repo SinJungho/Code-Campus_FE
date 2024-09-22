@@ -18,10 +18,12 @@ import MenteeControl from "./MenteeControl";
 import MatchRequest from "./MatchRequest";
 import { useUserNameStore } from "../../stores/isSignuped/userSucess";
 import { useMyProfileStore } from "../../stores/MyProfile/MyProfileStore";
+import { useUserStore } from "../../stores/isLogined/loginStore";
 
 const MyProfile: React.FC = () => {
   // 멘토 이름
   const { name, setName } = useUserNameStore();
+  const { userName } = useUserStore();
   // 코드 캠퍼스 멤버쉽, 매칭 요청 횟수
   const { memberShip, setMemberShip, matchingRequest, setMatchingRequest } =
     useMyProfileStore();
@@ -106,7 +108,8 @@ const MyProfile: React.FC = () => {
                 fontWeight: "bold",
               }}
             >
-              {name === "" ? "멘토" : name}님
+              {userName === "" ? "멘토님" : userName + "님"}
+              {/* {name === "" ? "멘토" : name}님 */}
             </Typography>
             <Button
               variant="contained"

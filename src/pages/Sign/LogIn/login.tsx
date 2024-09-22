@@ -11,7 +11,9 @@ import useLogin from "../../../hooks/useLogin";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [inputForm, setInputForm] = useState({ userEmail: '', password: '' });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [inputForm, setInputForm] = useState({ userEmail: "", password: "" });
   const { emailLogin } = useLogin();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

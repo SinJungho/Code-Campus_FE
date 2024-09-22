@@ -1,56 +1,96 @@
 import { Box } from "@mui/material";
 import React, { useState } from "react";
 import * as S from "../styled";
-
-interface CheckboxTypes {
-  type: "mentor" | "mentee";
-  id: string;
-  onChange: (type: "mentor" | "mentee") => void;
-}
+// import useSignUp from "../../../hooks/useSignUp";
+import { useNavigate } from "react-router-dom";
 
 interface ChooseMemberTypeProps {
   setType: React.Dispatch<React.SetStateAction<"mentor" | "mentee" | null>>;
 }
+
 export default function ChooseMemberType({ setType }: ChooseMemberTypeProps) {
+  // const { userSignUp } = useSignUp();
+  const navigate = useNavigate();
+
+  const [inputForm, setInputForm] = useState({
+    userEmail: "",
+    password: "",
+    userName: "",
+    userPhone: "",
+    userSex: "",
+    userType: "" as "mentee" | "mentor",
+    keyword: [""],
+    level: "",
+    school: "",
+    classArea: "",
+    classType: "",
+    tutorProfileImg: "",
+    tutorMajor: "",
+    tutorClassNum: "",
+    tutorIntro: "",
+    chatLink: "",
+    portLink: "",
+    authYN: "",
+    tutorLikes: 0,
+    studentType: "",
+  });
+
+  const handleSubmit = async () => {
+    try {
+      // await userSignUp(inputForm);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleCheckboxChange = (type: "mentor" | "mentee") => {
     setType(type);
+    setInputForm({ ...inputForm, userType: type });
   };
+
   return (
     <Box>
       <S.SignUpSubTitle>회원가입</S.SignUpSubTitle>
       <S.SignUpTitle>회원 유형 선택</S.SignUpTitle>
       <Box>
-        <Checkbox type="mentor" id="mentor" onChange={handleCheckboxChange} />
-        <Checkbox type="mentee" id="mentee" onChange={handleCheckboxChange} />
+        <RadioButton
+          type="mentor"
+          id="mentor"
+          selectedType={inputForm.userType}
+          onChange={handleCheckboxChange}
+        />
+        <RadioButton
+          type="mentee"
+          id="mentee"
+          selectedType={inputForm.userType}
+          onChange={handleCheckboxChange}
+        />
       </Box>
     </Box>
   );
 }
 
-function Checkbox({ type, id, onChange }: CheckboxTypes) {
-  const [activeCheck, setActiveCheck] = React.useState<string | null>(null);
+interface RadioButtonProps {
+  type: "mentor" | "mentee";
+  id: string;
+  selectedType: string;
+  onChange: (type: "mentor" | "mentee") => void;
+}
 
-  const handleClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const isChecked = event.target.checked;
-
-    if (isChecked) {
-      setActiveCheck(id);
-      onChange(type);
-    } else {
-      setActiveCheck(null);
-      onChange(type === "mentor" ? "mentee" : "mentor");
-    }
+function RadioButton({ type, id, selectedType, onChange }: RadioButtonProps) {
+  const handleClick = () => {
+    onChange(type);
   };
 
   return (
-    <S.SignUpLabel className={activeCheck === id ? "active" : ""}>
+    <S.SignUpLabel className={selectedType === type ? "active" : ""}>
       <S.CheckInput
-        type="checkbox"
+        type="radio"
         onChange={handleClick}
         name="member"
-        checked={activeCheck === id}
+        value={type}
+        checked={selectedType === type}
       />
-      {/* <S.CheckSubText> */}
       <Box
         sx={{
           display: "flex",
@@ -69,7 +109,6 @@ function Checkbox({ type, id, onChange }: CheckboxTypes) {
             : "코딩을 배울거에요!"}
         </S.ChooseMemberTypeContext>
       </Box>
-      {/* </S.CheckSubText> */}
     </S.SignUpLabel>
   );
 }

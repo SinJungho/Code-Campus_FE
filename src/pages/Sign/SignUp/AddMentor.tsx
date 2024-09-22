@@ -19,9 +19,35 @@ import {
   RadioGroup,
 } from "@mui/material";
 import { data } from "../../../mock-data/addrData";
+// import useSignUp from "../../../hooks/useSignUp";
+import { useNavigate } from "react-router-dom";
+
+// const { userSignUp } = useSignUp();
 
 // 선배 등록 페이지
 export default function AddMentor() {
+  const [inputForm, setInputForm] = useState({
+    userEmail: "",
+    password: "",
+    userName: "",
+    userPhone: "",
+    userSex: "",
+    userType: "",
+    keyword: [""],
+    level: "",
+    school: "",
+    classArea: "",
+    classType: "",
+    tutorProfileImg: "",
+    tutorMajor: "",
+    tutorClassNum: "",
+    tutorIntro: "",
+    chatLink: "",
+    portLink: "",
+    authYN: "",
+    tutorLikes: 0,
+    studentType: "",
+  });
   return (
     <Box>
       <Box>
@@ -124,7 +150,6 @@ function SelectSmall() {
       <Select
         labelId="demo-select-small-label"
         id="demo-select-small"
-        value={gender}
         label="성별"
         onChange={handleChange}
         sx={{ fontSize: "0.5rem", borderRadius: "10px" }}
@@ -150,6 +175,7 @@ function IntroduceKeyword() {
     { id: "2", content: "# 프론트엔드" },
     { id: "3", content: "# 리액트" },
   ];
+
   return (
     <Box>
       <Box sx={{ display: "flex", marginBottom: "0.6rem" }}>

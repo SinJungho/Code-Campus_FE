@@ -49,8 +49,8 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(), // HMR 플러그인 추가
     new webpack.DefinePlugin({
-      'process.env': JSON.stringify(dotenv.config().parsed)
-    })
+      "process.env": JSON.stringify(dotenv.config().parsed),
+    }),
   ],
   stats: {
     children: true,

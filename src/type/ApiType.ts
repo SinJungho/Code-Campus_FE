@@ -1,0 +1,44 @@
+export type SignUpType = {
+  userEmail: string;
+  password: string;
+  userName: string;
+  userPhone: string;
+  userSex: string;
+  userType: string;
+
+  keyword: string[];
+  level: string;
+  school: string;
+  classArea: string;
+  classType: string;
+  tutorProfileImg: string;
+  tutorMajor: string;
+  tutorClassNum: string;
+  tutorIntro: string;
+  chatLink: string;
+  portLink: string;
+  authYN: string;
+  tutorLikes: number;
+  studentType: string;
+
+  setUserEmail: (userEmail: string) => void;
+  setUserName: (userName: string) => void;
+  setUserPassword: (userPassword: string) => void;
+  setUserPhone: (userPhone: string) => void;
+  setUserSex: (userSex: string) => void;
+  setUserType: (userType: string) => void;
+  setKeyword: (keyword: string[]) => void;
+  setLevel: (level: string) => void;
+  setSchool: (school: string) => void;
+  setClassArea: (classArea: string) => void;
+  setClassType: (classType: string) => void;
+  setTutorProfileImg: (tutorProfileImg: string) => void;
+  setTutorMajor: (tutorMajor: string) => void;
+  setTutorIntro: (tutroIntro: string) => void;
+  setTutorClassNum: (tutorClassNum: string) => void;
+  setChatLink: (chatLink: string) => void;
+  setPortLink: (portLink: string) => void;
+  setAuthYN: (authYN: string) => void;
+  setTutorLikes: (tutorLikes: number) => void;
+  setStudentType: (studentType: string) => void;
+};
