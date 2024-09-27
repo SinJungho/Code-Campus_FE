@@ -9,3 +9,4 @@ const instance: AxiosInstance = axios.create({
 });
 
 export default instance;
+

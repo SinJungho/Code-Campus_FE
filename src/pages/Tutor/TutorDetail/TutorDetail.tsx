@@ -16,6 +16,10 @@ import TutorShortAdvice from "./TutorShortAdvice";
 import TutorMatching from "../TutorMatching/TutorMatching";
 import { useTutorDetailStore } from "../../../stores/Tutor/TutorStore";
 
+
+const API_URL = process.env.REACT_APP_BASE_URL as string;
+
+
 const TutorDetail: React.FC = () => {
   const {
     like,
