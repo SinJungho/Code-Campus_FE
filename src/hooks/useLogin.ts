@@ -51,7 +51,7 @@ const useLogin = () => {
   // 로그인 갱신
   const refreshLogin = async (): Promise<void> => {
     try {
-      const response = await axios.post<ResponseData>(`${API_URL}/api/users/refreshToken`, { refreshToken: localStorage.getItem('refresh') }, { withCredentials: true });
+      const response = await axios.post<ResponseData>(`${API_URL}/api/users/issueAccessToken`, { refreshToken: localStorage.getItem('refresh') }, { withCredentials: true });
       changeLoginStatus(setAuthTokens(response.data.data), response.data.data);
     } catch (error) {
       setIsLoading(false);
