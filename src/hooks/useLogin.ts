@@ -32,7 +32,7 @@ const useLogin = () => {
       localStorage.setItem('refresh', response.refreshToken);
       setUserName(response.userName);
       setUserEmail(response.userEmail);
-      setIsLoggedIn(true);
+      setIsLoggedIn(true);  
       setIsLoading(false);
     }
   };
@@ -42,6 +42,7 @@ const useLogin = () => {
     try {
       const response = await axios.post<ResponseData>(`${API_URL}/api/users/login`, inputForm, { withCredentials: true });
       changeLoginStatus(setAuthTokens(response.data.data), response.data.data);
+      localStorage.setItem('isLoggedIn', 'true');
     } catch (error) {
       setIsLoading(false);
       throw error;
