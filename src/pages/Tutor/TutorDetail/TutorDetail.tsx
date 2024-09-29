@@ -1,92 +1,77 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import * as S_detail from "./TutorDetail_styled";
-import { Box, Button, Typography } from "@mui/material";
-import Carousel from "react-material-ui-carousel";
-import { useParams } from "react-router-dom";  // for dynamic tutor id
+import * as S_detail from "./TutorDetail_styled"; // 스타일 컴포넌트 import
+import axios from 'axios'; // axios import
+import { Box } from "@mui/material"; // MUI Box import
+import TutorDefaultInfo from "./TutorDefaultInfo"; // TutorDefaultInfo 컴포넌트 import
 
 const API_URL = process.env.REACT_APP_BASE_URL as string;
 
+// 튜터 데이터를 담을 타입 정의
+interface TutorData {
+  tutorProfileImg: string;
+  keyword: string;
+  name: string;
+  classArea: string;
+  classType: string;
+  school: string;
+  tutorIntro: string;
+  chatLink: string;
+  portLink: string;
+}
+
 const TutorDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>();  // URL 파라미터로부터 id를 받아옴
-  const [tutorDetail, setTutorDetail] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [tutorData, setTutorData] = useState<TutorData | null>(null); // 타입 정의 추가
+  const id = 2; // 가져올 tutor ID
 
   useEffect(() => {
-    // API 호출
-    const fetchTutorDetail = async () => {
+    const fetchTutorData = async () => {
       try {
-        const response = await axios.get(`${API_URL}/api/tutor/${id}/detail`);
-        setTutorDetail(response.data.data);
-        setIsLoading(false);
-      } catch (error: any) {
-        console.error("Error fetching tutor detail:", error.response || error.message);
-        setTutorDetail(null);  // 데이터를 못 가져왔을 경우 대비
-        setIsLoading(false);
+        const response = await axios.get(`${API_URL}/api/tutor/${id}/detail`); 
+        if (response.data.result) {
+          setTutorData(response.data.data); // API에서 가져온 데이터 저장
+        }
+      } catch (error) {
+        console.error("Failed to fetch tutor data:", error);
       }
     };
 
-    fetchTutorDetail();
+    fetchTutorData();
   }, [id]);
 
-  if (isLoading) {
+  // 로딩 중일 때 처리
+  if (!tutorData) {
     return <div>Loading...</div>;
   }
 
-  if (!tutorDetail) {
-    return <div>Failed to load tutor details.</div>;
-  }
-
-  // API에서 가져온 응답 데이터 구조에 맞추어 데이터를 분리를 했는데 일단 좀 더 이해하자
-  const {
-    tutorDetailResponse, // 선배 상세 정보
-    myTuteeListResponse, // 후배 관리 - 수업 진행 중인 후배 리스트
-    requestedMentorshipListResponse, // 매칭 요청 리스트
-  } = tutorDetail;
-
-  const { tutorProfileImg, name } = tutorDetailResponse;
-
   return (
     <S_detail.Wrapper>
-      {/* 이미지 슬라이드 */}
-      <Box>
-        <Carousel height={464} navButtonsAlwaysVisible={true} animation="slide">
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <img src={tutorProfileImg} alt={`${name}'s profile`} />
-          </Box>
-        </Carousel>
-      </Box>
-
-      <Box sx={{ padding: "24px" }}>
-        {/* 선배 기본 정보 */}
-        <Typography sx={{ fontSize: "1.2rem", fontWeight: "bold" }}>
-          {name}
-        </Typography>
-
-        {/* 내 튜티 리스트 */}
-        <Box sx={{ marginTop: "20px" }}>
-          <Typography variant="h6">내 후배 목록</Typography>
-          {myTuteeListResponse.map((tutee: any) => (
-            <Box key={tutee.tuteeNo}>
-              <Typography>{tutee.tuteeName}</Typography>
-              <Typography>{tutee.mentorshipTime}</Typography>
-            </Box>
-          ))}
-        </Box>
-
-        {/* 매칭 요청 리스트 */}
-        <Box sx={{ marginTop: "20px" }}>
-          <Typography variant="h6">매칭 요청 목록</Typography>
-          {requestedMentorshipListResponse.map((request: any) => (
-            <Box key={request.tuteeNo}>
-              <Typography>{request.tuteeName}</Typography>
-              <Typography>{request.mentorshipTime}</Typography>
-              <Typography>{request.note}</Typography>
-            </Box>
-          ))}
-        </Box>
-      </Box>
+      <TutorDefaultInfo tutorData={tutorData} /> {/* TutorDefaultInfo에 tutorData 전달 */}
     </S_detail.Wrapper>
+  );
+};
+
+// 기술 키워드 컴포넌트
+interface MentorSkillKeywordProps {
+  keywords: string[]; // string 배열로 타입 정의
+}
+
+const MentorSkillKeyword: React.FC<MentorSkillKeywordProps> = ({ keywords }) => {
+  return (
+    <Box>
+      {keywords.map((item, index) => {
+        return (
+          <S_detail.KeywordChip
+            sx={{
+              fontSize: "0.5rem",
+              marginRight: "0.4rem",
+              marginBottom: "1rem",
+            }}
+            key={index} // key를 id 대신 index로 설정
+            label={`# ${item}`} // 키워드 앞에 # 추가
+          />
+        );
+      })}
+    </Box>
   );
 };
 

@@ -17,6 +17,9 @@ interface Tutor {
 const Home: React.FC = () => {
   const [popularTutors, setPopularTutors] = useState<Tutor[]>([]);
   const [newTutors, setNewTutors] = useState<Tutor[]>([]);
+  
+
+  
 
   const fetchTutors = async (orderCondition: 'POP' | 'NEW') => {
     try {
@@ -38,8 +41,11 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchTutors('POP');
-    fetchTutors('NEW');
+    const fetchData = async () => {
+      await fetchTutors('POP');
+      await fetchTutors('NEW');
+    };
+    fetchData();
   }, []);
 
   return (

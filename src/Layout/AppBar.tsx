@@ -8,26 +8,28 @@ import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import header_logo from "../assets/img/header_logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Paper } from "@mui/material";
 import TemporaryDrawer from "./Drawer";
 
 export default function MenuAppBar() {
-  const { isLoggedIn, isLoading, setIsLoggedIn, setIsLoading } = useAuthStore();
-  const { userName, userEmail, setUserName, setUserEmail } = useUserStore();
+  const { isLoggedIn, setIsLoggedIn } = useAuthStore();
+  const { userName, setUserName } = useUserStore();
   const [auth, setAuth] = React.useState(isLoggedIn);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAuth(event.target.checked);
   };
 
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleLogout = () => {
+    // 로그아웃 시 처리할 내용
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('authToken'); // 필요시 추가
+    window.localStorage.removeItem('refresh');
+    setIsLoggedIn(false);
+    setUserName(""); // 사용자 이름 초기화
+    navigate("/login"); // 로그인 페이지로 리디렉션
   };
 
   return (
@@ -73,12 +75,26 @@ export default function MenuAppBar() {
           <Box
             sx={{ minWidth: "4.5rem", display: "flex", justifyContent: "end" }}
           >
-            {localStorage.getItem('isLoggedIn') === 'true' ? (
-              <Link to="/profile">
-                <Paper>
-                  {userName} 님
-                </Paper>
-              </Link>
+            {isLoggedIn ? (
+              <>
+                <Link to="/profile">
+                  <Paper>
+                    {userName} 님
+                  </Paper>
+                </Link>
+                <Button
+                  variant="outlined"
+                  onClick={handleLogout} // 로그아웃 버튼 클릭 시 handleLogout 호출
+                  sx={{
+                    borderRadius: 5,
+                    padding: ".2rem 1rem",
+                    fontSize: "0.75rem",
+                    marginLeft: 1,
+                  }}
+                >
+                  로그아웃
+                </Button>
+              </>
             ) : (
               <Link to="/login">
                 <Button

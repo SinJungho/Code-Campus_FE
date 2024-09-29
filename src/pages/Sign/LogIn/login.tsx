@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as S from "../styled";
 import { Link, useNavigate } from "react-router-dom";
-import { Box, Button, InputAdornment, Switch, Tab } from "@mui/material";
+import { Box, Button, InputAdornment } from "@mui/material";
 // Icons
 import PersonIcon from "@mui/icons-material/Person";
 import LockIcon from "@mui/icons-material/Lock";
@@ -11,8 +11,6 @@ import useLogin from "../../../hooks/useLogin";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [inputForm, setInputForm] = useState({ userEmail: "", password: "" });
   const { emailLogin } = useLogin();
 
@@ -31,6 +29,7 @@ const Login: React.FC = () => {
       console.error("로그인 실패:", error);
     }
   };
+
   return (
     <S.Wrapper>
       <Box
@@ -43,7 +42,9 @@ const Login: React.FC = () => {
           padding: "0.3rem 24px",
         }}
       >
-        <S.LogInTitle>로그인</S.LogInTitle>
+        <Link to="/index"> {/* 홈으로 가는 링크 추가 */}
+          <S.LogInTitle>홈</S.LogInTitle>
+        </Link>
         <Link to="/index">
           <CloseIcon sx={{ fontSize: "28px" }} />
         </Link>
@@ -65,8 +66,8 @@ const Login: React.FC = () => {
               </InputAdornment>
             ),
           }}
-        ></S.TextInput>
-        {/* 비밀 번호 입력창 */}
+        />
+        {/* 비밀번호 입력창 */}
         <S.TextInput
           id="outlined-basic"
           label=""
