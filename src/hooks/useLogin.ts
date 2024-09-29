@@ -30,6 +30,7 @@ const useLogin = () => {
     if (setAuthTokens) {
       console.log(response);
       localStorage.setItem('refresh', response.refreshToken);
+      localStorage.setItem('access', response.accessToken)
       setUserName(response.userName);
       setUserEmail(response.userEmail);
       setIsLoggedIn(true);  

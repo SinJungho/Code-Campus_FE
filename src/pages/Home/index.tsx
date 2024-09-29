@@ -38,8 +38,11 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchTutors('POP');
-    fetchTutors('NEW');
+  const fetchData = async () => {
+    await fetchTutors('POP');
+    await fetchTutors('NEW');
+  };
+  fetchData();
   }, []);
 
   return (
