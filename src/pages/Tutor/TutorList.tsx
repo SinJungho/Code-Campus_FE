@@ -6,12 +6,18 @@ import {
   Box,
   Button,
   FormControl,
+  Input,
+  InputAdornment,
   InputLabel,
   MenuItem,
+  OutlinedInput,
   Select,
   SelectChangeEvent,
+  TextField,
+  Typography,
 } from "@mui/material";
 import students from "../../mock-data/students";
+import { Search } from "@mui/icons-material";
 
 const Home: React.FC = () => {
   // const [filterMode, setFilterMode] = useState<string>("all");
@@ -20,74 +26,160 @@ const Home: React.FC = () => {
   //   setFilterMode(event.target.value as string);
   // };
 
-  const [age, setAge] = React.useState("");
+  const [online, setOnline] = React.useState("");
+  const [gender, setGender] = React.useState("");
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value);
+  const handleOnlineChange = (event: SelectChangeEvent) => {
+    setOnline(event.target.value);
+  };
+  const handleGenderChange = (event: SelectChangeEvent) => {
+    setGender(event.target.value);
   };
   return (
     <S.Wrapper>
-      {/* <S.select_wrap>
-        <S.FilterDiv>
-          <FormControl
-            variant="outlined"
-            sx={{
-              position: "relative",
-              left: "-20rem",
-              width: "10rem",
-              border: "1px solid #BBBBBB",
-              borderRadius: "10px",
-              mt: "3rem",
-            }}
-          >
-            <Select value={filterMode} label="Mode">
-              <MenuItem value="all">전체</MenuItem>
-              <MenuItem value="online">온라인</MenuItem>
-              <MenuItem value="offline">오프라인</MenuItem>
-            </Select>
-          </FormControl>
-        </S.FilterDiv>
-        <S.FilterDiv>
-          <FormControl
-            variant="outlined"
-            sx={{
-              position: "relative",
-              left: "-20rem",
-              width: "10rem",
-              border: "1px solid #BBBBBB",
-              borderRadius: "10px",
-              mt: "1rem",
-            }}
-          >
-            <Select value={filterMode} label="Mode">
-              <MenuItem value="all">지역</MenuItem>
-              <MenuItem value="online">경기/인천</MenuItem>
-              <MenuItem value="offline">서울특별시</MenuItem>
-              <MenuItem value="offline">부산광역시</MenuItem>
-              <MenuItem value="offline">대전광역시</MenuItem>
-            </Select>
-          </FormControl>
-        </S.FilterDiv>
-      </S.select_wrap> */}
-      <Box>
-        <FormControl sx={{ m: 1, minWidth: 150 }}>
-          <InputLabel id="demo-simple-select-autowidth-label">Age</InputLabel>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: "1rem",
+        }}
+      >
+        {/* online & offline dropdown menu */}
+        <FormControl
+          sx={{
+            m: 1,
+            minWidth: 170,
+            marginTop: "1rem",
+            textAlign: "center",
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: "#BBBBBB", // Default border color
+                borderRadius: "20px",
+              },
+              "&:hover fieldset": {
+                borderColor: "#BBBBBB", // Border color when hovered
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#BBBBBB", // Border color when focused (clicked)
+                borderWidth: "2px", // Change the border width when focused
+              },
+            },
+          }}
+        >
+          <InputLabel id="demo-simple-select-autowidth-label">
+            오프라인
+          </InputLabel>
           <Select
             labelId="demo-simple-select-autowidth-label"
             id="demo-simple-select-autowidth"
-            value={age}
-            onChange={handleChange}
+            value={online}
+            onChange={handleOnlineChange}
             autoWidth
-            label="Age"
+            label="오프라인"
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={21}>Twenty one</MenuItem>
-            <MenuItem value={22}>Twenty one and a half</MenuItem>
+            <MenuItem value={"오프라인"}>오프라인</MenuItem>
+            <MenuItem value={"온라인"}>온라인</MenuItem>
           </Select>
         </FormControl>
+        {/* campus level button */}
+        <Box
+          sx={{ display: "flex", alignItems: "center", marginTop: "0.6rem" }}
+        >
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#E9FBEC",
+              border: "2px solid #158B28",
+              color: "#158B28",
+              borderRadius: "30px",
+              marginRight: "15px",
+              padding: "5px 25px",
+              "&:hover": {
+                backgroundColor: "#c7dccb",
+              },
+            }}
+          >
+            입문
+          </Button>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#FFF1CE",
+              border: "2px solid #C3951C",
+              color: "#C3951C",
+              borderRadius: "30px",
+              marginRight: "15px",
+              padding: "5px 25px",
+              "&:hover": {
+                backgroundColor: "#d7caaa",
+              },
+            }}
+          >
+            초급
+          </Button>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#FFEAEA",
+              border: "2px solid #FD5555",
+              color: "#FD5555",
+              borderRadius: "30px",
+              marginRight: "15px",
+              padding: "5px 25px",
+              "&:hover": {
+                backgroundColor: "#d8bfbf",
+              },
+            }}
+          >
+            중급 이상
+          </Button>
+        </Box>
+        {/* gender dropdown menu */}
+        <FormControl
+          sx={{
+            m: 1,
+            minWidth: 170,
+            marginTop: "1rem",
+            textAlign: "center",
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: "#BBBBBB", // Default border color
+                borderRadius: "20px",
+              },
+              "&:hover fieldset": {
+                borderColor: "#BBBBBB", // Border color when hovered
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#BBBBBB", // Border color when focused (clicked)
+                borderWidth: "2px", // Change the border width when focused
+              },
+            },
+          }}
+        >
+          <InputLabel id="demo-simple-select-autowidth-label">성별</InputLabel>
+          <Select
+            labelId="demo-simple-select-autowidth-label"
+            id="demo-simple-select-autowidth"
+            value={gender}
+            onChange={handleGenderChange}
+            autoWidth
+            label="성별"
+          >
+            <MenuItem value={"M"}>남성</MenuItem>
+            <MenuItem value={"W"}>여성</MenuItem>
+          </Select>
+        </FormControl>
+        <OutlinedInput
+          sx={{ marginTop: "20px", borderRadius: "40px" }}
+          placeholder="검색어를 입력하세요..."
+          startAdornment={
+            <InputAdornment position="end">
+              <Search />
+            </InputAdornment>
+          }
+        />
       </Box>
       <S.CardDiv>
         {students.map((student, index) => (
