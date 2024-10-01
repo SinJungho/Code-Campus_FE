@@ -1,71 +1,123 @@
-import { create } from "zustand";
-import instance from "../../api/axiosInstance";
-import { SignUpType } from "../../type/ApiType";
+import create from 'zustand';
 
-/**
- * 회원 가입 결과 타입
- */
-type SignResult = {
-  isSignUpOk: boolean;
-  isSigning: boolean;
-  setIsSignUpOk: (isSignUpOk: boolean) => void;
-  setIsSigning: (isSigning: boolean) => void;
-};
+interface SignInputValueStore {
+  userEmail: string;
+  userPassword: string;
+  userName: string;
+  userPhone: string;
+  userSex: string;
+  selectedKeywords: string[];
+  selectedLevel: string;
+  userType: string;
+  studentType: string;
+  chatLink: string;
+  classArea: string;
+  classType: string;
+  portLink: string;
+  school: string;
+  tutorProfileImg: string;
+  tutorIntro: string;
+  tutorMajor: string;
+  tutorClassNum: string;
 
-/**
- * 회원 가입 결과 Store 함수
- */
-export const useSignResultStore = create<SignResult>((set) => ({
-  isSignUpOk: false,
-  isSigning: false,
+  // Setter 메서드
+  setUserEmail: (email: string) => void;
+  setUserPassword: (password: string) => void;
+  setUserName: (name: string) => void;
+  setUserPhone: (phone: string) => void;
+  setUserSex: (userSex: string) => void;
+  setSelectedKeywords: (keywords: string[]) => void;
+  setSelectedLevel: (level: string) => void;
+  setUserType: (userType: string) => void;
+  setStudentType: (studentType: string) => void;
+  setChatLink: (chatLink: string) => void;
+  setClassArea: (classArea: string) => void;
+  setClassType: (classType: string) => void;
+  setPortLink: (portLink: string) => void;
+  setSchool: (school: string) => void;
+  setTutorProfileImg: (tutorProfileImg: string) => void;
+  setTutorIntro: (tutorIntro: string) => void;
+  setTutorMajor: (tutorMajor: string) => void;
+  setTutorClassNum: (classTutorNum: string) => void;
 
-  setIsSignUpOk: (isSignUpOk: boolean) => set({ isSignUpOk }),
-  setIsSigning: (isSigning: boolean) => set({ isSigning }),
-}));
+  // Getter 메서드
+  getUserEmail: () => string;
+  getUserPassword: () => string;
+  getUserName: () => string;
+  getUserPhone: () => string;
+  getUserSex: () => string;
+  getSelectedKeywords: () => string[];
+  getSelectedLevel: () => string;
+  getUserType: () => string;
+  getStudentType: () => string;
+  getChatLink: () => string;
+  getClassArea: () => string;
+  getClassType: () => string;
+  getPortLink: () => string;
+  getSchool: () => string;
+  getTutorProfileImg: () => string;
+  getTutorIntro: () => string;
+  getTutorMajor: () => string;
+  getTutorClassNum: () => string;
+}
 
-/***
- * 회원 가입 입력창 Store 함수
- */
-export const useSignInputValueStore = create<SignUpType>((set) => ({
-  userEmail: "",
-  password: "",
-  userName: "",
-  userPhone: "",
-  userSex: "",
-  userType: "",
-  keyword: [],
-  level: "",
-  school: "",
-  classArea: "",
-  classType: "",
-  tutorProfileImg: "",
-  tutorMajor: "",
-  tutorIntro: "",
-  tutorLikes: 0,
-  tutorClassNum: "",
-  chatLink: "",
-  portLink: "",
-  authYN: "",
-  studentType: "",
+export const useSignInputValueStore = create<SignInputValueStore>((set, get) => ({
+  userEmail: '',
+  userPassword: '',
+  userName: '',
+  userPhone: '',
+  userSex: '',
+  selectedKeywords: [],
+  selectedLevel: '',
+  userType: '',
+  studentType: '',
+  chatLink: '',
+  classArea: '',
+  classType: '',
+  portLink: '',
+  school: '',
+  tutorProfileImg: '',
+  tutorIntro: '',
+  tutorMajor: '',
+  tutorClassNum: '',
 
-  setUserEmail: (userEmail: string) => set({ userEmail }),
-  setUserPassword: (password: string) => set({ password }),
-  setUserName: (userName: string) => set({ userName }),
-  setUserPhone: (userPhone: string) => set({ userPhone }),
-  setUserSex: (userSex: string) => set({ userSex }),
-  setUserType: (userType: string) => set({ userType }),
-  setKeyword: (keyword: string[]) => set({ keyword }),
-  setLevel: (level: string) => set({ level }),
-  setSchool: (school: string) => set({ school }),
-  setClassArea: (classArea: string) => set({ classArea }),
-  setClassType: (classType: string) => set({ classType }),
-  setTutorProfileImg: (tutorProfileImg: string) => set({ tutorProfileImg }),
-  setTutorMajor: (tutorMajor: string) => set({ tutorMajor }),
-  setTutorClassNum: (tutorClassNum: string) => set({ tutorClassNum }),
-  setTutorIntro: (tutorIntro: string) => set({ tutorIntro }),
-  setChatLink: (chatLink: string) => set({ chatLink }),
-  setPortLink: (portLink: string) => set({ portLink }),
-  setAuthYN: (authYN: string) => set({ authYN }),
-  setTutorLikes: (tutorLikes: number) => set({ tutorLikes }),
-  setStudentType: (studentType: string) => set({ studentType }),
+  // Setter 메서드 구현
+  setUserEmail: (email) => set({ userEmail: email }),
+  setUserPassword: (password) => set({ userPassword: password }),
+  setUserName: (name) => set({ userName: name }),
+  setUserPhone: (phone) => set({ userPhone: phone }),
+  setUserSex: (userSex) => set({ userSex }),
+  setSelectedKeywords: (keywords) => set({ selectedKeywords: keywords }),
+  setSelectedLevel: (level) => set({ selectedLevel: level }),
+  setUserType: (userType) => set({ userType }),
+  setStudentType: (studentType) => set({ studentType }),
+  setChatLink: (chatLink) => set({ chatLink }),
+  setClassArea: (classArea) => set({ classArea }),
+  setClassType: (classType) => set({ classType }),
+  setPortLink: (portLink) => set({ portLink }),
+  setSchool: (school) => set({ school }),
+  setTutorProfileImg: (tutorProfileImg) => set({ tutorProfileImg }),
+  setTutorIntro: (tutorIntro) => set({ tutorIntro }),
+  setTutorMajor: (tutorMajor) => set({ tutorMajor }),
+  setTutorClassNum: (tutorClassNum) => set({tutorClassNum}),
+
+  // Getter 메서드 구현
+  getUserEmail: () => get().userEmail,
+  getUserPassword: () => get().userPassword,
+  getUserName: () => get().userName,
+  getUserPhone: () => get().userPhone,
+  getUserSex: () => get().userSex,
+  getSelectedKeywords: () => get().selectedKeywords,
+  getSelectedLevel: () => get().selectedLevel,
+  getUserType: () => get().userType,
+  getStudentType: () => get().studentType,
+  getChatLink: () => get().chatLink,
+  getClassArea: () => get().classArea,
+  getClassType: () => get().classType,
+  getPortLink: () => get().portLink,
+  getSchool: () => get().school,
+  getTutorProfileImg: () => get().tutorProfileImg,
+  getTutorIntro: () => get().tutorIntro,
+  getTutorMajor: () => get().tutorMajor,
+  getTutorClassNum: () => get().tutorClassNum,
 }));

@@ -157,11 +157,11 @@ const MyProfile: React.FC = () => {
               value="2"
             />
 
-            <Tab
+            {/* <Tab
               sx={{ width: "100%", fontSize: "0.5rem" }}
               label="코드캠퍼스 멤버쉽"
               value="3"
-            />
+            /> */}
           </TabList>
         </Box>
         <TabPanel value="1">
@@ -172,9 +172,9 @@ const MyProfile: React.FC = () => {
             <MatchRequest />
           </Typography>
         </TabPanel>
-        <TabPanel value="3">
+        {/* <TabPanel value="3">
           <Typography>코드캠퍼스 멤버쉽</Typography>
-        </TabPanel>
+        </TabPanel> */}
       </TabContext>
     </Box>
   );

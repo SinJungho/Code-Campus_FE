@@ -1,85 +1,164 @@
 import React, { useState } from "react";
 import * as S from "../styled";
-import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import {
-  Box,
-  Stepper,
-  Step,
-  StepLabel,
-  Button,
-  Typography,
-  TextField,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Chip,
-  FormLabel,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-} from "@mui/material";
-// Icons
+import { Link } from "react-router-dom";
+import { Box, Button, Stepper, Step } from "@mui/material";
 import WestIcon from "@mui/icons-material/West";
 import AddMentor from "./AddMentor";
 import ChooseMemberType from "./ChooseMemberType";
 import PrivacyInput from "./PrivacyInput";
 import AddMentee from "./AddMentee";
 import SuccessSign from "./SuccessSign";
-// import useSignUp from "../../../hooks/useSignUp";
-
-interface CheckboxTypes {
-  type: string;
-}
+import { useSignInputValueStore } from "../../../stores/isSignuped/SignUpStore";
+import { sendData } from "../../../api/sign"; // sendData 함수 임포트
 
 const steps = ["회원 유형 선택", "개인 정보 입력", "선배 등록", "완료"];
 
 const SignUp: React.FC = () => {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set<number>());
-  const [type, setType] = React.useState<"mentor" | "mentee" | null>(null);
+  const [activeStep, setActiveStep] = useState(0);
+  const [type, setType] = useState<"TUTOR" | "BASIC" | null>(null);
+  const {setChatLink, setClassArea, setClassType,setPortLink, setSchool,setTutorIntro, setTutorMajor,
+    setTutorProfileImg, setSelectedKeywords, setUserSex ,setSelectedLevel, setStudentType, setUserEmail, 
+    setUserPassword, setUserName, setUserPhone, setTutorClassNum,
+    getUserPassword, getTutorClassNum, getUserEmail, getUserName, getUserPhone, getUserSex ,getUserType, getStudentType,
+    getSelectedKeywords, getSelectedLevel, getChatLink,getClassArea, getClassType, getPortLink, getSchool, 
+    getTutorProfileImg, getTutorIntro, getTutorMajor}
+    = useSignInputValueStore();
 
-  const isStepOptional = (step: number) => {
-    return step === 2;
-  };
+  const [inputForm, setInputForm] = useState({
+    userEmail: "",
+    password: "",
+    userName: "",
+    userPhone: "",
+    confirmPassword: "",
+  });
 
-  const isStepSkipped = (step: number) => {
-    return skipped.has(step);
-  };
-
-  const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
+  const handleNext = async () => {
+    if (activeStep === 0 && !type) {
+      alert("회원 유형을 선택해주세요.");
+      return;
     }
 
+    if (activeStep === 1) {
+      const { userEmail, password, userName, userPhone, confirmPassword } = inputForm;
+
+      if (!userEmail) {
+        alert("이메일을 입력해주세요.");
+        return;
+      }
+      if (!password) {
+        alert("비밀번호를 입력해주세요.");
+        return;
+      }
+      if (!confirmPassword) {
+        alert("비밀번호 확인을 입력해주세요.");
+        return;
+      }
+      if (!userName) {
+        alert("이름을 입력해주세요.");
+        return;
+      }
+      if (!userPhone) {
+        alert("전화번호를 입력해주세요.");
+        return;
+      }
+      if (password !== confirmPassword) {
+        alert("비밀번호가 일치하지 않습니다.");
+        return;
+      }
+      
+      // 입력값을 스토어에 저장
+      setUserEmail(userEmail);
+      setUserPassword(password);
+      setUserName(userName);
+      setUserPhone(userPhone);
+    }
+
+    // AddMentee 또는 AddMentor에서 유효성 검사
+    if (activeStep === 2) {
+      // 후배 등록 (AddMentee)
+      if (type === "BASIC") {
+        const selectedKeywords = getSelectedKeywords();
+        const selectedLevel = getSelectedLevel();
+        const studentType = getStudentType();
+        const gender = getUserSex();
+
+        if (!studentType) {
+          alert("학생 유형을 선택해주세요.");
+          return;
+        }
+        if (!gender) {
+          alert("성별을 선택해주세요.");
+          return;
+        }
+        if (selectedKeywords.length ===-1) {
+          alert("소개 키워드를 선택해주세요.");
+          return;
+        }
+        if (!selectedLevel) {
+          alert("현재 자신의 수준을 선택해주세요.");
+          return;
+        }
+
+        setSelectedKeywords(selectedKeywords);
+        setStudentType(studentType);
+        setSelectedLevel(selectedLevel);
+        setUserSex(gender);
+      }
+
+      // 선배 등록 (AddMentor)
+      if (type === "TUTOR") {
+        // AddMentor 컴포넌트의 상태를 확인해야 함
+        // 여기에 AddMentor에서 유효성 검사를 추가할 수 있습니다.
+      }
+    }
+
+    // 마지막 단계에서 데이터 서버로 전송
+    if (activeStep === steps.length - 1) {
+      const finalData = {
+        userEmail: getUserEmail(),
+        password: getUserPassword(),
+        userName: getUserName(),
+        userPhone: getUserPhone(),
+        userType: getUserType(),
+        studentType: getStudentType(),
+        keyword: getSelectedKeywords(),
+        level: getSelectedLevel(),
+        userSex: getUserSex(),
+        chatLink: getChatLink(),
+        classArea: getClassArea(),
+        classType: getClassType(),
+        portLink: getPortLink(),
+        school: getSchool(),
+        tutorProfileImg: getTutorProfileImg(),
+        tutorIntro: getTutorIntro(),
+        tutorMajor: getTutorMajor(),
+        tutorClassNum: getTutorClassNum(),
+        // tutoprofileImg: getTutorProfileImg(),
+      };
+
+      console.log("최종 데이터 전송:", finalData);
+
+      // API 호출
+      try {
+        await sendData(finalData); // sendData 함수 호출
+        console.log("회원가입 성공:", finalData); // 응답 데이터 확인
+        // 성공 처리 로직 추가 (예: 성공 메시지 표시, 리다이렉션 등)
+        setActiveStep((prev) => prev + 1);
+      } catch (error) {
+        console.error("회원가입 실패:", error);
+        alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+      }
+      return; // 더 이상 진행하지 않음
+    }
+
+    // 다음 단계로 진행
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("현재 단계에서 건너뛰기를 할 수 없습니다.");
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
   return (
     <S.Wrapper sx={{ marginBottom: "5rem" }} className="margin-bottom">
       <Box
@@ -97,99 +176,34 @@ const SignUp: React.FC = () => {
           <WestIcon sx={{ fontSize: "28px" }} />
         </Link>
       </Box>
-      {/* stepper */}
       <Box sx={{ padding: "0px 24px" }}>
         <S.SignStepper activeStep={activeStep} sx={{ margin: "1.5rem 0" }}>
-          {steps.map((label, index) => {
-            const stepProps: { completed?: boolean } = {};
-            const labelProps: {
-              optional?: React.ReactNode;
-            } = {};
-
-            if (isStepSkipped(index)) {
-              stepProps.completed = false;
-            }
-            return (
-              <Step key={label} {...stepProps}>
-                <S.StepperLabel {...labelProps}>{label}</S.StepperLabel>
-              </Step>
-            );
-          })}
+          {steps.map((label) => (
+            <Step key={label}>
+              <S.StepperLabel>{label}</S.StepperLabel>
+            </Step>
+          ))}
         </S.SignStepper>
         {activeStep === steps.length ? (
           <React.Fragment>
             <SuccessSign />
-            <Button
-              sx={{
-                borderRadius: "10px",
-                fontSize: "0.5rem",
-                fontWeight: "bold",
-                padding: "0.5rem",
-                marginTop: "3.5rem",
-              }}
-              fullWidth
-              variant="contained"
-              onClick={handleReset}
-            >
-              홈으로 돌아가기
-            </Button>
+            <Button onClick={() => setActiveStep(0)}>홈으로 돌아가기</Button>
           </React.Fragment>
         ) : (
-          <React.Fragment>
-            <Box sx={{ mt: 2, mb: 1 }}>
-              {/* 회원 유형 선택 */}
-              {activeStep === 0 && <ChooseMemberType setType={setType} />}
-              {/* 개인 정보 입력 */}
-              {activeStep === 1 && <PrivacyInput />}
-              {/* 선배 등록 */}
-              {activeStep === 2 && type === "mentor" && <AddMentor />}
-              {activeStep === 2 && type === "mentee" && <AddMentee />}
-            </Box>
-
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                pt: 2,
-                gap: "10px",
-              }}
-            >
-              <Button
-                variant="contained"
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{
-                  fontSize: "0.5rem",
-                  fontWeight: "bold",
-                  padding: "0.5rem 0",
-                  borderRadius: "10px",
-                }}
-              >
+          <Box sx={{ mt: 2, mb: 1 }}>
+            {activeStep === 0 && <ChooseMemberType setType={setType} />}
+            {activeStep === 1 && <PrivacyInput inputForm={inputForm} setInputForm={setInputForm} />}
+            {activeStep === 2 && type === "TUTOR" && <AddMentor />}
+            {activeStep === 2 && type === "BASIC" && <AddMentee />}
+            <Box sx={{ display: "flex", flexDirection: "column", pt: 2, gap: "10px" }}>
+              <Button variant="contained" color="inherit" disabled={activeStep === 0} onClick={handleBack}>
                 이전
               </Button>
-              <Box
-                sx={{
-                  flex: "1 1 auto",
-                  fontSize: "0.5rem",
-                  fontWeight: "bold",
-                }}
-              />
-
-              <Button
-                variant="contained"
-                onClick={handleNext}
-                sx={{
-                  fontSize: "0.5rem",
-                  fontWeight: "bold",
-                  padding: "0.5rem 0px",
-                  borderRadius: "10px",
-                }}
-              >
-                {activeStep === steps.length - 1 ? "완료" : "다음으로"}
+              <Button variant="contained" onClick={handleNext}>
+                {activeStep === steps.length - 1 ? "완료" : "다음"}
               </Button>
             </Box>
-          </React.Fragment>
+          </Box>
         )}
       </Box>
     </S.Wrapper>

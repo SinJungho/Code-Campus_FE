@@ -34,13 +34,13 @@ export default function LabelBottomNavigation() {
             }}
             icon={<Home sx={{ fontSize: isMobile ? "2rem" : "2rem" }} />}
           />
-          <BottomNavigationAction
+          {/* <BottomNavigationAction
             label="서비스 소개"
             onClick={() => {
               navigate("/intro");
             }}
             icon={<Assistant sx={{ fontSize: isMobile ? "2rem" : "2rem" }} />}
-          />
+          /> */}
           <BottomNavigationAction
             label="선배 탐색"
             onClick={() => {
@@ -48,13 +48,13 @@ export default function LabelBottomNavigation() {
             }}
             icon={<PeopleAlt sx={{ fontSize: isMobile ? "2rem" : "2rem" }} />}
           />
-          <BottomNavigationAction
+          {/* <BottomNavigationAction
             label="코캠 공모전"
             onClick={() => {
               navigate("/awards");
             }}
             icon={<EmojiEvents sx={{ fontSize: isMobile ? "2rem" : "2rem" }} />}
-          />
+          /> */}
         </BottomNavigation>
       </ThemeProvider>
     </Paper>
