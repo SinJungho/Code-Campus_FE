@@ -18,31 +18,34 @@ const Home: React.FC = () => {
   const [popularTutors, setPopularTutors] = useState<Tutor[]>([]);
   const [newTutors, setNewTutors] = useState<Tutor[]>([]);
 
-  const fetchTutors = async (orderCondition: 'POP' | 'NEW') => {
+  const fetchTutors = async (orderCondition: "POP" | "NEW") => {
     try {
-      const response = await axios.post('http://localhost:8080/api/tutor/find', {
-        orderCondition
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/tutor/find",
+        {
+          orderCondition,
+        }
+      );
       if (response.data.result && response.status === 200) {
-        if (orderCondition === 'POP') {
+        if (orderCondition === "POP") {
           setPopularTutors(response.data.data);
-        } else if (orderCondition === 'NEW') {
+        } else if (orderCondition === "NEW") {
           setNewTutors(response.data.data);
         }
       } else {
-        console.error('Failed to fetch tutors:', response);
+        console.error("Failed to fetch tutors:", response);
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
   useEffect(() => {
-  const fetchData = async () => {
-    await fetchTutors('POP');
-    await fetchTutors('NEW');
-  };
-  fetchData();
+    const fetchData = async () => {
+      await fetchTutors("POP");
+      await fetchTutors("NEW");
+    };
+    fetchData();
   }, []);
 
   return (
