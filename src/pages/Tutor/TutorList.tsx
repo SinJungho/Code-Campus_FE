@@ -62,7 +62,7 @@ const Home: React.FC = () => {
                 borderColor: "#BBBBBB", // Border color when hovered
               },
               "&.Mui-focused fieldset": {
-                borderColor: "#BBBBBB", // Border color when focused (clicked)
+                borderColor: "blue", // Border color when focused (clicked)
                 borderWidth: "2px", // Change the border width when focused
               },
             },
@@ -152,7 +152,7 @@ const Home: React.FC = () => {
                 borderColor: "#BBBBBB", // Border color when hovered
               },
               "&.Mui-focused fieldset": {
-                borderColor: "#BBBBBB", // Border color when focused (clicked)
+                borderColor: "blue", // Border color when focused (clicked)
                 borderWidth: "2px", // Change the border width when focused
               },
             },
