@@ -181,7 +181,16 @@ function IntroduceKeyword({ setSelectedKeywords }: { setSelectedKeywords: (keywo
   const keyword = [
     { id: "1", content: "웹개발" },
     { id: "2", content: "프론트엔드" },
-    { id: "3", content: "리액트" },
+    { id: "3", content: "백엔드" },
+    { id: "4", content: "리액트" },
+    { id: "5", content: "자바스크립트" },
+    { id: "6", content: "자바" },
+    { id: "7", content: "스프링부트" },
+    { id: "8", content: "C" },
+    { id: "9", content: "C#" },
+    { id: "10", content: "C++" },
+    { id: "11", content: "타입스크립트" },
+
   ];
 
   const toggleKeyword = (content: string) => {
@@ -214,6 +223,9 @@ function IntroduceKeyword({ setSelectedKeywords }: { setSelectedKeywords: (keywo
           label={item.content}
           onClick={() => toggleKeyword(item.content)}
           sx={{
+            border: selectedKeywords.includes(item.content) 
+            ? "none"  // 선택되면 테두리 없음
+            : "1px solid grey", // 선택되지 않았을 때 검정색 테두리
             cursor: "pointer",
             backgroundColor: selectedKeywords.includes(item.content)
               ? "#d3d3d3"
@@ -233,9 +245,9 @@ function TeachLevel({ setSelectedLevel }: { setSelectedLevel: (level: string) =>
   const [selectedLevel, setSelectedLevelLocal] = React.useState("");
 
   const levels = [
-    { id: "1", content: "입문", color: "#e9fbec", border: "#158b28" },
-    { id: "2", content: "초급", color: "#FFF1CE", border: "#C3951C" },
-    { id: "3", content: "중급 이상", color: "#FFEAEA", border: "#FD5555" },
+    { id: "1", content: "입문", color: "#e9fbec", border: "#158b28", darkColor: "#dddddd" },
+    { id: "2", content: "초급", color: "#FFF1CE", border: "#C3951C", darkColor: "#dddddd" },
+    { id: "3", content: "중급 이상", color: "#FFEAEA", border: "#FD5555", darkColor: "#dddddd"},
   ];
 
   const handleLevelChange = (level: string) => {
@@ -271,7 +283,7 @@ function TeachLevel({ setSelectedLevel }: { setSelectedLevel: (level: string) =>
               <S.KeywordChip
                 label={level.content}
                 sx={{
-                  backgroundColor: level.color,
+                  backgroundColor: selectedLevel === level.content ? level.darkColor : level.color, // 선택된 경우 어두운 색상
                   border: "1px solid",
                   borderColor: level.border,
                   color: level.border,

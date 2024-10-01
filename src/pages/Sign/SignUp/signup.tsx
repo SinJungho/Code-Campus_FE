@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as S from "../styled";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { Box, Button, Stepper, Step } from "@mui/material";
 import WestIcon from "@mui/icons-material/West";
 import AddMentor from "./AddMentor";
@@ -107,8 +107,67 @@ const SignUp: React.FC = () => {
 
       // 선배 등록 (AddMentor)
       if (type === "TUTOR") {
-        // AddMentor 컴포넌트의 상태를 확인해야 함
-        // 여기에 AddMentor에서 유효성 검사를 추가할 수 있습니다.
+        const school = getSchool();
+        const tutorMajor = getTutorMajor();
+        const tutorClassNum = getTutorClassNum();
+        const classType = getClassType();
+        const classArea = getClassArea();
+        const tutorIntro = getTutorIntro();
+        const chatLink = getChatLink();
+        const portLink = getPortLink();
+        const selectedKeywords = getSelectedKeywords();
+        const selectedLevel = getSelectedLevel();
+        const studentType = getStudentType();
+        const gender = getUserSex();
+
+        if (!school) {
+          alert("학교를 입력해주세요.");
+          return;
+        }
+        if (!tutorMajor) {
+          alert("전공을 입력해주세요.");
+          return;
+        }
+        if (!tutorClassNum) {
+          alert("학번을 입력해주세요.");
+          return;
+        }
+        if (!studentType) {
+          alert("학생 유형을 선택해주세요.");
+          return;
+        }
+        if (!gender) {
+          alert("성별을 선택해주세요.");
+          return;
+        }
+        if (selectedKeywords.length ===-1) {
+          alert("소개 키워드를 선택해주세요.");
+          return;
+        }
+        if (!selectedLevel) {
+          alert("현재 자신의 수준을 선택해주세요.");
+          return;
+        }
+        if (!classType) {
+          alert("수업 방식을 선택해주세요.");
+          return;
+        }
+        if (!classArea) {
+          alert("지역을 입력해주세요.");
+          return;
+        }
+        if (!tutorIntro) {
+          alert("자기소개를 해주세요.");
+          return;
+        }
+        if (!chatLink) {
+          alert("오픈채팅 링크를 입력해주세요.");
+          return;
+        }
+        if (!portLink) {
+          alert("포트폴리오 링크를 입력해주세요.");
+          return;
+        }
       }
     }
 
@@ -159,6 +218,8 @@ const SignUp: React.FC = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const navigate = useNavigate(); // useNavigate 훅 사용
+
   return (
     <S.Wrapper sx={{ marginBottom: "5rem" }} className="margin-bottom">
       <Box
@@ -187,7 +248,7 @@ const SignUp: React.FC = () => {
         {activeStep === steps.length ? (
           <React.Fragment>
             <SuccessSign />
-            <Button onClick={() => setActiveStep(0)}>홈으로 돌아가기</Button>
+            <Button onClick={() => navigate('/')}>홈으로 돌아가기</Button>
           </React.Fragment>
         ) : (
           <Box sx={{ mt: 2, mb: 1 }}>
