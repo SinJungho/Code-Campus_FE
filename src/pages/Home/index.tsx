@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from "react";
-import axios, { AxiosError } from "axios";
+import React from "react";
 import * as S from "./styled";
 import { Link } from "react-router-dom";
-import { Avatar, Button } from "@mui/material";
+import { ArrowRight, Search } from "@mui/icons-material";
+import { Avatar, Button, IconButton, InputBase, Paper } from "@mui/material";
+import students from "../../mock-data/students";
 
-interface Tutor {
-  userNo: number;
-  tutorProfileImg: string;
-  userName: string;
-  keyword: string[];
-  school: string;
-  classArea: string;
-}
+const list: number[] = [1, 2, 3];
 
 const Home: React.FC = () => {
   const [popularTutors, setPopularTutors] = useState<Tutor[]>([]);
