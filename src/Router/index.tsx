@@ -10,7 +10,7 @@ const Router = () => {
         <Route element={<Layout />}>
           <Route path="*" element={<P.Home />} />
           <Route path="/tutorList" element={<P.TutorList />} />
-           <Route path="/TutorDetail/:userNo" element={<P.TutorDetail />} />
+          <Route path="/TutorDetail/:userNo" element={<P.TutorDetail />} />
           <Route path="/tutorMatching" element={<P.TutorMatching />} />
         </Route>
         <Route path="/login" element={<P.Login />} />
