@@ -51,28 +51,28 @@ const TutorDetail: React.FC = () => {
       text: onlineOrOffline,
     },
   ];
-  const stepFourCarousel = [
-    {
-      id: 1,
-      url: "https://via.placeholder.com/824x464?text=Mentor1.png",
-      alt: "멘토 사진 1",
-    },
-    {
-      id: 2,
-      url: "https://via.placeholder.com/824x464?text=Mentor2.png",
-      alt: "멘토 사진 2",
-    },
-    {
-      id: 3,
-      url: "https://via.placeholder.com/824x464?text=Mentor3.png",
-      alt: "멘토 사진 2",
-    },
-  ];
+  // const stepFourCarousel = [
+  //   {
+  //     id: 1,
+  //     url: "https://via.placeholder.com/824x464?text=Mentor1.png",
+  //     alt: "멘토 사진 1",
+  //   },
+  //   {
+  //     id: 2,
+  //     url: "https://via.placeholder.com/824x464?text=Mentor2.png",
+  //     alt: "멘토 사진 2",
+  //   },
+  //   {
+  //     id: 3,
+  //     url: "https://via.placeholder.com/824x464?text=Mentor3.png",
+  //     alt: "멘토 사진 2",
+  //   },
+  // ];
   return (
     <S_detail.Wrapper>
       {/* 이미지 슬라이드 */}
       <Box>
-        <Carousel
+        {/* <Carousel
           height={464}
           navButtonsAlwaysVisible={true}
           animation="slide"
@@ -99,7 +99,7 @@ const TutorDetail: React.FC = () => {
               <img src={content.url} alt={content.alt} />
             </Box>
           ))}
-        </Carousel>
+        </Carousel> */}
       </Box>
       <Box sx={{ padding: "24px" }}>
         {/* 선배 기술 스택 */}
