@@ -1,53 +1,47 @@
-import * as S_privacy from "./PrivacyInput_styled";
 import * as S from "../styled";
-import React, { ChangeEvent, useState } from "react";
-import { Box, Button, FormControlLabel } from "@mui/material";
+import React, { ChangeEvent } from "react";
+import { Box } from "@mui/material";
 import { useUserNameStore } from "../../../stores/isSignuped/userSucess";
-// import useSignUp from "../../../hooks/useSignUp";
-import { useNavigate } from "react-router-dom";
+import { useSignInputValueStore } from "../../../stores/isSignuped/SignUpStore"; // 추가된 import
 
-export default function PrivacyInput() {
-  return <PrivacyInputContent />;
+interface PrivacyInputProps {
+  inputForm: {
+    userEmail: string;
+    password: string;
+    userName: string;
+    userPhone: string;
+    confirmPassword: string;
+  };
+  setInputForm: React.Dispatch<React.SetStateAction<{
+    userEmail: string;
+    password: string;
+    userName: string;
+    userPhone: string;
+    confirmPassword: string;
+  }>>;
 }
 
-export function PrivacyInputContent() {
-  // const { userSignUp } = useSignUp();
-  const navigate = useNavigate();
+export default function PrivacyInput({ inputForm, setInputForm }: PrivacyInputProps) {
+  const { setName } = useUserNameStore();
+  const { setUserEmail, setUserPassword, setUserName, setUserPhone } = useSignInputValueStore(); // 스토어에서 setter 함수 가져오기
 
-  const [inputForm, setInputForm] = useState({
-    userEmail: "",
-    password: "",
-    userName: "",
-    userPhone: "",
-    userSex: "",
-    userType: "",
-    keyword: [""],
-    level: "",
-    school: "",
-    classArea: "",
-    classType: "",
-    tutorProfileImg: "",
-    tutorMajor: "",
-    tutorClassNum: "",
-    tutorIntro: "",
-    chatLink: "",
-    portLink: "",
-    authYN: "",
-    tutorLikes: 0,
-    studentType: "",
-  });
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setInputForm((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
 
-  const handleSubmit = async () => {
-    try {
-      // await userSignUp(inputForm);
-    } catch (error) {
-      console.error(error);
+    // 각 필드에 대해 스토어 업데이트
+    if (name === "userName") {
+      setName(value);
+    } else if (name === "userEmail") {
+      setUserEmail(value);
+    } else if (name === "password") {
+      setUserPassword(value);
+    } else if (name === "userPhone") {
+      setUserPhone(value);
     }
-  };
-
-  const { name, setName } = useUserNameStore();
-  const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
   };
 
   return (
@@ -59,7 +53,9 @@ export function PrivacyInputContent() {
         id="email-required"
         label="이메일"
         variant="outlined"
+        name="userEmail"
         value={inputForm.userEmail}
+        onChange={handleChange}
       />
       <S.SignTextInput
         fullWidth
@@ -68,7 +64,9 @@ export function PrivacyInputContent() {
         id="password-required"
         label="비밀번호"
         variant="outlined"
+        name="password"
         value={inputForm.password}
+        onChange={handleChange}
       />
       <S.SignTextInput
         fullWidth
@@ -77,6 +75,9 @@ export function PrivacyInputContent() {
         id="repeatPassword-required"
         label="비밀번호 확인"
         variant="outlined"
+        name="confirmPassword"
+        value={inputForm.confirmPassword}
+        onChange={handleChange}
       />
       <S.SignTextInput
         fullWidth
@@ -85,139 +86,21 @@ export function PrivacyInputContent() {
         id="name-required"
         label="이름"
         variant="outlined"
+        name="userName"
         value={inputForm.userName}
-        onChange={handleName}
+        onChange={handleChange}
       />
-
-      <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-        <S.SignTextInput
-          fullWidth
-          required
-          type="tel"
-          id="phone-required"
-          label="전화번호"
-          variant="outlined"
-          value={inputForm.userPhone}
-        />
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-start",
-            gap: "20px",
-          }}
-        >
-          <S_privacy.TextInput
-            id="outlined-basic"
-            placeholder="인증 번호를 입력해주세요."
-            label=""
-            variant="outlined"
-          />
-          <Button
-            variant="contained"
-            sx={{ fontSize: "0.5rem", fontWeight: "bold" }}
-          >
-            인증하기
-          </Button>
-        </Box>
-      </Box>
-      {/* 사용자 약관 동의 체크 박스 */}
-      <Box>
-        <IndeterminateCheckbox />
-      </Box>
-    </Box>
-  );
-}
-
-function IndeterminateCheckbox() {
-  const [checkList, setCheckList] = useState<string[]>([]);
-  const check = (e: ChangeEvent<HTMLInputElement>) => {
-    e.target.checked
-      ? setCheckList([...checkList, e.target.name])
-      : setCheckList(checkList.filter((choice) => choice !== e.target.name));
-  };
-  const checkAll = (e: ChangeEvent<HTMLInputElement>) => {
-    e.target.checked
-      ? setCheckList(["terms", "privacy", "marketing"])
-      : setCheckList([]);
-  };
-
-  return (
-    <Box>
-      {/* 이용약관 전체 동의 체크박스 */}
-      <S_privacy.Wrapper>
-        <FormControlLabel
-          value="end"
-          control={
-            <S_privacy.PrivacyCheckbox
-              name="all"
-              onChange={checkAll}
-              checked={checkList.length === 3 ? true : false}
-            />
-          }
-          label={
-            <S_privacy.PrivacyText className="bold">
-              이용약관 전체 동의
-            </S_privacy.PrivacyText>
-          }
-          labelPlacement="end"
-        />
-      </S_privacy.Wrapper>
-      {/* 이용약관 동의 체크 박스 */}
-      <S_privacy.Wrapper>
-        <FormControlLabel
-          value="end"
-          control={
-            <S_privacy.PrivacyCheckbox
-              name="terms"
-              onChange={check}
-              checked={checkList.includes("terms") ? true : false}
-            />
-          }
-          label={
-            <S_privacy.PrivacyText>
-              이용약관 동의<S.Star>*</S.Star>
-            </S_privacy.PrivacyText>
-          }
-          labelPlacement="end"
-        />
-      </S_privacy.Wrapper>
-      {/* 개인 정보 취급 방침 동의 체크박스 */}
-      <S_privacy.Wrapper>
-        <FormControlLabel
-          value="end"
-          control={
-            <S_privacy.PrivacyCheckbox
-              name="privacy"
-              onChange={check}
-              checked={checkList.includes("privacy") ? true : false}
-            />
-          }
-          label={
-            <S_privacy.PrivacyText>
-              개인정보 취급 방침 동의<S.Star>*</S.Star>
-            </S_privacy.PrivacyText>
-          }
-          labelPlacement="end"
-        />
-      </S_privacy.Wrapper>
-      {/* 마케팅 정보 수신 동의 체크박스 */}
-      <S_privacy.Wrapper>
-        <FormControlLabel
-          value="end"
-          control={
-            <S_privacy.PrivacyCheckbox
-              name="marketing"
-              onChange={check}
-              checked={checkList.includes("marketing") ? true : false}
-            />
-          }
-          label={
-            <S_privacy.PrivacyText>마케팅 정보 수신 동의</S_privacy.PrivacyText>
-          }
-          labelPlacement="end"
-        />
-      </S_privacy.Wrapper>
+      <S.SignTextInput
+        fullWidth
+        required
+        type="tel"
+        id="phone-required"
+        label="전화번호"
+        variant="outlined"
+        name="userPhone"
+        value={inputForm.userPhone}
+        onChange={handleChange}
+      />
     </Box>
   );
 }

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Badge, Box, Paper } from "@mui/material";
+import { Badge, Box, Chip, Paper } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
 
 export const LogInTitle = styled.h4`
@@ -45,4 +45,12 @@ export const TabBadge = styled(Badge)`
     position: absolute;
     right: -10px;
   }
+`;
+
+export const MenteeChip = styled(Chip)`
+  & .MuiChip-label {
+    font-size: 14px;
+  }
+  margin-right: 15px;
+  margin-bottom: 0.5rem;
 `;

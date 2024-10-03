@@ -1,77 +1,122 @@
 import React, { useEffect, useState } from "react";
-import * as S_detail from "./TutorDetail_styled"; // 스타일 컴포넌트 import
-import axios from 'axios'; // axios import
-import { Box } from "@mui/material"; // MUI Box import
-import TutorDefaultInfo from "./TutorDefaultInfo"; // TutorDefaultInfo 컴포넌트 import
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import * as S_detail from "./TutorDetail_styled";
+import { Link } from "react-router-dom";
+import { Box, Button, Typography } from "@mui/material";
+import FmdGoodIcon from "@mui/icons-material/FmdGood";
+import LaptopIcon from "@mui/icons-material/Laptop";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import SmsIcon from "@mui/icons-material/Sms";
+import { useTutorDetailStore } from "../../../stores/Tutor/TutorStore";
 
 const API_URL = process.env.REACT_APP_BASE_URL as string;
 
-// 튜터 데이터를 담을 타입 정의
-interface TutorData {
-  tutorProfileImg: string;
-  keyword: string;
-  name: string;
-  classArea: string;
-  classType: string;
-  school: string;
-  tutorIntro: string;
-  chatLink: string;
-  portLink: string;
-}
-
 const TutorDetail: React.FC = () => {
-  const [tutorData, setTutorData] = useState<TutorData | null>(null); // 타입 정의 추가
-  const id = 2; // 가져올 tutor ID
+  const { id } = useParams<{ id: string }>(); // URL에서 id 가져오기
+  const [tutorData, setTutorData] = useState<any>(null); // API에서 받아온 선배 정보
+  const [loading, setLoading] = useState(true); // 로딩 상태
+  const { like, comment, addr, setAddr, onlineOrOffline, setOnlineOrOffline } = useTutorDetailStore();
 
   useEffect(() => {
     const fetchTutorData = async () => {
       try {
-        const response = await axios.get(`${API_URL}/api/tutor/${id}/detail`); 
-        if (response.data.result) {
-          setTutorData(response.data.data); // API에서 가져온 데이터 저장
+        console.log("Fetching tutor data...");
+        const accessToken = document.cookie
+          .split('; ')
+          .find(row => row.startsWith('access='))
+          ?.split('=')[1]; // Optional chaining 사용
+
+        if (!accessToken) {
+          console.error("Access token not found in cookies");
+          setLoading(false);
+          return; // 토큰이 없으면 함수 종료
+        }
+
+        const response = await axios.get(`${API_URL}/api/tutor/profile/${id}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`, // 인증 토큰 추가
+          },
+        });
+        console.log("API response:", response.data); // 응답 전체 출력
+
+        if (response.data && response.data.data) {
+          const data = response.data.data;
+          console.log("Fetched tutor data:", data); // Fetch된 tutorData 확인
+          setTutorData(data);
+          setAddr(data.classArea);
+          setOnlineOrOffline(data.classType);
+        } else {
+          console.error("Invalid response structure:", response.data);
         }
       } catch (error) {
-        console.error("Failed to fetch tutor data:", error);
+        console.error("Error fetching tutor data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchTutorData();
-  }, [id]);
+    if (id) {
+      fetchTutorData();
+    }
+  }, [id, setAddr, setOnlineOrOffline]);
 
-  // 로딩 중일 때 처리
-  if (!tutorData) {
-    return <div>Loading...</div>;
+  if (loading) {
+    return <Typography>Loading...</Typography>; // 로딩 중일 때 표시
   }
+
+  if (!tutorData) {
+    console.log("tutorData is null or undefined"); // tutorData가 null인지 확인
+    return <Typography>No tutor data found.</Typography>; // 데이터가 없을 때 표시
+  }
+
+  const emojiInfo = [
+    { id: 1, emoji: <FavoriteIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />, text: like },
+    { id: 2, emoji: <SmsIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />, text: comment },
+  ];
+
+  const mentorInfo = [
+    { id: 1, icon: <FmdGoodIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />, text: tutorData.classArea },
+    { id: 2, icon: <LaptopIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />, text: tutorData.classType },
+  ];
 
   return (
     <S_detail.Wrapper>
-      <TutorDefaultInfo tutorData={tutorData} /> {/* TutorDefaultInfo에 tutorData 전달 */}
+      {/* 선배 기본 정보 & 매칭 요청 버튼 */}
+      <Box sx={{ padding: "24px" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Box sx={{ display: "flex", marginBottom: "20px", gap: "2rem" }}>
+            <Typography sx={{ fontSize: "0.75rem" }}>
+              <b style={{ fontSize: "0.82rem" }}>{tutorData.name}</b> 선배님
+            </Typography>
+            <Box>
+              <Link to="/tutorMatching">
+                <Button variant="contained" sx={{ fontSize: "0.5rem", fontWeight: "bold", marginRight: "14px" }}>
+                  매칭 요청
+                </Button>
+              </Link>
+              <Button variant="outlined" sx={{ fontSize: "0.5rem", fontWeight: "bold" }}>
+                공유하기
+              </Button>
+            </Box>
+          </Box>
+          {mentorInfo.map((item) => (
+            <Box key={item.id} sx={{ display: "flex", gap: "15px", alignItems: "center", marginBottom: "15px" }}>
+              {item.icon}
+              <Typography sx={{ fontSize: "0.6rem" }}>{item.text}</Typography>
+            </Box>
+          ))}
+          <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            {emojiInfo.map((item) => (
+              <Box key={item.id} sx={{ display: "flex", gap: "15px", alignItems: "center", marginBottom: "15px" }}>
+                {item.emoji}
+                <Typography sx={{ fontSize: "0.6rem" }}>{item.text}</Typography>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      </Box>
     </S_detail.Wrapper>
-  );
-};
-
-// 기술 키워드 컴포넌트
-interface MentorSkillKeywordProps {
-  keywords: string[]; // string 배열로 타입 정의
-}
-
-const MentorSkillKeyword: React.FC<MentorSkillKeywordProps> = ({ keywords }) => {
-  return (
-    <Box>
-      {keywords.map((item, index) => {
-        return (
-          <S_detail.KeywordChip
-            sx={{
-              fontSize: "0.5rem",
-              marginRight: "0.4rem",
-              marginBottom: "1rem",
-            }}
-            key={index} // key를 id 대신 index로 설정
-            label={`# ${item}`} // 키워드 앞에 # 추가
-          />
-        );
-      })}
-    </Box>
   );
 };
 

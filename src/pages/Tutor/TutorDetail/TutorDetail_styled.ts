@@ -8,6 +8,7 @@ import {
   MenuItem,
   FormControl,
 } from "@mui/material";
+import { CheckBox } from "@mui/icons-material";
 
 export const Wrapper = styled(Box)`
   padding: 24px;
