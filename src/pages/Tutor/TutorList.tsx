@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import * as S from "./styled";
 import { Link } from "react-router-dom";
 import {
@@ -6,35 +6,107 @@ import {
   Box,
   Button,
   FormControl,
-  Input,
   InputAdornment,
   InputLabel,
   MenuItem,
   OutlinedInput,
   Select,
   SelectChangeEvent,
-  TextField,
-  Typography,
 } from "@mui/material";
-import students from "../../mock-data/students";
 import { Search } from "@mui/icons-material";
+import axios from "axios";
+
+interface Tutor {
+  userNo: number;
+  tutorProfileImg: string;
+  userName: string;
+  keyword: string[];
+  school: string;
+  classArea: string;
+  level: string;
+  userSex: string;
+  classType: string;
+}
+
+interface Filters {
+  userSex: string;
+  classType: string;
+  levels: string[];
+  searchTerm: string;
+}
 
 const Home: React.FC = () => {
-  // const [filterMode, setFilterMode] = useState<string>("all");
+  const [allTutors, setAllTutors] = useState<Tutor[]>([]);
+  const [filters, setFilters] = useState<Filters>({
+    userSex: "",
+    classType: "",
+    levels: [],
+    searchTerm: "",
+  });
 
-  // const handleModeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-  //   setFilterMode(event.target.value as string);
-  // };
+  const fetchTutors = async () => {
+    try {
+      const response = await axios.post<{
+        result: boolean;
+        status: number;
+        message: string;
+        data: Tutor[];
+      }>("http://localhost:8080/api/tutor/find", { orderCondition: "NEW" });
 
-  const [online, setOnline] = React.useState("");
-  const [gender, setGender] = React.useState("");
-
-  const handleOnlineChange = (event: SelectChangeEvent) => {
-    setOnline(event.target.value);
+      if (response.data.result && response.status === 200) {
+        setAllTutors(response.data.data);
+      } else {
+        console.error("Failed to fetch tutors:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
-  const handleGenderChange = (event: SelectChangeEvent) => {
-    setGender(event.target.value);
+
+  useEffect(() => {
+    fetchTutors();
+  }, []);
+
+  const handleFilterChange = (event: any, filterType: keyof Filters) => {
+    const value = event.target.value;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterType]: value,
+    }));
   };
+
+  const handleLevelChange = (level: string) => {
+    setFilters((prevFilters) => {
+      const newLevels = prevFilters.levels.includes(level)
+        ? prevFilters.levels.filter((l) => l !== level)
+        : [...prevFilters.levels, level];
+      return { ...prevFilters, levels: newLevels };
+    });
+  };
+
+  const filteredTutors = useMemo(() => {
+    return allTutors.filter((tutor) => {
+      const matchesGender = filters.userSex
+        ? tutor.userSex === filters.userSex
+        : true;
+      const matchesClassType = filters.classType
+        ? tutor.classType === filters.classType
+        : true;
+      const matchesLevel =
+        filters.levels.length === 0 || filters.levels.includes(tutor.level);
+      const matchesSearch = filters.searchTerm
+        ? tutor.userName
+            .toLowerCase()
+            .includes(filters.searchTerm.toLowerCase()) ||
+          tutor.keyword.some((kw) =>
+            kw.toLowerCase().includes(filters.searchTerm.toLowerCase())
+          )
+        : true;
+
+      return matchesGender && matchesClassType && matchesLevel && matchesSearch;
+    });
+  }, [allTutors, filters]);
+
   return (
     <S.Wrapper>
       <Box
@@ -46,49 +118,51 @@ const Home: React.FC = () => {
           gap: "1rem",
         }}
       >
-        {/* online & offline dropdown menu */}
+        {/* Class Type dropdown menu */}
         <FormControl
-          sx={{
-            m: 1,
-            minWidth: 170,
-            marginTop: "1rem",
-            textAlign: "center",
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": {
-                borderColor: "#BBBBBB", // Default border color
-                borderRadius: "20px",
-              },
-              "&:hover fieldset": {
-                borderColor: "#BBBBBB", // Border color when hovered
-              },
-              "&.Mui-focused fieldset": {
-                borderColor: "blue", // Border color when focused (clicked)
-                borderWidth: "2px", // Change the border width when focused
-              },
-            },
-          }}
+          sx={{ m: 1, minWidth: 170, marginTop: "1rem", textAlign: "center" }}
         >
-          <InputLabel id="demo-simple-select-autowidth-label">
-            오프라인
-          </InputLabel>
+          <InputLabel id="class-type-label">수업 방식</InputLabel>
           <Select
-            labelId="demo-simple-select-autowidth-label"
-            id="demo-simple-select-autowidth"
-            value={online}
-            onChange={handleOnlineChange}
+            labelId="class-type-label"
+            value={filters.classType}
+            onChange={(event) => handleFilterChange(event, "classType")}
             autoWidth
-            label="오프라인"
+            label="수업 방식"
           >
-            <MenuItem value={"오프라인"}>오프라인</MenuItem>
-            <MenuItem value={"온라인"}>온라인</MenuItem>
+            <MenuItem value="">전체</MenuItem>
+            <MenuItem value="offline">오프라인</MenuItem>
+            <MenuItem value="online">온라인</MenuItem>
           </Select>
         </FormControl>
-        {/* campus level button */}
+
+        {/* Level buttons */}
         <Box
           sx={{ display: "flex", alignItems: "center", marginTop: "0.6rem" }}
         >
+          {/* {["입문", "초급", "중급 이상"].map((level) => (
+            <Button
+              key={level}
+              variant="contained"
+              onClick={() => handleLevelChange(level)}
+              sx={{
+                backgroundColor: filters.levels.includes(level)
+                  ? "#c7dccb"
+                  : "#E9FBEC",
+                border: "2px solid #158B28",
+                color: "#158B28",
+                borderRadius: "30px",
+                marginRight: "15px",
+                padding: "5px 25px",
+                "&:hover": { backgroundColor: "#c7dccb" },
+              }}
+            >
+              {level}
+            </Button>
+          ))} */}
           <Button
             variant="contained"
+            onClick={() => handleLevelChange("입문")}
             sx={{
               backgroundColor: "#E9FBEC",
               border: "2px solid #158B28",
@@ -96,15 +170,14 @@ const Home: React.FC = () => {
               borderRadius: "30px",
               marginRight: "15px",
               padding: "5px 25px",
-              "&:hover": {
-                backgroundColor: "#c7dccb",
-              },
+              "&:hover": { backgroundColor: "#c7dccb" },
             }}
           >
             입문
           </Button>
           <Button
             variant="contained"
+            onClick={() => handleLevelChange("초급")}
             sx={{
               backgroundColor: "#FFF1CE",
               border: "2px solid #C3951C",
@@ -112,15 +185,14 @@ const Home: React.FC = () => {
               borderRadius: "30px",
               marginRight: "15px",
               padding: "5px 25px",
-              "&:hover": {
-                backgroundColor: "#d7caaa",
-              },
+              "&:hover": { backgroundColor: "#EDE1C2" },
             }}
           >
             초급
           </Button>
           <Button
             variant="contained"
+            onClick={() => handleLevelChange("중급 이상")}
             sx={{
               backgroundColor: "#FFEAEA",
               border: "2px solid #FD5555",
@@ -128,61 +200,47 @@ const Home: React.FC = () => {
               borderRadius: "30px",
               marginRight: "15px",
               padding: "5px 25px",
-              "&:hover": {
-                backgroundColor: "#d8bfbf",
-              },
+              "&:hover": { backgroundColor: "#ECD9D9" },
             }}
           >
             중급 이상
           </Button>
         </Box>
-        {/* gender dropdown menu */}
+
+        {/* Gender dropdown menu */}
         <FormControl
-          sx={{
-            m: 1,
-            minWidth: 170,
-            marginTop: "1rem",
-            textAlign: "center",
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": {
-                borderColor: "#BBBBBB", // Default border color
-                borderRadius: "20px",
-              },
-              "&:hover fieldset": {
-                borderColor: "#BBBBBB", // Border color when hovered
-              },
-              "&.Mui-focused fieldset": {
-                borderColor: "blue", // Border color when focused (clicked)
-                borderWidth: "2px", // Change the border width when focused
-              },
-            },
-          }}
+          sx={{ m: 1, minWidth: 170, marginTop: "1rem", textAlign: "center" }}
         >
-          <InputLabel id="demo-simple-select-autowidth-label">성별</InputLabel>
+          <InputLabel id="gender-label">성별</InputLabel>
           <Select
-            labelId="demo-simple-select-autowidth-label"
-            id="demo-simple-select-autowidth"
-            value={gender}
-            onChange={handleGenderChange}
+            labelId="gender-label"
+            value={filters.userSex}
+            onChange={(event) => handleFilterChange(event, "userSex")}
             autoWidth
             label="성별"
           >
-            <MenuItem value={"M"}>남성</MenuItem>
-            <MenuItem value={"W"}>여성</MenuItem>
+            <MenuItem value="">전체</MenuItem>
+            <MenuItem value="M">남성</MenuItem>
+            <MenuItem value="W">여성</MenuItem>
           </Select>
         </FormControl>
+
+        {/* Search input */}
         <OutlinedInput
           sx={{ marginTop: "20px", borderRadius: "40px" }}
-          placeholder="검색어를 입력하세요..."
+          placeholder="이름 또는 키워드로 검색..."
+          value={filters.searchTerm}
+          onChange={(event) => handleFilterChange(event, "searchTerm")}
           startAdornment={
-            <InputAdornment position="end">
+            <InputAdornment position="start">
               <Search />
             </InputAdornment>
           }
         />
       </Box>
+
       <S.CardDiv>
-        {students.map((student, index) => (
+        {filteredTutors.map((tutor, index) => (
           <S.CardWrap
             key={index}
             sx={{
@@ -208,19 +266,20 @@ const Home: React.FC = () => {
                 justifyContent: "center",
                 mr: "1.5rem",
               }}
+              src={tutor.tutorProfileImg}
             >
-              {student.name.charAt(0)}
+              {tutor.userName.charAt(0)}
             </Avatar>
             <S.CardTextDiv>
               <div>
-                {student.specialties.map((value, idx) => (
+                {tutor.keyword.map((value, idx) => (
                   <span key={idx}>#{value} </span>
                 ))}
               </div>
-              <p>{student.university + " " + student.department}</p>
-              <b>{student.name} 선배님</b>
+              <p>{tutor.school + " " + tutor.classArea}</p>
+              <b>{tutor.userName} 선배님</b>
             </S.CardTextDiv>
-            <Link to="/tutorDetail">
+            <Link to={`/tutorDetail/${tutor.userNo}`}>
               <Button
                 variant="contained"
                 sx={{
@@ -238,4 +297,5 @@ const Home: React.FC = () => {
     </S.Wrapper>
   );
 };
+
 export default Home;
