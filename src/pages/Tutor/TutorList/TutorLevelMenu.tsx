@@ -1,9 +1,9 @@
-import { Box, Button } from "@mui/material";
-import { Filters } from "../../../type/TutorListType";
 import React, { useState } from "react";
+import { Box, Button } from "@mui/material";
+
 
 type LevelType = {
-  handleLevelChange: Function;
+  handleLevelChange: (level: string) => void;
 };
 
 const levels = [
