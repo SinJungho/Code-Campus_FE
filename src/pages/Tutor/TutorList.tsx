@@ -112,10 +112,8 @@ const Home: React.FC = () => {
             handleFilterChange={handleFilterChange}
           />
         </FormControl>
-
         {/* Level buttons */}
         <TutorLevelMenu handleLevelChange={handleLevelChange} />
-
         {/* Gender dropdown menu */}
         <FormControl
           sx={{ m: 1, minWidth: 170, marginTop: "1rem", textAlign: "center" }}

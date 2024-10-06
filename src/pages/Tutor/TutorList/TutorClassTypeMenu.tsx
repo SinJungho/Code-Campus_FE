@@ -22,8 +22,8 @@ export default function TutorClassTypeMenu({
         label="수업 방식"
       >
         <MenuItem value="">전체</MenuItem>
-        <MenuItem value="offline">오프라인</MenuItem>
-        <MenuItem value="online">온라인</MenuItem>
+        <MenuItem value="OFF">오프라인</MenuItem>
+        <MenuItem value="ON">온라인</MenuItem>
       </Select>
     </>
   );
