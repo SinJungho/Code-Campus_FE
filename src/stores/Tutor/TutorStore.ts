@@ -1,51 +1,47 @@
 import { create } from "zustand";
 
-type TutorDetailType = {
-  like: string;
-  comment: string;
-  addr: string;
-  onlineOrOffline: string;
-  setLike: (like: string) => void;
-  setComment: (comment: string) => void;
-  setAddr: (addr: string) => void;
-  setOnlineOrOffline: (onlineOrOffline: string) => void;
-};
+// Tutor 상태 인터페이스 정의
+interface TutorDetailType {
+  keyword: string[]; // string[]로 변경
+  name: string;
+  classArea: string;
+  classType: string;
+  school: string;
+  tutorMajor: string;
+  tutorIntro: string;
+  chatLink: string;
+  portLink: string;
 
-type TutorMatchingStoreType = {
-  tutorNo: number;
-  tuteeNo: number;
-  mentorshipDay: string;
-  mentorshipTime: string;
-  category: string;
+  setKeyword: (keyword: string[]) => void; // string[]로 변경
+  setName: (name: string) => void;
+  setClassArea: (area: string) => void;
+  setClassType: (type: string) => void;
+  setSchool: (school: string) => void;
+  setTutorMajor: (major: string) => void;
+  setTutorIntro: (intro: string) => void;
+  setChatLink: (link: string) => void;
+  setPortLink: (link: string) => void;
+}
 
-  setTutorNo: (tutorNo: number) => void;
-  setTuteeNo: (tuteeNo: number) => void;
-  setMentorshipDay: (mentorshipDay: string) => void;
-  setMentorshipTime: (mentorshipTime: string) => void;
-  setCategory: (category: string) => void;
-};
-
+// Tutor 상태 스토어 생성
 export const useTutorDetailStore = create<TutorDetailType>((set) => ({
-  like: "0",
-  comment: "0",
-  addr: "경기도 수원시",
-  onlineOrOffline: "온라인 강의 / 오프라인 강의",
-  setLike: (like) => ({ like }),
-  setComment: (comment) => ({ comment }),
-  setAddr: (addr) => ({ addr }),
-  setOnlineOrOffline: (onlineOrOffline) => ({ onlineOrOffline }),
-}));
+  keyword: [], // 빈 배열로 초기화
+  name: "",
+  classArea: "",
+  classType: "",
+  school: "",
+  tutorMajor: "",
+  tutorIntro: "",
+  chatLink: "",
+  portLink: "",
 
-export const useTutorMatchingStore = create<TutorMatchingStoreType>((set) => ({
-  tutorNo: 0,
-  tuteeNo: 0,
-  mentorshipDay: "",
-  mentorshipTime: "",
-  category: "",
-
-  setTutorNo: (tutorNo) => ({ tutorNo }),
-  setTuteeNo: (tuteeNo) => ({ tuteeNo }),
-  setMentorshipDay: (mentorshipDay) => ({ mentorshipDay }),
-  setMentorshipTime: (mentorshipTime) => ({ mentorshipTime }),
-  setCategory: (category) => ({ category }),
+  setKeyword: (keyword) => set({ keyword }), // 배열로 설정
+  setName: (name) => set({ name }),
+  setClassArea: (area) => set({ classArea: area }),
+  setClassType: (type) => set({ classType: type }),
+  setSchool: (school) => set({ school }),
+  setTutorMajor: (major) => set({ tutorMajor: major }),
+  setTutorIntro: (intro) => set({ tutorIntro: intro }),
+  setChatLink: (link) => set({ chatLink: link }),
+  setPortLink: (link) => set({ portLink: link }),
 }));
