@@ -15,25 +15,10 @@ import {
 } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import axios from "axios";
-
-interface Tutor {
-  userNo: number;
-  tutorProfileImg: string;
-  userName: string;
-  keyword: string[];
-  school: string;
-  classArea: string;
-  level: string;
-  userSex: string;
-  classType: string;
-}
-
-interface Filters {
-  userSex: string;
-  classType: string;
-  levels: string[];
-  searchTerm: string;
-}
+import { Filters, Tutor } from "../../type/TutorListType";
+import TutorClassTypeMenu from "./TutorList/TutorClassTypeMenu";
+import TutorLevelMenu from "./TutorList/TutorLevelMenu";
+import TutorGenderMenu from "./TutorList/TutorGenderMenu";
 
 const Home: React.FC = () => {
   const [allTutors, setAllTutors] = useState<Tutor[]>([]);
@@ -122,107 +107,23 @@ const Home: React.FC = () => {
         <FormControl
           sx={{ m: 1, minWidth: 170, marginTop: "1rem", textAlign: "center" }}
         >
-          <InputLabel id="class-type-label">수업 방식</InputLabel>
-          <Select
-            labelId="class-type-label"
-            value={filters.classType}
-            onChange={(event) => handleFilterChange(event, "classType")}
-            autoWidth
-            label="수업 방식"
-          >
-            <MenuItem value="">전체</MenuItem>
-            <MenuItem value="offline">오프라인</MenuItem>
-            <MenuItem value="online">온라인</MenuItem>
-          </Select>
+          <TutorClassTypeMenu
+            filters={filters}
+            handleFilterChange={handleFilterChange}
+          />
         </FormControl>
 
         {/* Level buttons */}
-        <Box
-          sx={{ display: "flex", alignItems: "center", marginTop: "0.6rem" }}
-        >
-          {/* {["입문", "초급", "중급 이상"].map((level) => (
-            <Button
-              key={level}
-              variant="contained"
-              onClick={() => handleLevelChange(level)}
-              sx={{
-                backgroundColor: filters.levels.includes(level)
-                  ? "#c7dccb"
-                  : "#E9FBEC",
-                border: "2px solid #158B28",
-                color: "#158B28",
-                borderRadius: "30px",
-                marginRight: "15px",
-                padding: "5px 25px",
-                "&:hover": { backgroundColor: "#c7dccb" },
-              }}
-            >
-              {level}
-            </Button>
-          ))} */}
-          <Button
-            variant="contained"
-            onClick={() => handleLevelChange("입문")}
-            sx={{
-              backgroundColor: "#E9FBEC",
-              border: "2px solid #158B28",
-              color: "#158B28",
-              borderRadius: "30px",
-              marginRight: "15px",
-              padding: "5px 25px",
-              "&:hover": { backgroundColor: "#c7dccb" },
-            }}
-          >
-            입문
-          </Button>
-          <Button
-            variant="contained"
-            onClick={() => handleLevelChange("초급")}
-            sx={{
-              backgroundColor: "#FFF1CE",
-              border: "2px solid #C3951C",
-              color: "#C3951C",
-              borderRadius: "30px",
-              marginRight: "15px",
-              padding: "5px 25px",
-              "&:hover": { backgroundColor: "#EDE1C2" },
-            }}
-          >
-            초급
-          </Button>
-          <Button
-            variant="contained"
-            onClick={() => handleLevelChange("중급 이상")}
-            sx={{
-              backgroundColor: "#FFEAEA",
-              border: "2px solid #FD5555",
-              color: "#FD5555",
-              borderRadius: "30px",
-              marginRight: "15px",
-              padding: "5px 25px",
-              "&:hover": { backgroundColor: "#ECD9D9" },
-            }}
-          >
-            중급 이상
-          </Button>
-        </Box>
+        <TutorLevelMenu handleLevelChange={handleLevelChange} />
 
         {/* Gender dropdown menu */}
         <FormControl
           sx={{ m: 1, minWidth: 170, marginTop: "1rem", textAlign: "center" }}
         >
-          <InputLabel id="gender-label">성별</InputLabel>
-          <Select
-            labelId="gender-label"
-            value={filters.userSex}
-            onChange={(event) => handleFilterChange(event, "userSex")}
-            autoWidth
-            label="성별"
-          >
-            <MenuItem value="">전체</MenuItem>
-            <MenuItem value="M">남성</MenuItem>
-            <MenuItem value="W">여성</MenuItem>
-          </Select>
+          <TutorGenderMenu
+            filters={filters}
+            handleFilterChange={handleFilterChange}
+          />
         </FormControl>
 
         {/* Search input */}
