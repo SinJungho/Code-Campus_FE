@@ -18,30 +18,32 @@ interface ResponseData {
 const useLogin = () => {
   const { setIsLoggedIn, setIsLoading, setAccessToken } = useAuthStore(); // setAccessToken 가져오기
   const { setUserName, setUserEmail } = useUserStore();
+  const { setIsLoggedIn, setIsLoading } = useAuthStore();
+  const { setUserName, setUserEmail, setUserNo } = useUserStore();
 
   const setAuthTokens = (data: any): boolean => {
     instance.defaults.headers.common["Authorization"] = `Bearer ${data.accessTOKEN}`;
+    instance.defaults.headers.common["Authorization"] = `Bearer ${data.accessToken}`;
     setTimeout(() => refreshLogin(), JWT_EXPIRY_TIME - 300000); // 35분에 연장
     return true;
   };
 
   const changeLoginStatus = (setAuthTokens: boolean, response: any) => {
     if (setAuthTokens) {
-      console.log(response);
-
       localStorage.setItem('refresh', response.refreshToken);
       document.cookie = `access=${response.accessToken}`;
 
       setAccessToken(response.accessToken); // accessToken 상태 설정
+      document.cookie = `access=${response.accessToken}`;
 
       setUserName(response.userName);
       setUserEmail(response.userEmail);
+      setUserNo(response.userNo); // userNo 저장
       setIsLoggedIn(true);
       setIsLoading(false);
     }
   };
 
-  // 이메일 로그인(기본로그인)
   const emailLogin = async (inputForm: InputForm): Promise<void> => {
     try {
       const response = await axios.post<ResponseData>(

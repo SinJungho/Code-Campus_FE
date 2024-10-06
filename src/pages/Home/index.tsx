@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import * as S from "./styled";
 import { Link } from "react-router-dom";
@@ -40,7 +40,7 @@ const Home: React.FC = () => {
     }
   };
 
-  useEffect(() => {
+  useMemo(() => {
     const fetchData = async () => {
       await fetchTutors("POP");
       await fetchTutors("NEW");

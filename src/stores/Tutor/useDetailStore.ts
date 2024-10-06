@@ -1,6 +1,8 @@
+// useDetailStore.ts 파일
+
 import create from 'zustand';
 
-interface RequestedMentee {
+export interface RequestedMentee {
   mentorshipNo: number;
   tuteeNo: number;
   tuteeName: string;
@@ -8,30 +10,42 @@ interface RequestedMentee {
   note: string | null;
 }
 
-interface MyTutee {
+export interface MyTutee {
   mentorshipNo: number;
   tuteeNo: number;
   tuteeName: string;
   mentorshipTime: string;
 }
 
-interface TutorDetailResponse {
+export interface TutorDetailResponse {
   tutorProfileImg: string;
   name: string;
   userType: string;
 }
 
-interface UserDetailStore {
+// useDetailStore.ts 파일에서 TuteeDetail 인터페이스 수정
+export interface TuteeDetail {
+  tuteeName: string;
+  keywordList: string[];
+  mentorshipDay: string[];
+  mentorshipTime: string;
+  note: string | null;
+}
+
+
+export interface UserDetailStore {
   tutorProfileImg: string;
   name: string;
   userType: string;
   myTuteeList: MyTutee[];
   requestedList: RequestedMentee[];
+  tuteeDetail: TuteeDetail | null;
   setTutorProfileImg: (img: string) => void;
   setName: (name: string) => void;
   setUserType: (type: string) => void;
   setMyTuteeList: (list: MyTutee[]) => void;
   setRequestedList: (list: RequestedMentee[]) => void;
+  setTuteeDetail: (detail: TuteeDetail) => void;
   setUserDetails: (details: {
     tutorProfileImg: string;
     name: string;
@@ -47,11 +61,13 @@ export const useMyProfileStore = create<UserDetailStore>((set) => ({
   userType: '',
   myTuteeList: [],
   requestedList: [],
+  tuteeDetail: null,
   setTutorProfileImg: (img) => set({ tutorProfileImg: img }),
   setName: (name) => set({ name }),
   setUserType: (type) => set({ userType: type }),
   setMyTuteeList: (list) => set({ myTuteeList: list }),
   setRequestedList: (list) => set({ requestedList: list }),
+  setTuteeDetail: (detail) => set({ tuteeDetail: detail }),
   setUserDetails: (details) => {
     set({
       tutorProfileImg: details.tutorProfileImg,
