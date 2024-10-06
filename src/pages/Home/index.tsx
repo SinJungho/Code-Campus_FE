@@ -46,7 +46,7 @@ const Home: React.FC = () => {
       await fetchTutors("NEW");
     };
     fetchData();
-  }, []);
+  });
 
   return (
     <S.Wrapper>
