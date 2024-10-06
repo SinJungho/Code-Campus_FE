@@ -31,8 +31,10 @@ const useLogin = () => {
   const changeLoginStatus = (setAuthTokens: boolean, response: any) => {
     if (setAuthTokens) {
       console.log(response);
-      localStorage.setItem("refresh", response.refreshToken);
-      document.cookie = `access=${response.accessToken}`;
+
+      localStorage.setItem('refresh', response.refreshToken);
+      document.cookie=`access=${response.accessToken}`
+
       setUserName(response.userName);
       setUserEmail(response.userEmail);
       setIsLoggedIn(true);

@@ -1,52 +1,29 @@
 import { Box } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "../styled";
-// import useSignUp from "../../../hooks/useSignUp";
+import { useSignInputValueStore } from "../../../stores/isSignuped/SignUpStore"; // 상태 저장소 import
 import { useNavigate } from "react-router-dom";
 
 interface ChooseMemberTypeProps {
-  setType: React.Dispatch<React.SetStateAction<"mentor" | "mentee" | null>>;
+  setType: React.Dispatch<React.SetStateAction<"TUTOR" | "BASIC" | null>>;
 }
 
 export default function ChooseMemberType({ setType }: ChooseMemberTypeProps) {
-  // const { userSignUp } = useSignUp();
+  const { setUserType, userType } = useSignInputValueStore(); // Zustand에서 setUserType과 userType 가져오기
   const navigate = useNavigate();
 
-  const [inputForm, setInputForm] = useState({
-    userEmail: "",
-    password: "",
-    userName: "",
-    userPhone: "",
-    userSex: "",
-    userType: "" as "mentee" | "mentor",
-    keyword: [""],
-    level: "",
-    school: "",
-    classArea: "",
-    classType: "",
-    tutorProfileImg: "",
-    tutorMajor: "",
-    tutorClassNum: "",
-    tutorIntro: "",
-    chatLink: "",
-    portLink: "",
-    authYN: "",
-    tutorLikes: 0,
-    studentType: "",
-  });
+  const [selectedType, setSelectedType] = useState<"TUTOR" | "BASIC" | null>(null);
 
-  const handleSubmit = async () => {
-    try {
-      // await userSignUp(inputForm);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleCheckboxChange = (type: "mentor" | "mentee") => {
+  const handleCheckboxChange = (type: "TUTOR" | "BASIC") => {
     setType(type);
-    setInputForm({ ...inputForm, userType: type });
+    setUserType(type); // Zustand에 userType 저장
+    setSelectedType(type); // 로컬 상태에 선택된 유형 저장
   };
+
+  // Zustand에 있는 userType을 콘솔에 로그로 찍기
+  useEffect(() => {
+    console.log("현재 사용자 유형:", userType);
+  }, [userType]); // userType이 변경될 때마다 로그 출력
 
   return (
     <Box>
@@ -54,15 +31,15 @@ export default function ChooseMemberType({ setType }: ChooseMemberTypeProps) {
       <S.SignUpTitle>회원 유형 선택</S.SignUpTitle>
       <Box>
         <RadioButton
-          type="mentor"
-          id="mentor"
-          selectedType={inputForm.userType}
+          type="TUTOR"
+          id="TUTOR"
+          selectedType={selectedType}
           onChange={handleCheckboxChange}
         />
         <RadioButton
-          type="mentee"
-          id="mentee"
-          selectedType={inputForm.userType}
+          type="BASIC"
+          id="TUTEE"
+          selectedType={selectedType}
           onChange={handleCheckboxChange}
         />
       </Box>
@@ -71,10 +48,10 @@ export default function ChooseMemberType({ setType }: ChooseMemberTypeProps) {
 }
 
 interface RadioButtonProps {
-  type: "mentor" | "mentee";
+  type: "TUTOR" | "BASIC";
   id: string;
-  selectedType: string;
-  onChange: (type: "mentor" | "mentee") => void;
+  selectedType: "TUTOR" | "BASIC" | null;
+  onChange: (type: "TUTOR" | "BASIC") => void;
 }
 
 function RadioButton({ type, id, selectedType, onChange }: RadioButtonProps) {
@@ -101,10 +78,10 @@ function RadioButton({ type, id, selectedType, onChange }: RadioButtonProps) {
         }}
       >
         <S.ChooseMemberTypeTitle>
-          {type === "mentor" ? "선배" : "후배"}
+          {type === "TUTOR" ? "선배" : "후배"}
         </S.ChooseMemberTypeTitle>
         <S.ChooseMemberTypeContext>
-          {type === "mentor"
+          {type === "TUTOR"
             ? "코딩을 가르쳐 줄거에요! (대학생만 가능합니다!)"
             : "코딩을 배울거에요!"}
         </S.ChooseMemberTypeContext>
