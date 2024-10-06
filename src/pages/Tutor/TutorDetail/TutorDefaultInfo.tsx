@@ -7,7 +7,6 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox"; // 인증 아이콘 imp
 
 // 튜터 데이터에 대한 타입 정의
 interface TutorData {
-  tutorProfileImg: string;
   keyword: string;
   name: string;
   classArea: string;
@@ -39,7 +38,7 @@ export default function TutorDefaultInfo({ tutorData }: TutorDefaultInfoProps) {
         classType={tutorData.classType}
         classArea={tutorData.classArea}
       />
-      <TutorProtfilo chatLink={tutorData.chatLink} portLink={tutorData.portLink} />
+      <TutorPortfolio chatLink={tutorData.chatLink} portLink={tutorData.portLink} />
     </Box>
   );
 }
@@ -84,7 +83,7 @@ const TutorInfo = ({ tutorData }: { tutorData: TutorData }) => {
           </Box>
         ))}
       </Box>
-      <MentorSkillTag keywords={tutorData.keyword.split(",")} /> {/* 키워드 태그에 전달 */}
+      <MentorSkillTag keywords={tutorData.keyword.split(",").map((k) => k.trim())} /> {/* 키워드 태그에 전달 */}
     </Box>
   );
 };
@@ -108,7 +107,7 @@ function MentorSkillTag({ keywords }: MentorSkillTagProps) {
             marginBottom: "1rem",
           }}
           key={index}
-          label={`# ${item.trim()}`} // 키워드 앞에 # 추가
+          label={`# ${item}`} // 키워드 앞에 # 추가
         />
       ))}
     </Box>
@@ -144,7 +143,7 @@ const TutorTeachTypeAndTutoringTime = ({
 };
 
 // 튜터 포트폴리오
-const TutorProtfilo = ({ chatLink, portLink }: { chatLink: string; portLink: string }) => {
+const TutorPortfolio = ({ chatLink, portLink }: { chatLink: string; portLink: string }) => {
   return (
     <Box sx={{ marginTop: "2rem" }}>
       <S_detail.Title>포트폴리오</S_detail.Title>

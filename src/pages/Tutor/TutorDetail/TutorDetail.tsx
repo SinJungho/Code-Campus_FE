@@ -10,36 +10,28 @@ import SmsIcon from "@mui/icons-material/Sms";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { useTutorDetailStore } from "../../../stores/Tutor/TutorStore"; // 상태 불러오기
+import TutorDefaultInfo from "./TutorDefaultInfo";
+import TutorShortAdvice from "./TutorShortAdvice";
 
 const API_URL = process.env.REACT_APP_BASE_URL as string;
 
-const TutorDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const tutorId = Number(id);
-  const [loading, setLoading] = useState(true);
+interface TutorData {
+  keyword: string;
+  name: string;
+  classArea: string;
+  classType: string;
+  school: string;
+  tutorIntro: string;
+  chatLink: string;
+  portLink: string;
+}
 
-  // Zustand 상태 불러오기
-  const {
-    keyword,
-    name,
-    classArea,
-    classType,
-    school,
-    tutorMajor,
-    tutorIntro,
-    chatLink,
-    portLink,
-    setKeyword,
-    setName,
-    setClassArea,
-    setClassType,
-    setSchool,
-    setTutorMajor,
-    setTutorIntro,
-    setChatLink,
-    setPortLink,
-  } = useTutorDetailStore();
+const TutorDetail: React.FC = () => {
+  const { userNo } = useParams<{ userNo: string }>();
+  const tutorId = Number(userNo);
+  const [loading, setLoading] = useState(true);
+  const [tutorData, setTutorData] = useState<TutorData | null>(null); // tutorData 상태 추가
+  const [keywords, setKeywords] = useState<string>(""); // 기본값을 빈 문자열로 설정
 
   useEffect(() => {
     const fetchTutorData = async () => {
@@ -48,37 +40,30 @@ const TutorDetail: React.FC = () => {
           .split("; ")
           .find((row) => row.startsWith("access="))
           ?.split("=")[1];
-  
-          if (!tutorId) {
-            console.error("ID is undefined");
-            setLoading(false); // 로딩 상태 종료
-            return; // ID가 없으면 함수 종료
-          }
+
+        if (!tutorId) {
+          console.error("ID is undefined");
+          setLoading(false); // 로딩 상태 종료
+          return; // ID가 없으면 함수 종료
+        }
         if (!accessToken) {
           console.error("Access token not found");
           return; // 토큰이 없으면 함수 종료
         }
-  
+
         const response = await axios.get(`${API_URL}/api/tutor/profile/${tutorId}`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
         });
-  
+
         if (response.data && response.data.data) {
           const data = response.data.data;
-  
-          // Zustand에 상태 저장
-          setKeyword(data.keyword);
-          setName(data.name);
-          setClassArea(data.classArea);
-          setClassType(data.classType);
-          setSchool(data.school);
-          setTutorMajor(data.tutorMajor);
-          setTutorIntro(data.tutorIntro);
-          setChatLink(data.chatLink);
-          setPortLink(data.portLink);
+
+          // tutorData 상태에 API 응답 데이터 저장
+          setTutorData(data);
+          setKeywords(data.keyword || ""); // keyword는 문자열이므로 기본값을 빈 문자열로 설정
         } else {
           console.error("Invalid response structure:", response.data);
         }
@@ -88,13 +73,12 @@ const TutorDetail: React.FC = () => {
         setLoading(false);
       }
     };
-  
-    if (id) {
+
+    if (userNo) {
       fetchTutorData();
     }
-  }, [id, setKeyword, setName, setClassArea, setClassType, setSchool, setTutorMajor, setTutorIntro, setChatLink, setPortLink]);
-  
-  console.log("Fetching tutor data for ID:", tutorId);
+  }, [userNo]);
+
   if (loading) {
     return <Typography>Loading...</Typography>; // 로딩 상태 표시
   }
@@ -116,12 +100,12 @@ const TutorDetail: React.FC = () => {
     {
       id: 1,
       icon: <FmdGoodIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />,
-      text: classArea,
+      text: "컴퓨터공학", // 예시로 고정된 값을 사용
     },
     {
       id: 2,
       icon: <LaptopIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />,
-      text: classType,
+      text: "개인", // 예시로 고정된 값을 사용
     },
   ];
 
@@ -130,14 +114,14 @@ const TutorDetail: React.FC = () => {
       <Box sx={{ padding: "24px" }}>
         {/* 선배 기술 스택 */}
         <Box>
-          <MentorSkillKeyword keywords={keyword} />
+          <MentorSkillKeyword keywords={keywords} />
         </Box>
 
         {/* 선배 기본 정보 & 매칭 요청 버튼 */}
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Box sx={{ display: "flex", marginBottom: "20px", gap: "2rem" }}>
             <Typography sx={{ fontSize: "0.75rem" }}>
-              <b style={{ fontSize: "0.82rem" }}>{name}</b> 선배님
+              <b style={{ fontSize: "0.82rem" }}>{tutorData?.name}</b> 선배님
             </Typography>
             <Box>
               <Link to="/tutorMatching">
@@ -195,7 +179,7 @@ const TutorDetail: React.FC = () => {
 
         {/* 선배 상세 페이지 탭 컴포넌트 */}
         <Box>
-          <MentorTabMenu />
+          <MentorTabMenu tutorData={tutorData} /> {/* tutorData 전달 */}
         </Box>
       </Box>
     </S_detail.Wrapper>
@@ -203,10 +187,12 @@ const TutorDetail: React.FC = () => {
 };
 
 // 기술 스택 키워드 컴포넌트
-const MentorSkillKeyword = ({ keywords }: { keywords: string[] }) => {
+const MentorSkillKeyword = ({ keywords }: { keywords: string }) => {
+  const keywordArray = keywords.split(",").map(keyword => keyword.trim()); // 문자열을 배열로 변환
+
   return (
     <Box>
-      {keywords.map((keyword, index) => (
+      {keywordArray.map((keyword, index) => (
         <S_detail.KeywordChip
           key={index}
           sx={{
@@ -214,7 +200,7 @@ const MentorSkillKeyword = ({ keywords }: { keywords: string[] }) => {
             marginRight: "0.4rem",
             marginBottom: "1rem",
           }}
-          label={`# ${keyword.trim()}`} // 공백 제거 후 출력
+          label={`# ${keyword}`} // 공백 제거 후 출력
         />
       ))}
     </Box>
@@ -222,7 +208,7 @@ const MentorSkillKeyword = ({ keywords }: { keywords: string[] }) => {
 };
 
 // 선배 상세 페이지 탭 메뉴
-const MentorTabMenu: React.FC = () => {
+const MentorTabMenu: React.FC<{ tutorData: TutorData | null }> = ({ tutorData }) => {
   const [value, setValue] = useState("1");
   const [isSticky, setIsSticky] = useState(false);
   const tabRef = useRef<HTMLDivElement>(null);
@@ -265,11 +251,11 @@ const MentorTabMenu: React.FC = () => {
       {isSticky && <Box sx={{ height: "48px" }} />}
       <TabPanel value="1">
         <Typography>선배 기본 정보</Typography>
-        {/* TutorDefaultInfo 컴포넌트로 대체 */}
+        {tutorData && <TutorDefaultInfo tutorData={tutorData} />}
       </TabPanel>
       <TabPanel value="2">
         <Typography>후배들의 한마디</Typography>
-        {/* TutorShortAdvice 컴포넌트로 대체 */}
+        <TutorShortAdvice/>
       </TabPanel>
     </TabContext>
   );
