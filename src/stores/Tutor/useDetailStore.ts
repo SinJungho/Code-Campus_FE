@@ -1,6 +1,6 @@
 // useDetailStore.ts 파일
 
-import create from 'zustand';
+import { create } from 'zustand';
 
 export interface RequestedMentee {
   mentorshipNo: number;
