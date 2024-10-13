@@ -51,23 +51,6 @@ const TutorDetail: React.FC = () => {
       text: onlineOrOffline,
     },
   ];
-  // const stepFourCarousel = [
-  //   {
-  //     id: 1,
-  //     url: "https://via.placeholder.com/824x464?text=Mentor1.png",
-  //     alt: "멘토 사진 1",
-  //   },
-  //   {
-  //     id: 2,
-  //     url: "https://via.placeholder.com/824x464?text=Mentor2.png",
-  //     alt: "멘토 사진 2",
-  //   },
-  //   {
-  //     id: 3,
-  //     url: "https://via.placeholder.com/824x464?text=Mentor3.png",
-  //     alt: "멘토 사진 2",
-  //   },
-  // ];
   return (
     <S_detail.Wrapper>
       {/* 이미지 슬라이드 */}
@@ -125,12 +108,6 @@ const TutorDetail: React.FC = () => {
                   매칭 요청
                 </Button>
               </Link>
-              <Button
-                variant="outlined"
-                sx={{ fontSize: "0.5rem", fontWeight: "bold" }}
-              >
-                공유하기
-              </Button>
             </Box>
           </Box>
           {mentorInfo.map((index) => {

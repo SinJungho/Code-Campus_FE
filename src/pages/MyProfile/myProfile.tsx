@@ -42,14 +42,6 @@ const MyProfile: React.FC = () => {
     },
     {
       id: 2,
-      icon: (
-        <WorkspacePremiumIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />
-      ),
-      text: "코드 캠퍼스 멤버쉽 :",
-      content: `LV.${memberShip}`,
-    },
-    {
-      id: 3,
       icon: <CheckCircleIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />,
       text: "인증된 사용자",
       content: "",
