@@ -7,7 +7,7 @@ import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import header_logo from "../assets/img/header_logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Paper } from "@mui/material";
 import TemporaryDrawer from "./Drawer";
 import { useAuthStore, useUserStore } from "../stores/isLogined/loginStore";
