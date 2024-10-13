@@ -19,9 +19,10 @@ interface PrivacyInputProps {
     userPhone: string;
     confirmPassword: string;
   }>>;
+  onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // onEmailChange 추가
 }
 
-export default function PrivacyInput({ inputForm, setInputForm }: PrivacyInputProps) {
+export default function PrivacyInput({ inputForm, setInputForm,onEmailChange }: PrivacyInputProps) {
   const { setName } = useUserNameStore();
   const { setUserEmail, setUserPassword, setUserName, setUserPhone } = useSignInputValueStore(); // 스토어에서 setter 함수 가져오기
 
@@ -55,7 +56,7 @@ export default function PrivacyInput({ inputForm, setInputForm }: PrivacyInputPr
         variant="outlined"
         name="userEmail"
         value={inputForm.userEmail}
-        onChange={handleChange}
+        onChange={onEmailChange}
       />
       <S.SignTextInput
         fullWidth
