@@ -1,6 +1,6 @@
 // useDetailStore.ts 파일
 
-import { create } from 'zustand';
+import create from 'zustand';
 
 export interface RequestedMentee {
   mentorshipNo: number;
@@ -27,6 +27,7 @@ export interface TutorDetailResponse {
 export interface TuteeDetail {
   tuteeName: string;
   keywordList: string[];
+  classLevel: string;
   mentorshipDay: string[];
   mentorshipTime: string;
   note: string | null;

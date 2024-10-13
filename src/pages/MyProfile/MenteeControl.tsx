@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as S from "./styled";
-import { Box, Avatar, Button, Typography, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import { Box, Avatar, Button, Typography, Dialog, DialogTitle, DialogContent } from "@mui/material";
 import { useMyProfileStore, TuteeDetail } from "../../stores/Tutor/useDetailStore";
 import axios from "axios";
 
@@ -8,18 +8,19 @@ import axios from "axios";
 const getTokenFromCookies = () => {
   const token = document.cookie
     .split("; ")
-    .find((row) => row.startsWith("access=")) // 쿠키에서 'token='으로 시작하는 항목 찾기
-    ?.split("=")[1]; // token 값만 추출
+    .find((row) => row.startsWith("access="))
+    ?.split("=")[1];
   return token;
 };
 
 export default function MenteeControl() {
-  const { myTuteeList, setTuteeDetail } = useMyProfileStore(); // Zustand에서 상태 가져오기
-  const [selectedTutee, setSelectedTutee] = useState<TuteeDetail | null>(null); // 선택된 멘티 상태
-  const [open, setOpen] = useState(false); // 모달 상태
+  const { myTuteeList, setTuteeDetail } = useMyProfileStore();
+  const [selectedTutee, setSelectedTutee] = useState<TuteeDetail | null>(null);
+  const [open, setOpen] = useState(false);
+  const [mentorshipNoToDelete, setMentorshipNoToDelete] = useState<number | null>(null); // 삭제할 멘토십 번호 상태
 
   const handleDetailClick = async (mentorshipNo: number, tuteeName: string) => {
-    const token = getTokenFromCookies(); // 쿠키에서 토큰 가져오기
+    const token = getTokenFromCookies();
 
     if (!token) {
       alert("로그인이 필요합니다.");
@@ -31,50 +32,73 @@ export default function MenteeControl() {
         `http://localhost:8080/api/tutor/myTutee/detail/${mentorshipNo}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Authorization 헤더에 토큰 추가
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         }
       );
 
-      // API 응답에서 가져온 데이터
-      const { keywordList, mentorshipDay, mentorshipTime, note } = response.data.data;
+      const { keywordList, classLevel, mentorshipDay, mentorshipTime, note } = response.data.data;
 
-      // Zustand 상태 업데이트
       setTuteeDetail({
-        tuteeName, // 선택된 멘티 이름
+        tuteeName,
         keywordList,
+        classLevel,
         mentorshipDay,
         mentorshipTime,
         note,
       });
 
-      // 선택된 멘티 상태 업데이트
       setSelectedTutee({
-        tuteeName, // 선택된 멘티 이름
+        tuteeName,
         keywordList,
+        classLevel,
         mentorshipDay,
         mentorshipTime,
         note,
       });
 
-      // 모달 열기
+      setMentorshipNoToDelete(mentorshipNo); // 삭제할 멘토십 번호 설정
       setOpen(true);
-      console.log(response.data); // 데이터 출력
     } catch (error) {
-      // 에러 처리
       console.error("상세 정보 조회에 실패했습니다.", error);
       alert("상세 정보 조회에 실패했습니다.");
     }
   };
 
+  const handleDeleteTutee = async () => {
+    const token = getTokenFromCookies();
+
+    if (!token || mentorshipNoToDelete === null) {
+      alert("로그인이 필요하거나 삭제할 멘티가 선택되지 않았습니다.");
+      return;
+    }
+
+    try {
+      await axios.delete(`http://localhost:8080/api/mentorship/${mentorshipNoToDelete}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      // 선택적으로: 스토어를 업데이트하거나 멘티 목록을 새로 고침
+      alert("멘티가 성공적으로 삭제되었습니다.");
+      setOpen(false);
+      setSelectedTutee(null);
+    } catch (error) {
+      console.error("멘티 삭제에 실패했습니다.", error);
+      alert("멘티 삭제에 실패했습니다.");
+    }
+  };
+
   const handleClose = () => {
     setOpen(false);
-    setSelectedTutee(null); // 모달 닫을 때 선택된 멘티 상태 초기화
+    setSelectedTutee(null);
   };
 
   if (!myTuteeList || myTuteeList.length === 0) {
-    return <Typography>현재 멘티 목록이 없습니다.</Typography>; // 데이터가 없을 때
+    return <Typography>현재 멘티 목록이 없습니다.</Typography>;
   }
 
   return (
@@ -110,7 +134,7 @@ export default function MenteeControl() {
                 mr: "1.5rem",
               }}
             >
-              {mentee.tuteeName.charAt(0)} {/* 멘티 이름의 첫 글자 */}
+              {mentee.tuteeName.charAt(0)}
             </Avatar>
             <S.CardTextDiv>
               <p>{mentee.mentorshipTime}</p>
@@ -134,98 +158,130 @@ export default function MenteeControl() {
         </S.CardWrap>
       ))}
 
-{/*모달*/}
-<Dialog
-  open={open}
-  onClose={handleClose}
-  fullWidth
-  maxWidth="lg" // 모달의 기본 크기를 더 키움 ('lg'는 큰 사이즈의 모달)
-  sx={{
-    "& .MuiDialog-paper": {
-      width: "800px", // 모달 창의 너비를 커스터마이징 (800px 정도로 설정)
-      maxWidth: "95%", // 화면 크기에 맞춰 반응형으로 최대 95%까지 확장 가능하게 함
-    },
-  }}
->
-  <DialogTitle>
-    <Typography variant="h6" fontWeight="bold">
-      {selectedTutee?.tuteeName} 후배님의 상세 정보
-    </Typography>
-  </DialogTitle>
-  <DialogContent>
-    {selectedTutee && (
-      <Box sx={{ padding: "20px" }}> {/* 전체 컨텐츠에 여유로운 패딩 추가 */}
-        {/* 후배 키워드 */}
-        <Box sx={{ mb: 4 }}> {/* 박스 사이 간격도 더 넓힘 */}
-          <Typography variant="subtitle1" fontWeight="bold">
-            후배 키워드
+      {/* 모달 */}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullWidth
+        maxWidth="lg"
+        sx={{
+          "& .MuiDialog-paper": {
+            width: "800px",
+            maxWidth: "95%",
+            borderRadius: "16px",
+          },
+        }}
+      >
+        <DialogTitle>
+          <Typography variant="h6" fontWeight="bold">
+            {selectedTutee?.tuteeName} 후배님의 상세 정보
           </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              borderRadius: "10px",
-              padding: "2rem", // 키워드 박스의 패딩을 1rem으로 확장
-              marginLeft: "0px",
-              mt: 1,
-            }}
-          >
-            {selectedTutee.keywordList && selectedTutee.keywordList.length > 0 ? (
-              selectedTutee.keywordList.map((keyword, index) => (
-                <Typography
-                  key={index}
+        </DialogTitle>
+        <DialogContent>
+          {selectedTutee && (
+            <Box sx={{ padding: "20px" }}>
+              {/* 후배 키워드 및 클래스 레벨 */}
+              <Box sx={{ mb: 4 }}>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  후배 키워드
+                </Typography>
+                <Box
                   sx={{
-                    bgcolor: keyword === "입문" ? "#e0f3e3" : "#f0f0f0",
-                    color: keyword === "입문" ? "#4CAF50" : "black",
+                    display: "flex",
+                    flexWrap: "wrap",
                     borderRadius: "20px",
-                    padding: "0.75rem", // 키워드에 패딩을 더 줘서 여유롭게 표시
-                    margin: "0.5rem", // 키워드 사이의 간격도 넓힘
-                    fontWeight: keyword === "입문" ? "bold" : "normal",
+                    padding: "1rem",
+                    mt: 1,
+                    alignItems: "center",
                   }}
                 >
-                  #{keyword}
+                  {selectedTutee.keywordList && selectedTutee.keywordList.length > 0 ? (
+                    selectedTutee.keywordList.map((keyword, index) => (
+                      <Box
+                        key={index}
+                        sx={{
+                          bgcolor: "#e0e0e0",
+                          borderRadius: "20px",
+                          padding: "5px 10px",
+                          marginRight: "5px",
+                          marginBottom: "5px",
+                        }}
+                      >
+                        <Typography variant="body2">#{keyword}</Typography>
+                      </Box>
+                    ))
+                  ) : (
+                    <Typography>없음</Typography>
+                  )}
+                  <Box
+                    sx={{
+                      bgcolor:
+                        selectedTutee.classLevel === "입문" ? "#D4EDDA" : // 연한 녹색
+                        selectedTutee.classLevel === "초급" ? "#FFF3CD" : // 연한 노란색
+                        selectedTutee.classLevel === "중급 이상" ? "#F8D7DA" : // 연한 빨간색
+                        "transparent",
+
+                      color: selectedTutee.classLevel === "입문" ? "#155724" : // 어두운 녹색
+                              selectedTutee.classLevel === "초급" ? "#856404" : // 어두운 노란색
+                              selectedTutee.classLevel === "중급 이상" ? "#721C24" : // 어두운 빨간색
+                              "black", // 기본값
+                      borderRadius: "20px",
+                      padding: "5px 10px",
+                      marginLeft: "20px",
+                    }}
+                  >
+                    {selectedTutee.classLevel || "없음"}
+                  </Box>
+                </Box>
+              </Box>
+
+              {/* 선호 요일 및 시간 */}
+              <Box sx={{ mb: 4 }}>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  선호 요일 및 시간
                 </Typography>
-              ))
-            ) : (
-              <Typography>없음</Typography>
-            )}
-          </Box>
-        </Box>
+                <Typography sx={{ mt: 1 }}>
+                  {selectedTutee.mentorshipDay?.length > 0
+                    ? `매주 ${selectedTutee.mentorshipDay.join(", ")}`
+                    : "없음"}{" "}
+                  {selectedTutee.mentorshipTime || "없음"}
+                </Typography>
+              </Box>
 
-        {/* 선호 요일 및 시간 */}
-        <Box sx={{ mb: 4 }}>
-          <Typography variant="subtitle1" fontWeight="bold">
-            선호 요일 및 시간
-          </Typography>
-          <Typography sx={{ mt: 1, paddingLeft: "10px" }}> {/* 텍스트에 좌측 패딩 추가 */}
-            {selectedTutee.mentorshipDay?.length > 0
-              ? `매주 ${selectedTutee.mentorshipDay.join(", ")}`
-              : "없음"}{" "}
-            {selectedTutee.mentorshipTime || "없음"}
-          </Typography>
-        </Box>
+              {/* 후배에 대한 한 줄 메모 */}
+              <Box sx={{ mb: 4 }}>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  후배에 대한 한 줄 메모
+                </Typography>
+                <Box
+                  sx={{
+                    bgcolor: "#f5f5f5",
+                    borderRadius: "8px",
+                    padding: "10px",
+                    mt: 1,
+                  }}
+                >
+                  <Typography>{selectedTutee.note || "없음"}</Typography>
+                </Box>
+              </Box>
 
-        {/* 후배에 대한 한 줄 메모 */}
-        <Box sx={{ mb: 4 }}>
-          <Typography variant="subtitle1" fontWeight="bold">
-            후배에 대한 한 줄 메모
-          </Typography>
-          <Box
-            sx={{
-              bgcolor: "#f7f7f7",
-              borderRadius: "10px",
-              padding: "1.5rem", // 메모 박스의 패딩을 1.5rem으로 늘려 여유롭게 만듦
-              mt: 1,
-            }}
-          >
-            <Typography>{selectedTutee.note || "없음"}</Typography>
-          </Box>
-        </Box>
-      </Box>
-    )}
-  </DialogContent>
-  {/*정보수정, 후배목록에서 삭제 버튼 추가해야함 */}
-  </Dialog>
+              {/* 삭제 버튼 */}
+              <Button
+                variant="contained"
+                color="error"
+                onClick={handleDeleteTutee} // 삭제 함수 호출
+                sx={{
+                  marginTop: "10px",
+                  borderRadius: "5px",
+                  padding: ".5rem 1.5rem",
+                }}
+              >
+                후배 목록에서 삭제
+              </Button>
+            </Box>
+          )}
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 }
