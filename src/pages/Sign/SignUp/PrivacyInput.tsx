@@ -1,8 +1,8 @@
 import * as S from "../styled";
 import React, { ChangeEvent } from "react";
-import { Box } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useUserNameStore } from "../../../stores/isSignuped/userSucess";
-import { useSignInputValueStore } from "../../../stores/isSignuped/SignUpStore"; // 추가된 import
+import { useSignInputValueStore } from "../../../stores/isSignuped/SignUpStore";
 
 interface PrivacyInputProps {
   inputForm: {
@@ -12,19 +12,30 @@ interface PrivacyInputProps {
     userPhone: string;
     confirmPassword: string;
   };
-  setInputForm: React.Dispatch<React.SetStateAction<{
-    userEmail: string;
-    password: string;
-    userName: string;
-    userPhone: string;
-    confirmPassword: string;
-  }>>;
-  onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // onEmailChange 추가
+  setInputForm: React.Dispatch<
+    React.SetStateAction<{
+      userEmail: string;
+      password: string;
+      userName: string;
+      userPhone: string;
+      confirmPassword: string;
+    }>
+  >;
+  onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // 이메일 변경 함수
+  checkEmailDuplicate: () => Promise<void>; // 이메일 중복 체크 함수
+  isEmailDuplicate: boolean | null; // 이메일 중복 여부 상태
 }
 
-export default function PrivacyInput({ inputForm, setInputForm,onEmailChange }: PrivacyInputProps) {
+export default function PrivacyInput({
+  inputForm,
+  setInputForm,
+  onEmailChange,
+  checkEmailDuplicate, // 중복 체크 함수 추가
+  isEmailDuplicate, // 중복 여부 상태 추가
+}: PrivacyInputProps) {
   const { setName } = useUserNameStore();
-  const { setUserEmail, setUserPassword, setUserName, setUserPhone } = useSignInputValueStore(); // 스토어에서 setter 함수 가져오기
+  const { setUserEmail, setUserPassword, setUserName, setUserPhone } =
+    useSignInputValueStore();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -47,17 +58,44 @@ export default function PrivacyInput({ inputForm, setInputForm,onEmailChange }: 
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-      <S.SignTextInput
-        fullWidth
-        required
-        type="email"
-        id="email-required"
-        label="이메일"
-        variant="outlined"
-        name="userEmail"
-        value={inputForm.userEmail}
-        onChange={onEmailChange}
-      />
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <S.SignTextInput
+          fullWidth
+          required
+          type="email"
+          id="email-required"
+          label="이메일"
+          variant="outlined"
+          name="userEmail"
+          value={inputForm.userEmail}
+          onChange={onEmailChange}
+          sx={{ flex: 1, height: '56px' }} // Set height to match the button
+        />
+        <Button
+          onClick={checkEmailDuplicate}
+          variant="contained"
+          size="small"
+          sx={{ 
+            marginLeft: "10px", 
+            height: '46px',
+            borderRadius: "8px",
+            fontSize: '0.6rem'
+          }}
+        >
+          이메일 중복 확인
+        </Button>
+      </Box>
+      {isEmailDuplicate === false && (
+        <S.ErrorMessage>
+          중복된 이메일입니다. 다른 이메일을 입력해주세요.
+        </S.ErrorMessage>
+      )}
+      {isEmailDuplicate === true && (
+        <S.SuccessMessage>
+          사용 가능한 이메일입니다.
+        </S.SuccessMessage>
+      )}
+
       <S.SignTextInput
         fullWidth
         required

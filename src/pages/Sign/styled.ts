@@ -27,6 +27,15 @@ export const LogInTitle = styled.h4`
   font-size: 0.55rem;
 `;
 
+export const SuccessMessage = styled.p`
+  color: green;
+  font-size: 16px;
+`;
+
+export const ErrorMessage = styled.p`
+  color: red;
+  font-size: 16px;
+`;
 // 아이디, 비밀번호 입력창
 export const TextInput = styled(TextField)`
   & .MuiOutlinedInput-root {
