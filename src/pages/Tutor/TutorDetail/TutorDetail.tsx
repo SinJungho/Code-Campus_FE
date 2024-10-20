@@ -51,15 +51,12 @@ const TutorDetail: React.FC = () => {
           return; // 토큰이 없으면 함수 종료
         }
 
-        const response = await axios.get(
-          `${API_URL}/api/tutor/profile/${tutorId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await axios.get(`${API_URL}/api/tutor/profile/${tutorId}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        });
 
         if (response.data && response.data.data) {
           const data = response.data.data;
@@ -127,7 +124,7 @@ const TutorDetail: React.FC = () => {
               <b style={{ fontSize: "0.82rem" }}>{tutorData?.name}</b> 선배님
             </Typography>
             <Box>
-              <Link to="/tutorMatching">
+              <Link to={`/tutorMatching?tutorNo=${tutorId}`}>
                 <Button
                   variant="contained"
                   sx={{
@@ -139,10 +136,7 @@ const TutorDetail: React.FC = () => {
                   매칭 요청
                 </Button>
               </Link>
-              <Button
-                variant="outlined"
-                sx={{ fontSize: "0.5rem", fontWeight: "bold" }}
-              >
+              <Button variant="outlined" sx={{ fontSize: "0.5rem", fontWeight: "bold" }}>
                 공유하기
               </Button>
             </Box>
@@ -177,9 +171,7 @@ const TutorDetail: React.FC = () => {
                 }}
               >
                 {emoji.emoji}
-                <Typography sx={{ fontSize: "0.6rem" }}>
-                  {emoji.text}
-                </Typography>
+                <Typography sx={{ fontSize: "0.6rem" }}>{emoji.text}</Typography>
               </Box>
             ))}
           </Box>
@@ -196,7 +188,7 @@ const TutorDetail: React.FC = () => {
 
 // 기술 스택 키워드 컴포넌트
 const MentorSkillKeyword = ({ keywords }: { keywords: string }) => {
-  const keywordArray = keywords.split(",").map((keyword) => keyword.trim()); // 문자열을 배열로 변환
+  const keywordArray = keywords.split(",").map(keyword => keyword.trim()); // 문자열을 배열로 변환
 
   return (
     <Box>
@@ -216,9 +208,7 @@ const MentorSkillKeyword = ({ keywords }: { keywords: string }) => {
 };
 
 // 선배 상세 페이지 탭 메뉴
-const MentorTabMenu: React.FC<{ tutorData: TutorData | null }> = ({
-  tutorData,
-}) => {
+const MentorTabMenu: React.FC<{ tutorData: TutorData | null }> = ({ tutorData }) => {
   const [value, setValue] = useState("1");
   const [isSticky, setIsSticky] = useState(false);
   const tabRef = useRef<HTMLDivElement>(null);
@@ -254,16 +244,8 @@ const MentorTabMenu: React.FC<{ tutorData: TutorData | null }> = ({
         ref={tabRef}
       >
         <TabList onChange={handleChange} variant="fullWidth">
-          <Tab
-            sx={{ width: "100%", fontSize: "0.5rem" }}
-            label="선배 기본 정보"
-            value="1"
-          />
-          <Tab
-            sx={{ width: "100%", fontSize: "0.5rem" }}
-            label="후배들의 한마디"
-            value="2"
-          />
+          <Tab sx={{ width: "100%", fontSize: "0.5rem" }} label="선배 기본 정보" value="1" />
+          <Tab sx={{ width: "100%", fontSize: "0.5rem" }} label="후배들의 한마디" value="2" />
         </TabList>
       </Box>
       {isSticky && <Box sx={{ height: "48px" }} />}
@@ -273,7 +255,7 @@ const MentorTabMenu: React.FC<{ tutorData: TutorData | null }> = ({
       </TabPanel>
       <TabPanel value="2">
         <Typography>후배들의 한마디</Typography>
-        <TutorShortAdvice />
+        <TutorShortAdvice/>
       </TabPanel>
     </TabContext>
   );
