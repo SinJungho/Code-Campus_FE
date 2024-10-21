@@ -181,6 +181,7 @@ export default function MatchRequest() {
         sx={{
           "& .MuiDialog-paper": {
             padding: "1.5rem",
+            borderRadius: "20px",
           },
         }}
       >
@@ -247,22 +248,6 @@ export default function MatchRequest() {
                         : "없음"
                     }
                   />
-                  {/* <Chip
-                    sx={{
-                      // width: "120px",
-                      padding: "0.78rem",
-                      color: "black",
-                      "& .MuiChip-label": {
-                        // Chip 내부의 label 스타일 지정
-                        fontSize: "0.85rem", // 원하는 폰트 크기로 조절
-                      },
-                    }}
-                    label={
-                      menteeDetail.keywordList.length > 0
-                        ? menteeDetail.keywordList.join(", ")
-                        : "없음"
-                    }
-                  /> */}
                 </Box>
               </Box>
 
