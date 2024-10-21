@@ -35,6 +35,7 @@ const Home: React.FC = () => {
       } else {
         console.error("Failed to fetch tutors:", response);
       }
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Chip,
 } from "@mui/material";
 import axios from "axios";
 import { useMyProfileStore } from "../../stores/Tutor/useDetailStore";
@@ -57,7 +58,7 @@ export default function MatchRequest() {
 
   const handleAccept = async () => {
     const accessToken = getAccessTokenFromCookies();
-  
+
     try {
       await axios.post(
         `http://localhost:8080/api/mentorship/update-status`, // 수락 API
@@ -78,10 +79,10 @@ export default function MatchRequest() {
       alert("멘티 요청 수락에 실패했습니다.");
     }
   };
-  
+
   const handleReject = async () => {
     const accessToken = getAccessTokenFromCookies();
-  
+
     try {
       await axios.post(
         `http://localhost:8080/api/mentorship/update-status`, // 거절 API
@@ -102,7 +103,7 @@ export default function MatchRequest() {
       alert("멘티 요청 거절에 실패했습니다.");
     }
   };
-  
+
   return (
     <Box>
       {requestedList.map((mentee, index) => (
@@ -114,9 +115,17 @@ export default function MatchRequest() {
             bgcolor: "#f5f5f5",
             borderRadius: ".8rem",
             boxShadow: "none",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <Avatar
               sx={{
                 width: "2.8rem",
@@ -129,17 +138,35 @@ export default function MatchRequest() {
             >
               {mentee.tuteeName.charAt(0)}
             </Avatar>
-            <Box>
-              <Badge color="info" variant="dot" overlap="circular">
-                <Typography component="span" sx={{ fontWeight: "bold", color: "black" }}>
-                  {mentee.tuteeName} 후배님
-                </Typography>
-              </Badge>
-              <Typography component="span">{mentee.mentorshipTime}</Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                height: "4rem",
+                justifyContent: "space-around",
+              }}
+            >
+              <Typography component="span" sx={{ fontSize: "0.85rem" }}>
+                {mentee.mentorshipTime}
+              </Typography>
+              <Typography
+                component="span"
+                sx={{ fontWeight: "bold", color: "black" }}
+              >
+                {mentee.tuteeName} 후배님
+              </Typography>
             </Box>
           </Box>
+
           <Button
             variant="contained"
+            sx={{
+              borderRadius: 5,
+              padding: ".2rem 1rem",
+              fontSize: "0.65rem",
+              fontWeight: "bold",
+              height: "45px",
+            }}
             onClick={() => handleClickOpen(mentee.mentorshipNo, mentee)} // mentorshipNo 사용
           >
             상세보기
@@ -148,32 +175,192 @@ export default function MatchRequest() {
       ))}
 
       {/* 다이얼로그로 상세 정보 표시 */}
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{selectedMentee?.tuteeName}님의 상세 정보</DialogTitle>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        sx={{
+          "& .MuiDialog-paper": {
+            padding: "1.5rem",
+          },
+        }}
+      >
+        <Button
+          onClick={handleClose}
+          sx={{
+            width: "45px",
+            position: "absolute",
+            right: "0px",
+            top: "0px",
+            color: "black",
+          }}
+          variant="text"
+          color="error"
+        >
+          X
+        </Button>
+        <DialogTitle
+          sx={{ fontSize: "1.2rem", fontWeight: "bold", textAlign: "center" }}
+        >
+          {selectedMentee?.tuteeName}님의 상세 정보
+        </DialogTitle>
         <DialogContent>
           {menteeDetail ? (
             <>
-              <Typography component="div">
-                키워드: {menteeDetail.keywordList.length > 0 ? menteeDetail.keywordList.join(', ') : "없음"}
-              </Typography>
-              <Typography component="div">
-                요일: {menteeDetail.mentorshipDay.length > 0 ? menteeDetail.mentorshipDay.join(', ') : "없음"}
-              </Typography>
-              <Typography component="div">
-                시간: {menteeDetail.mentorshipTime || "없음"}
-              </Typography>
-              <Typography component="div">
-                메모: {menteeDetail.note || "없음"}
-              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginBottom: "1rem",
+                  gap: "0.5rem",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "0.85rem",
+                    display: "inline-block",
+                    marginRight: "0.5rem",
+                    fontWeight: "bold",
+                  }}
+                >
+                  후배 키워드
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "0.5rem",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  <Chip
+                    sx={{
+                      // width: "120px",
+                      padding: "0.78rem",
+                      color: "black",
+                      "& .MuiChip-label": {
+                        fontSize: "0.85rem",
+                      },
+                    }}
+                    label={
+                      menteeDetail.keywordList.length > 0
+                        ? menteeDetail.keywordList.join(", ")
+                        : "없음"
+                    }
+                  />
+                  {/* <Chip
+                    sx={{
+                      // width: "120px",
+                      padding: "0.78rem",
+                      color: "black",
+                      "& .MuiChip-label": {
+                        // Chip 내부의 label 스타일 지정
+                        fontSize: "0.85rem", // 원하는 폰트 크기로 조절
+                      },
+                    }}
+                    label={
+                      menteeDetail.keywordList.length > 0
+                        ? menteeDetail.keywordList.join(", ")
+                        : "없음"
+                    }
+                  /> */}
+                </Box>
+              </Box>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginBottom: "1rem",
+                  gap: "0.5rem",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "0.85rem",
+                    display: "inline-block",
+                    marginRight: "0.5rem",
+                    fontWeight: "bold",
+                  }}
+                >
+                  선호 요일 및 시간
+                </Typography>
+                <Typography
+                  component="div"
+                  sx={{
+                    fontSize: "0.85rem",
+                    fontWeight: "bold",
+                    color: "#1564FF",
+                    display: "inline-block",
+                  }}
+                >
+                  {menteeDetail.mentorshipDay.length > 0
+                    ? menteeDetail.mentorshipDay.join(", ")
+                    : "없음"}{" "}
+                  {menteeDetail.mentorshipTime || "없음"}
+                </Typography>
+              </Box>
+
+              <Box
+                sx={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "0.85rem",
+                    display: "inline-block",
+                    marginRight: "0.5rem",
+                    fontWeight: "bold",
+                  }}
+                >
+                  선배에게 하고 싶은 말
+                </Typography>
+                <Box
+                  sx={{
+                    backgroundColor: "#F5F5F5",
+                    borderRadius: "20px",
+                    padding: "1rem",
+                  }}
+                >
+                  <Typography
+                    component="div"
+                    sx={{
+                      fontSize: "0.85rem",
+                      color: "black",
+                      display: "inline-block",
+                    }}
+                  >
+                    {menteeDetail.note || "없음"}
+                  </Typography>
+                </Box>
+              </Box>
             </>
           ) : (
             <Typography component="div">로딩 중...</Typography>
           )}
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleAccept} color="primary">수락하기</Button>
-          <Button onClick={handleReject} color="secondary">거절하기</Button>
-          <Button onClick={handleClose}>닫기</Button>
+        <DialogActions
+          sx={{
+            "&.MuiDialogActions-root": {
+              display: "flex",
+              justifyContent: "space-between",
+            },
+          }}
+        >
+          <Button
+            onClick={handleAccept}
+            sx={{ fontSize: "0.85rem" }}
+            variant="contained"
+            color="primary"
+          >
+            수락하기
+          </Button>
+          <Button
+            onClick={handleReject}
+            sx={{ fontSize: "0.85rem" }}
+            variant="contained"
+            color="primary"
+          >
+            거절하기
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>

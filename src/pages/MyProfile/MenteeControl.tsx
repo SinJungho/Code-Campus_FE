@@ -1,7 +1,18 @@
 import React, { useState } from "react";
 import * as S from "./styled";
-import { Box, Avatar, Button, Typography, Dialog, DialogTitle, DialogContent } from "@mui/material";
-import { useMyProfileStore, TuteeDetail } from "../../stores/Tutor/useDetailStore";
+import {
+  Box,
+  Avatar,
+  Button,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+} from "@mui/material";
+import {
+  useMyProfileStore,
+  TuteeDetail,
+} from "../../stores/Tutor/useDetailStore";
 import axios from "axios";
 
 // 쿠키에서 토큰 가져오기
@@ -17,7 +28,10 @@ export default function MenteeControl() {
   const { myTuteeList, setTuteeDetail } = useMyProfileStore();
   const [selectedTutee, setSelectedTutee] = useState<TuteeDetail | null>(null);
   const [open, setOpen] = useState(false);
-  const [mentorshipNoToDelete, setMentorshipNoToDelete] = useState<number | null>(null); // 삭제할 멘토십 번호 상태
+  const [mentorshipNoToDelete, setMentorshipNoToDelete] = useState<
+    number | null
+  >(null); // 삭제할 멘토십 번호 상태
+  console.log(myTuteeList);
 
   const handleDetailClick = async (mentorshipNo: number, tuteeName: string) => {
     const token = getTokenFromCookies();
@@ -37,8 +51,10 @@ export default function MenteeControl() {
           },
         }
       );
+      console.log(response.data);
 
-      const { keywordList, classLevel, mentorshipDay, mentorshipTime, note } = response.data.data;
+      const { keywordList, classLevel, mentorshipDay, mentorshipTime, note } =
+        response.data.data;
 
       setTuteeDetail({
         tuteeName,
@@ -75,12 +91,15 @@ export default function MenteeControl() {
     }
 
     try {
-      await axios.delete(`http://localhost:8080/api/mentorship/${mentorshipNoToDelete}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      await axios.delete(
+        `http://localhost:8080/api/mentorship/${mentorshipNoToDelete}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       // 선택적으로: 스토어를 업데이트하거나 멘티 목록을 새로 고침
       alert("멘티가 성공적으로 삭제되었습니다.");
@@ -151,7 +170,9 @@ export default function MenteeControl() {
               fontSize: "0.65rem",
               fontWeight: "bold",
             }}
-            onClick={() => handleDetailClick(mentee.mentorshipNo, mentee.tuteeName)}
+            onClick={() =>
+              handleDetailClick(mentee.mentorshipNo, mentee.tuteeName)
+            }
           >
             상세보기
           </Button>
@@ -195,7 +216,8 @@ export default function MenteeControl() {
                     alignItems: "center",
                   }}
                 >
-                  {selectedTutee.keywordList && selectedTutee.keywordList.length > 0 ? (
+                  {selectedTutee.keywordList &&
+                  selectedTutee.keywordList.length > 0 ? (
                     selectedTutee.keywordList.map((keyword, index) => (
                       <Box
                         key={index}
@@ -216,15 +238,22 @@ export default function MenteeControl() {
                   <Box
                     sx={{
                       bgcolor:
-                        selectedTutee.classLevel === "입문" ? "#D4EDDA" : // 연한 녹색
-                        selectedTutee.classLevel === "초급" ? "#FFF3CD" : // 연한 노란색
-                        selectedTutee.classLevel === "중급 이상" ? "#F8D7DA" : // 연한 빨간색
-                        "transparent",
+                        selectedTutee.classLevel === "입문"
+                          ? "#D4EDDA" // 연한 녹색
+                          : selectedTutee.classLevel === "초급"
+                          ? "#FFF3CD" // 연한 노란색
+                          : selectedTutee.classLevel === "중급 이상"
+                          ? "#F8D7DA" // 연한 빨간색
+                          : "transparent",
 
-                      color: selectedTutee.classLevel === "입문" ? "#155724" : // 어두운 녹색
-                              selectedTutee.classLevel === "초급" ? "#856404" : // 어두운 노란색
-                              selectedTutee.classLevel === "중급 이상" ? "#721C24" : // 어두운 빨간색
-                              "black", // 기본값
+                      color:
+                        selectedTutee.classLevel === "입문"
+                          ? "#155724" // 어두운 녹색
+                          : selectedTutee.classLevel === "초급"
+                          ? "#856404" // 어두운 노란색
+                          : selectedTutee.classLevel === "중급 이상"
+                          ? "#721C24" // 어두운 빨간색
+                          : "black", // 기본값
                       borderRadius: "20px",
                       padding: "5px 10px",
                       marginLeft: "20px",
