@@ -33,7 +33,6 @@ export default function PrivacyInput({
   checkEmailDuplicate, // 중복 체크 함수 추가
   isEmailDuplicate, // 중복 여부 상태 추가
 }: PrivacyInputProps) {
-  const { setName } = useUserNameStore();
   const { setUserEmail, setUserPassword, setUserName, setUserPhone } =
     useSignInputValueStore();
 
@@ -46,7 +45,7 @@ export default function PrivacyInput({
 
     // 각 필드에 대해 스토어 업데이트
     if (name === "userName") {
-      setName(value);
+      setUserName(value);
     } else if (name === "userEmail") {
       setUserEmail(value);
     } else if (name === "password") {

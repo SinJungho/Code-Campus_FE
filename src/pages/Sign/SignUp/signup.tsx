@@ -62,6 +62,11 @@ const SignUp: React.FC = () => {
       const response = await axios.get(`${API_URL}/api/users/isDuplicate/${inputForm.userEmail}`);
       setIsEmailDuplicate(response.data); // true: 사용 가능, false: 중복
       setEmailChecked(true); // 이메일 중복 체크 완료
+
+      // 중복이 아니라면 상태 저장소에 이메일 저장
+      if (response.data) {
+        setUserEmail(inputForm.userEmail); // 이메일 저장
+      }
     } catch (error) {
       console.error("Error checking email duplicate:", error);
       setIsEmailDuplicate(false);
