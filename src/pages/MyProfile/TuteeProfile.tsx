@@ -19,17 +19,13 @@ import MatchRequest from "./MatchRequest";
 import { useUserNameStore } from "../../stores/isSignuped/userSucess";
 import { useMyProfileStore } from "../../stores/MyProfile/MyProfileStore";
 import { useUserStore } from "../../stores/isLogined/loginStore";
-import { useSignInputValueStore } from "../../stores/isSignuped/SignUpStore";
 
-const MyProfile: React.FC = () => {
+const TuteeProfile: React.FC = () => {
   // 멘토 이름
   const { userName } = useUserStore();
   // 코드 캠퍼스 멤버쉽, 매칭 요청 횟수
   const { memberShip, setMemberShip, matchingRequest, setMatchingRequest } =
     useMyProfileStore();
-  const { userType } = useSignInputValueStore();
-  console.log(userType);
-
   const [value, setValue] = React.useState("1");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -41,7 +37,7 @@ const MyProfile: React.FC = () => {
       id: 1,
       icon: <PersonIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />,
       text: "회원 유형 :",
-      content: "선배",
+      content: "후배",
     },
     {
       id: 2,
@@ -142,7 +138,7 @@ const MyProfile: React.FC = () => {
           <TabList onChange={handleChange} variant="fullWidth">
             <Tab
               sx={{ width: "100%", fontSize: "0.5rem" }}
-              label="후배 관리"
+              label="선배 관리"
               value="1"
             />
 
@@ -177,16 +173,16 @@ const MyProfile: React.FC = () => {
   function TabLabel() {
     return (
       <Box>
-        {/* <S.TabBadge
+        <S.TabBadge
           sx={{ fontSize: "0.4rem" }}
           color="info"
           badgeContent={matchingRequest}
-        > */}
-        <Typography sx={{ fontSize: "0.5rem" }}>매칭 요청</Typography>
-        {/* </S.TabBadge> */}
+        >
+          <Typography sx={{ fontSize: "0.5rem" }}>매칭 요청</Typography>
+        </S.TabBadge>
       </Box>
     );
   }
 };
 
-export default MyProfile;
+export default TuteeProfile;

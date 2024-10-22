@@ -12,6 +12,7 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import TutorDefaultInfo from "./TutorDefaultInfo";
 import TutorShortAdvice from "./TutorShortAdvice";
+import { useMyProfileStore } from "../../../stores/Tutor/useDetailStore";
 
 const API_URL = process.env.REACT_APP_BASE_URL as string;
 
@@ -51,12 +52,15 @@ const TutorDetail: React.FC = () => {
           return; // 토큰이 없으면 함수 종료
         }
 
-        const response = await axios.get(`${API_URL}/api/tutor/profile/${tutorId}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await axios.get(
+          `${API_URL}/api/tutor/profile/${tutorId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (response.data && response.data.data) {
           const data = response.data.data;
@@ -83,18 +87,18 @@ const TutorDetail: React.FC = () => {
     return <Typography>Loading...</Typography>; // 로딩 상태 표시
   }
 
-  const emojiInfo = [
-    {
-      id: 1,
-      emoji: <FavoriteIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />,
-      text: "Like",
-    },
-    {
-      id: 2,
-      emoji: <SmsIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />,
-      text: "Comment",
-    },
-  ];
+  // const emojiInfo = [
+  //   {
+  //     id: 1,
+  //     emoji: <FavoriteIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />,
+  //     text: "Like",
+  //   },
+  //   {
+  //     id: 2,
+  //     emoji: <SmsIcon sx={{ color: "#1564FF", fontSize: "1.2rem" }} />,
+  //     text: "Comment",
+  //   },
+  // ];
 
   const mentorInfo = [
     {
@@ -108,7 +112,7 @@ const TutorDetail: React.FC = () => {
       text: "개인", // 예시로 고정된 값을 사용
     },
   ];
-
+  const { userType } = useMyProfileStore();
   return (
     <S_detail.Wrapper>
       <Box sx={{ padding: "24px" }}>
@@ -126,6 +130,7 @@ const TutorDetail: React.FC = () => {
             <Box>
               <Link to={`/tutorMatching?tutorNo=${tutorId}`}>
                 <Button
+                  disabled={userType === "TUTOR" ? true : false}
                   variant="contained"
                   sx={{
                     fontSize: "0.5rem",
@@ -136,7 +141,10 @@ const TutorDetail: React.FC = () => {
                   매칭 요청
                 </Button>
               </Link>
-              <Button variant="outlined" sx={{ fontSize: "0.5rem", fontWeight: "bold" }}>
+              <Button
+                variant="outlined"
+                sx={{ fontSize: "0.5rem", fontWeight: "bold" }}
+              >
                 공유하기
               </Button>
             </Box>
@@ -159,7 +167,7 @@ const TutorDetail: React.FC = () => {
           ))}
 
           {/* Like & Comment */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          {/* <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
             {emojiInfo.map((emoji) => (
               <Box
                 key={emoji.id}
@@ -174,7 +182,7 @@ const TutorDetail: React.FC = () => {
                 <Typography sx={{ fontSize: "0.6rem" }}>{emoji.text}</Typography>
               </Box>
             ))}
-          </Box>
+          </Box> */}
         </Box>
 
         {/* 선배 상세 페이지 탭 컴포넌트 */}
@@ -188,7 +196,7 @@ const TutorDetail: React.FC = () => {
 
 // 기술 스택 키워드 컴포넌트
 const MentorSkillKeyword = ({ keywords }: { keywords: string }) => {
-  const keywordArray = keywords.split(",").map(keyword => keyword.trim()); // 문자열을 배열로 변환
+  const keywordArray = keywords.split(",").map((keyword) => keyword.trim()); // 문자열을 배열로 변환
 
   return (
     <Box>
@@ -208,7 +216,9 @@ const MentorSkillKeyword = ({ keywords }: { keywords: string }) => {
 };
 
 // 선배 상세 페이지 탭 메뉴
-const MentorTabMenu: React.FC<{ tutorData: TutorData | null }> = ({ tutorData }) => {
+const MentorTabMenu: React.FC<{ tutorData: TutorData | null }> = ({
+  tutorData,
+}) => {
   const [value, setValue] = useState("1");
   const [isSticky, setIsSticky] = useState(false);
   const tabRef = useRef<HTMLDivElement>(null);
@@ -244,8 +254,16 @@ const MentorTabMenu: React.FC<{ tutorData: TutorData | null }> = ({ tutorData })
         ref={tabRef}
       >
         <TabList onChange={handleChange} variant="fullWidth">
-          <Tab sx={{ width: "100%", fontSize: "0.5rem" }} label="선배 기본 정보" value="1" />
-          <Tab sx={{ width: "100%", fontSize: "0.5rem" }} label="후배들의 한마디" value="2" />
+          <Tab
+            sx={{ width: "100%", fontSize: "0.5rem" }}
+            label="선배 기본 정보"
+            value="1"
+          />
+          <Tab
+            sx={{ width: "100%", fontSize: "0.5rem" }}
+            label="후배들의 한마디"
+            value="2"
+          />
         </TabList>
       </Box>
       {isSticky && <Box sx={{ height: "48px" }} />}
@@ -255,7 +273,7 @@ const MentorTabMenu: React.FC<{ tutorData: TutorData | null }> = ({ tutorData })
       </TabPanel>
       <TabPanel value="2">
         <Typography>후배들의 한마디</Typography>
-        <TutorShortAdvice/>
+        <TutorShortAdvice />
       </TabPanel>
     </TabContext>
   );

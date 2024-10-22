@@ -104,7 +104,8 @@ export default function MenuAppBar() {
 
   React.useEffect(() => {
     setAuth(isLoggedIn);
-  }, [isLoggedIn]); // isLoggedIn 변경 시 auth 상태 업데이트
+    console.log(userType);
+  }, [isLoggedIn, userType]); // isLoggedIn 변경 시 auth 상태 업데이트
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -152,7 +153,10 @@ export default function MenuAppBar() {
             {isLoggedIn ? (
               <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
                 <Typography> {userName}님</Typography>
-                <Link to="/profile" onClick={handleUserNameClick}>
+                <Link
+                  to={userType === "BASIC" ? "/profileTutee" : "/profile"}
+                  onClick={handleUserNameClick}
+                >
                   <AccountCircleIcon />
                 </Link>
                 <Button variant="contained" onClick={() => handleLogOut()}>

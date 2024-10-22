@@ -5,6 +5,7 @@ import TutorList from "./Tutor/TutorList";
 import MyProfile from "./MyProfile/myProfile";
 import TutorDetail from "./Tutor/TutorDetail/TutorDetail";
 import TutorMatching from "./Tutor/TutorMatching/TutorMatching";
+import TuteeProfile from "./MyProfile/TuteeProfile";
 export {
   Home,
   Login,
@@ -13,4 +14,5 @@ export {
   MyProfile,
   TutorDetail,
   TutorMatching,
+  TuteeProfile,
 };

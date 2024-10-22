@@ -12,7 +12,7 @@ import { useSignInputValueStore } from "../../../stores/isSignuped/SignUpStore";
 import { sendData } from "../../../api/sign";
 import axios from "axios";
 
-const steps = ["회원 유형 선택", "개인 정보 입력", "선배 등록", "완료"];
+const steps = ["회원 유형 선택", "개인 정보 입력", "선배 등록"];
 const API_URL = process.env.REACT_APP_BASE_URL as string;
 
 const SignUp: React.FC = () => {
@@ -53,13 +53,17 @@ const SignUp: React.FC = () => {
     confirmPassword: "",
   });
 
-  const [isEmailDuplicate, setIsEmailDuplicate] = useState<boolean | null>(null);
+  const [isEmailDuplicate, setIsEmailDuplicate] = useState<boolean | null>(
+    null
+  );
   const [emailChecked, setEmailChecked] = useState<boolean>(false);
 
   // 이메일 중복 체크 함수
   const checkEmailDuplicate = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/users/isDuplicate/${inputForm.userEmail}`);
+      const response = await axios.get(
+        `${API_URL}/api/users/isDuplicate/${inputForm.userEmail}`
+      );
       setIsEmailDuplicate(response.data); // true: 사용 가능, false: 중복
       setEmailChecked(true); // 이메일 중복 체크 완료
 
@@ -88,7 +92,8 @@ const SignUp: React.FC = () => {
     }
 
     if (activeStep === 1) {
-      const { userEmail, password, userName, userPhone, confirmPassword } = inputForm;
+      const { userEmail, password, userName, userPhone, confirmPassword } =
+        inputForm;
 
       if (!userEmail) {
         alert("이메일을 입력해주세요.");
@@ -208,7 +213,12 @@ const SignUp: React.FC = () => {
             {activeStep === 2 && type === "TUTOR" && <AddMentor />}
             {activeStep === 2 && type === "BASIC" && <AddMentee />}
             <Box
-              sx={{ display: "flex", flexDirection: "column", pt: 2, gap: "10px" }}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                pt: 2,
+                gap: "10px",
+              }}
             >
               <Button
                 variant="contained"

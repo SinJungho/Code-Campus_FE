@@ -8,20 +8,25 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
 import { IconButton } from "@mui/material";
+import { useMyProfileStore } from "../stores/Tutor/useDetailStore";
 
 interface MenuType {
   name: string;
   url: string;
 }
-const MenuList: MenuType[] = [
-  { name: "코드캠퍼스 소개", url: "/about" },
-  { name: "선배 탐색", url: "/tutorList" },
-  { name: "내 프로필", url: "/profile" },
-];
 
 export default function TemporaryDrawer() {
   const [open, setOpen] = React.useState(false);
-
+  const { userType } = useMyProfileStore();
+  const MenuList: MenuType[] = [
+    { name: "코드캠퍼스 소개", url: "/about" },
+    { name: "선배 탐색", url: "/tutorList" },
+    {
+      name: "내 프로필",
+      // url: "/profile",
+      url: userType === "BASIC" ? "/profileTutee" : "/profile",
+    },
+  ];
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
