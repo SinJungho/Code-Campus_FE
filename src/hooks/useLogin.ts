@@ -17,7 +17,7 @@ interface ResponseData {
 
 const useLogin = () => {
   const { setIsLoggedIn, setIsLoading } = useAuthStore();
-  const { setUserName, setUserEmail, setUserNo } = useUserStore();
+  const { setUserName, setUserEmail, setUserNo, setUserType } = useUserStore();
 
   // axios 헤더에 액세스 토큰 담고 setTimeout으로 리프레쉬 돌리기
   const setAuthTokens = (data: any): boolean => {
@@ -34,8 +34,11 @@ const useLogin = () => {
       setUserName(response.userName);
       setUserEmail(response.userEmail);
       setUserNo(response.userNo); // userNo 저장
+      setUserType(response.userType); // userNo 저장
       setIsLoggedIn(true);
       setIsLoading(false);
+
+      console.log(response.userType)
     }
   };
 

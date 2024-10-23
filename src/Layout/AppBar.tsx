@@ -24,11 +24,15 @@ export default function MenuAppBar() {
   const {
     tutorProfileImg,
     name,
-    userType,
     myTuteeList,
     requestedList,
     setUserDetails,
+    setTuteeDetail,
   } = useMyProfileStore();
+
+  const { 
+    userType,
+  }= useUserStore();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAuth(event.target.checked);
@@ -64,7 +68,7 @@ export default function MenuAppBar() {
     }
   };
 
-  const handleUserNameClick = async () => {
+  const handleTutorNameClick = async () => {
     try {
       const response = await axios.get(
         `http://localhost:8080/api/tutor/${userNo}/detail`,
@@ -75,6 +79,8 @@ export default function MenuAppBar() {
           },
         }
       );
+
+      console.log("튜터 호출 성공")
 
       const { tutorProfileImg, name, userType } =
         response.data.data.tutorDetailResponse;
@@ -99,6 +105,40 @@ export default function MenuAppBar() {
       console.log("requestedList:", requestedList);
     } catch (error) {
       console.error("Error fetching user details:", error);
+    }
+  };
+
+
+  //튜티일때 
+  const handleTuteeNameClick = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/tutee/${userNo}/mypage`,
+        {
+          headers: {
+            Authorization: `Bearer ${document.cookie.split("=")[1]}`, // 쿠키에서 토큰 가져오기
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("튜티 호출 성공")
+      console.log(response.data); // 서버 응답 처리
+
+      const { ongoingMentorshipList, requestedMentorshipList, tuteeDetailResponse } = response.data.data;
+
+      // 상태에 저장
+      setTuteeDetail({
+        tuteeName: tuteeDetailResponse.name,
+        keywordList: [], // 필요시 추가
+        classLevel: "", // 필요시 추가
+        mentorshipDay: [], // 필요시 추가
+        mentorshipTime: ongoingMentorshipList.length > 0 ? ongoingMentorshipList[0].mentorshipTime : '', // 예시로 첫 번째 멘토링 시간 사용
+        note: ongoingMentorshipList.length > 0 ? ongoingMentorshipList[0].note : null, // 예시로 첫 번째 멘토링 노트 사용
+      });
+
+      
+    } catch (error) {
+      console.error("튜티 호출 실패:", error);
     }
   };
 
@@ -150,33 +190,39 @@ export default function MenuAppBar() {
           <Box
             sx={{ minWidth: "4.5rem", display: "flex", justifyContent: "end" }}
           >
-            {isLoggedIn ? (
-              <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                <Typography> {userName}님</Typography>
-                <Link
-                  to={userType === "BASIC" ? "/profileTutee" : "/profile"}
-                  onClick={handleUserNameClick}
-                >
-                  <AccountCircleIcon />
-                </Link>
-                <Button variant="contained" onClick={() => handleLogOut()}>
-                  로그아웃
-                </Button>
-              </Box>
-            ) : (
-              <Link to="/login">
-                <Button
-                  variant="contained"
-                  sx={{
-                    borderRadius: 5,
-                    padding: ".2rem 1rem",
-                    fontSize: "0.75rem",
-                  }}
-                >
-                  로그인
-                </Button>
+          {isLoggedIn ? (
+            <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+              <Typography> {userName}님</Typography>
+              <Link
+                to={userType === "BASIC" ? "/profileTutee" : "/profile"}
+                onClick={async () => {
+                  if (userType === "TUTOR") {
+                    await handleTutorNameClick(); // 기존 함수 호출
+                  } else if (userType === "BASIC") {
+                    await handleTuteeNameClick();
+                  }
+                }}
+              >
+                <AccountCircleIcon />
               </Link>
-            )}
+              <Button variant="contained" onClick={() => handleLogOut()}>
+                로그아웃
+              </Button>
+            </Box>
+          ) : (
+            <Link to="/login">
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: 5,
+                  padding: ".2rem 1rem",
+                  fontSize: "0.75rem",
+                }}
+              >
+                로그인
+              </Button>
+            </Link>
+          )}
           </Box>
         </Toolbar>
       </AppBar>

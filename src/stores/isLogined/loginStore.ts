@@ -22,9 +22,11 @@ interface UserState {
   userName: string;
   userEmail: string;
   userNo: number; // userNo의 타입을 number로 추가
+  userType: string,
   setUserName: (userName: string) => void;
   setUserEmail: (userEmail: string) => void;
   setUserNo: (userNo: number) => void; // setUserNo 추가
+  setUserType: (userType: string) => void;
 }
 
 // User 상태 스토어 생성
@@ -32,8 +34,10 @@ export const useUserStore = create<UserState>((set) => ({
   userName: '', // 로그인 시에 유저 이름
   userEmail: '', // 로그인 시에 유저 이메일
   userNo: 0, // 초기값 설정
+  userType: '',
 
   setUserName: (userName: string) => set({ userName }),
   setUserEmail: (userEmail: string) => set({ userEmail }),
   setUserNo: (userNo: number) => set({ userNo }), // userNo 설정
+  setUserType: (userType: string) => set({ userType }),
 }));
