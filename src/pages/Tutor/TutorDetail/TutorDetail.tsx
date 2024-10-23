@@ -13,6 +13,7 @@ import TabPanel from "@mui/lab/TabPanel";
 import TutorDefaultInfo from "./TutorDefaultInfo";
 import TutorShortAdvice from "./TutorShortAdvice";
 import { useMyProfileStore } from "../../../stores/Tutor/useDetailStore";
+import { useUserStore } from "../../../stores/isLogined/loginStore";
 
 const API_URL = process.env.REACT_APP_BASE_URL as string;
 
@@ -33,7 +34,7 @@ const TutorDetail: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [tutorData, setTutorData] = useState<TutorData | null>(null); // tutorData 상태 추가
   const [keywords, setKeywords] = useState<string>(""); // 기본값을 빈 문자열로 설정
-  const { userType } = useMyProfileStore();
+  const { userType } = useUserStore();
 
   useEffect(() => {
     const fetchTutorData = async () => {
@@ -124,32 +125,33 @@ const TutorDetail: React.FC = () => {
 
         {/* 선배 기본 정보 & 매칭 요청 버튼 */}
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Box sx={{ display: "flex", marginBottom: "20px", gap: "2rem" }}>
-            <Typography sx={{ fontSize: "0.75rem" }}>
-              <b style={{ fontSize: "0.82rem" }}>{tutorData?.name}</b> 선배님
-            </Typography>
-            <Box>
-              <Link to={`/tutorMatching?tutorNo=${tutorId}`}>
-                <Button
-                  disabled={userType === "TUTOR" ? true : false}
-                  variant="contained"
-                  sx={{
-                    fontSize: "0.5rem",
-                    fontWeight: "bold",
-                    marginRight: "14px",
-                  }}
-                >
-                  매칭 요청
-                </Button>
-              </Link>
-              <Button
-                variant="outlined"
-                sx={{ fontSize: "0.5rem", fontWeight: "bold" }}
-              >
-                공유하기
-              </Button>
-            </Box>
-          </Box>
+        <Box sx={{ display: "flex", marginBottom: "20px", gap: "2rem" }}>
+  <Typography sx={{ fontSize: "0.75rem" }}>
+    <b style={{ fontSize: "0.82rem" }}>{tutorData?.name}</b> 선배님
+  </Typography>
+  <Box>
+    {userType === "BASIC" && ( 
+      <Link to={`/tutorMatching?tutorNo=${tutorId}`}>
+        <Button
+          variant="contained"
+          sx={{
+            fontSize: "0.5rem",
+            fontWeight: "bold",
+            marginRight: "14px",
+          }}
+        >
+          매칭 요청
+        </Button>
+      </Link>
+    )}
+    <Button
+      variant="outlined"
+      sx={{ fontSize: "0.5rem", fontWeight: "bold" }}
+    >
+      공유하기
+    </Button>
+  </Box>
+</Box>
 
           {/* 선배 정보 */}
           {mentorInfo.map((info) => (
