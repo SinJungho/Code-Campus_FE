@@ -33,6 +33,7 @@ const TutorDetail: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [tutorData, setTutorData] = useState<TutorData | null>(null); // tutorData 상태 추가
   const [keywords, setKeywords] = useState<string>(""); // 기본값을 빈 문자열로 설정
+  const { userType } = useMyProfileStore();
 
   useEffect(() => {
     const fetchTutorData = async () => {
@@ -112,7 +113,7 @@ const TutorDetail: React.FC = () => {
       text: "개인", // 예시로 고정된 값을 사용
     },
   ];
-  const { userType } = useMyProfileStore();
+  
   return (
     <S_detail.Wrapper>
       <Box sx={{ padding: "24px" }}>
